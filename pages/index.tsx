@@ -8,6 +8,13 @@ import PrimaryButton from "../components/buttons/primaryButton";
 import WhiteButton from "../components/buttons/whiteButton";
 
 const Home: NextPage = () => {
+
+    const types = [
+        {key: "1", value: "Software Engineer"},
+        {key: "2", value: "Teacher"},
+        {key: "3", value: "Doctor"}
+    ];
+
     return (
         <div>
             <Head>
@@ -21,9 +28,9 @@ const Home: NextPage = () => {
 
             <div className={"flex flex-col justify-center w-full"}>
                 <div className={"shadow rounded bg-white p-6 flex flex-col gap-3 w-64 mx-auto my-8"}>
-                    <Dropdown />
+                    <Dropdown options={types} onSelect={()=>false} />
 
-                    <Dropdown />
+                    <Dropdown options={types} onSelect={()=>false} />
 
                     <TextInput />
                 </div>

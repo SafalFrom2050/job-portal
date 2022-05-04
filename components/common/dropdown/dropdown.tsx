@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const Dropdown = () => {
+const Dropdown = (props: { options: { key: String, value: String }[], onSelect: (key: String) => boolean }) => {
 
     const [show, setShow] = useState(false);
 
@@ -25,20 +25,20 @@ const Dropdown = () => {
                     className={`${show ? "" : "hidden"} absolute z-20 right-0 w-full px-1 py-2 top-12`}
                     id="drop-down-div">
                     <div className={"fixed top-0 left-0 h-screen w-screen z-0"} onClick={toggle}></div>
-                    <div className={"w-full absolute flex flex-col z-30 bg-white border-t border-gray-200 rounded shadow"}>
-                        <a href="javascript:void(0)" className="hover"><p
-                            className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded">
-                            Software Engineer
-                        </p></a>
-                        <a href="javascript:void(0)"><p
-                            className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded">
-                            Teacher
-                        </p></a>
-                        <a href="javascript:void(0)"><p
-                            className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded">
-                            Chef
-                        </p></a>
+                    <div
+                        className={"w-full absolute flex flex-col z-30 bg-white border-t border-gray-200 rounded shadow"}>
 
+                        {props.options.map((option, index) => {
+
+                            return (
+                                <a key={index} onClick={() => props.onSelect(option.key)}
+                                   className="hover"><p
+                                    className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded">
+                                    {option.value}
+                                </p></a>
+                            );
+                        })
+                        }
                     </div>
                 </div>
             </div>

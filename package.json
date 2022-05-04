@@ -9,9 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.6",
+    "@types/lodash": "^4.14.182",
+    "formik": "^2.2.9",
+    "lodash": "^4.17.21",
     "next": "12.1.5",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "tailwind-override": "^0.6.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "17.0.31",
