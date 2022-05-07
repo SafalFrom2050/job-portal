@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 
                     <Dropdown options={types} onSelect={()=>false} />
 
-                    <TextInput />
+                    <TextInput  name="location" type="text"/>
                 </div>
                 <div className="flex w-64 mx-auto">
                     <WhiteButton name="Add Filter" />
