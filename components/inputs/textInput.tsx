@@ -30,10 +30,10 @@ function TextInput(props: {
                 <input
                     name={props.name}
                     id={props.id && ""}
-                    aria-labelledby={props.label && ""}
+                    aria-labelledby={props.label || ""}
                     type={props.type}
-                    className={overrideTailwindClasses(`bg-gray-200 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2 ${props.iClass} ${props.error? "bg-red-50 border-red-400" : ""}`)}
-                    placeholder={props.placeholder && ""}
+                    className={overrideTailwindClasses(`bg-gray-200 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-2 w-full pl-3 mt-2 ${props.iClass} ${props.error? "bg-red-50 border-red-400" : ""}`)}
+                    placeholder={props.placeholder || ""}
                     onChange={props.onChange}
                     value={props.value}
                 />

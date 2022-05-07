@@ -1,19 +1,27 @@
 import React, {useState} from 'react';
 
-const Dropdown = (props: { options: { key: String, value: String }[], onSelect: (key: String) => boolean }) => {
+const Dropdown = (props: { options: { key: String, value: String }[], onSelect: (key: String) => boolean, label?: string }) => {
 
     const [show, setShow] = useState(false);
+
+    const [selectedOption, setSelectedOption] = useState(props.label == undefined ? "Select" : props.label);
 
     function toggle() {
         setShow(!show)
     }
 
+    function selectOption(key: string, value: string) {
+        setSelectedOption(value)
+        props.onSelect(key)
+        toggle()
+    }
+
     return (
         <div className="relative ">
             <div className="relative w-full border border-gray-300 rounded outline-none dropdown-one">
-                <button onClick={toggle} className="relative flex items-center justify-between w-full px-5 py-3">
+                <button onClick={toggle} className="relative flex items-center justify-between w-full px-5 py-2">
                       <span className="pr-4 text-sm font-medium text-gray-600" id="drop-down-content-setter">
-                        Title/Type
+                        {String(selectedOption)}
                       </span>
                     <svg id="rotate" className="absolute z-10 cursor-pointer right-5" width={10} height={6}
                          viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +39,7 @@ const Dropdown = (props: { options: { key: String, value: String }[], onSelect: 
                         {props.options.map((option, index) => {
 
                             return (
-                                <a key={index} onClick={() => props.onSelect(option.key)}
+                                <a key={index} onClick={() => selectOption(String(option.key), String(option.value))}
                                    className="hover"><p
                                     className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded">
                                     {option.value}

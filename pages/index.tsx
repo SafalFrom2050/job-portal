@@ -27,14 +27,14 @@ const Home: NextPage = () => {
             <BottomNav/>
 
             <div className={"flex flex-col justify-center w-full"}>
-                <div className={"shadow rounded bg-white p-6 flex flex-col gap-3 w-64 mx-auto my-8"}>
+                <div className={"shadow rounded bg-white p-6 flex flex-col gap-3 w-64 mx-auto mt-8"}>
                     <Dropdown options={types} onSelect={()=>false} />
 
                     <Dropdown options={types} onSelect={()=>false} />
 
-                    <TextInput  name="location" type="text"/>
+                    <TextInput  name="location" placeholder="Location" type="text"/>
                 </div>
-                <div className="flex w-64 mx-auto">
+                <div className="flex w-64 mx-auto justify-center">
                     <WhiteButton name="Add Filter" />
 
                     <PrimaryButton name="Search Job" />

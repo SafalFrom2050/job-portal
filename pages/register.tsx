@@ -1,16 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import TextInput from "../components/inputs/textInput";
 import PrimaryButton from "../components/buttons/primaryButton";
 import {TopReview} from "../components/login/topReview";
 import {IconGoogle} from "../components/icons/iconGoogle";
 import {IconShowHidePassword} from "../components/icons/iconShowHidePassword";
 import * as yup from 'yup';
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import Header from "../components/navigation/header";
-import {useQuery} from "react-query";
+import {useMutation, useQuery} from "react-query";
+import Link from "next/link";
+import {registerUser} from "../others/api";
 
 
-export default function Login() {
+export default function Register() {
 
     const [showpass, setShowPass] = useState(false)
 
@@ -41,22 +43,23 @@ export default function Login() {
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
-            alert(JSON.stringify(values, null, 2));
+            initiateRegistration()
         },
     })
 
-
-    const { isLoading, error, data } = useQuery('repoData', () =>
-        fetch('https://api.github.com/repos/tannerlinsley/react-query').then(res =>
-            res.json()
-        )
-    )
-
-
+    const { isLoading: isRegisteringUser, mutate: initiateRegistration } = useMutation<any, Error>(
+        async () => {
+            return await registerUser(formik.values).then(response => {
+                if (response.status == 400) {
+                    formik.setErrors(response.data)
+                }
+            })
+        }
+    );
 
     return (
         <>
-            <Header guest={true} />
+            <Header guest={true}/>
             <div>
                 <div
                     className="xl:px-20 md:px-10 sm:px-6 px-4 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center">
@@ -64,56 +67,51 @@ export default function Login() {
                         <div className="w-full">
                             <p className="text-3xl font-bold leading-none text-gray-600">JOB PORTAL</p>
                         </div>
-                    </div>-
+                    </div>
+
                     <div
                         className="bg-white shadow-lg rounded xl:w-1/3 lg:w-5/12 md:w-1/2 w-full lg:px-10 sm:px-6 sm:py-10 px-2 py-6">
                         <p className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
                             Create a new account
                         </p>
-                        <p
-                            className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">
-                            Already have account?
-                            <a href="/signup"
-                               className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer">
-                                {" "}
-                                Login here
-                            </a>
-                        </p>
-                        <button aria-label="Continue with google" role="button"
-                                className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 p-3 border rounded-lg border-gray-700 flex items-center w-full mt-10 hover:bg-gray-100">
+
+                        {/*<button aria-label="Continue with google" role="button"*/}
+                        {/*        className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 p-3 border rounded-lg border-gray-700 flex items-center w-full mt-10 hover:bg-gray-100">*/}
 
 
-                            <IconGoogle/>
-                            <p className="text-base font-medium ml-4 text-gray-700">Continue with Google</p>
-                        </button>
+                        {/*    <IconGoogle/>*/}
+                        {/*    <p className="text-base font-medium ml-4 text-gray-700">Continue with Google</p>*/}
+                        {/*</button>*/}
 
-                        <div className="w-full flex items-center justify-between py-5">
-                            <hr className="w-full bg-gray-400"/>
-                            <p className="text-base font-medium leading-4 px-2.5 text-gray-500">OR</p>
-                            <hr className="w-full bg-gray-400"/>
+                        {/*<div className="w-full flex items-center justify-between py-5">*/}
+                        {/*    <hr className="w-full bg-gray-400"/>*/}
+                        {/*    <p className="text-base font-medium leading-4 px-2.5 text-gray-500">OR</p>*/}
+                        {/*    <hr className="w-full bg-gray-400"/>*/}
+                        {/*</div>*/}
+                        <div className="flex items-center justify-between gap-x-4">
+                            <div className="mt-6">
+                                <TextInput type={'text'}
+                                           name={'first_name'}
+                                           label={'first name'}
+                                           value={formik.values.first_name}
+                                           onChange={formik.handleChange}
+                                           error={formik.touched.first_name && Boolean(formik.errors.first_name)}
+                                           errorMsg={formik.touched.first_name && formik.errors.first_name}
+                                />
+                            </div>
+
+                            <div className={"mt-6"}>
+                                <TextInput type={'text'}
+                                           name={'last_name'}
+                                           label={'last name'}
+                                           value={formik.values.last_name}
+                                           onChange={formik.handleChange}
+                                           error={formik.touched.last_name && Boolean(formik.errors.last_name)}
+                                           errorMsg={formik.touched.last_name && formik.errors.last_name}
+                                />
+                            </div>
+
                         </div>
-                        <div>
-                            <TextInput type={'text'}
-                                       name={'first_name'}
-                                       label={'first name'}
-                                       value={formik.values.first_name}
-                                       onChange={formik.handleChange}
-                                       error={formik.touched.first_name && Boolean(formik.errors.first_name)}
-                                       errorMsg={formik.touched.first_name && formik.errors.first_name}
-                            />
-                        </div>
-
-                        <div className={"mt-6"}>
-                            <TextInput type={'text'}
-                                       name={'last_name'}
-                                       label={'last name'}
-                                       value={formik.values.last_name}
-                                       onChange={formik.handleChange}
-                                       error={formik.touched.last_name && Boolean(formik.errors.last_name)}
-                                       errorMsg={formik.touched.last_name && formik.errors.last_name}
-                            />
-                        </div>
-
                         <div className={"mt-6"}>
                             <TextInput type={'email'}
                                        name={'email'}
@@ -145,12 +143,26 @@ export default function Login() {
                             </TextInput>
 
                         </div>
-                        <div className="mt-8">
+                        <div className="mt-6">
                             <PrimaryButton
+                                disabled={isRegisteringUser || Object.keys(formik.errors).length !== 0}
                                 onClick={formik.submitForm}
                                 name={"SIGN UP"} cClass="w-full"
-                                class={"w-full h-full mx-0  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none py-4"}/>
+                                class={"w-full h-full mx-0  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 disabled:bg-gray-500 text-sm font-semibold leading-none text-white focus:outline-none py-4"}/>
                         </div>
+
+                        <p
+                            className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">
+                            Already have account?
+                            <Link href="login">
+                                <a
+                                    className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer">
+                                    {" "}
+                                    Login here
+                                </a>
+                            </Link>
+
+                        </p>
                     </div>
 
                     <TopReview/>

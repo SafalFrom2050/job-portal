@@ -7,11 +7,17 @@ import {IconShowHidePassword} from "../components/icons/iconShowHidePassword";
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import Header from "../components/navigation/header";
+import Link from "next/link";
+import {useMutation} from "react-query";
+import {loginUser, registerUser} from "../others/api";
+import {InformationCircleIcon} from "@heroicons/react/solid";
+import { InformationCircle } from "heroicons-react";
 
 
 export default function Login() {
 
     const [showpass, setShowPass] = useState(false)
+    const [errorMsg, setErrorMsg] = useState(false);
 
     const validationSchema = yup.object({
         email: yup
@@ -32,10 +38,23 @@ export default function Login() {
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
-            alert(JSON.stringify(values, null, 2));
+            initiateLogin()
         },
     })
 
+    const { isLoading: isLoggingIn, mutate: initiateLogin } = useMutation<any, Error>(
+        async () => {
+            return await loginUser(formik.values).then(response => {
+                if (response.status == 400) {
+                    formik.setErrors(response.data)
+                }else if (response.status == 401) {
+                    if (response.data.detail != null) {
+                        setErrorMsg(response.data.detail)
+                    }
+                }
+            })
+        }
+    );
 
     return (
         <>
@@ -53,29 +72,28 @@ export default function Login() {
                         <p className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
                             Login to your account
                         </p>
-                        <p
-                           className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">
-                            Dont have account?{" "}
-                            <a href="/signup"
-                               className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer">
-                                {" "}
-                                Sign up here
-                            </a>
-                        </p>
-                        <button aria-label="Continue with google" role="button"
-                                className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 p-3 border rounded-lg border-gray-700 flex items-center w-full mt-10 hover:bg-gray-100">
+
+                        {/*<button aria-label="Continue with google" role="button"*/}
+                        {/*        className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 p-3 border rounded-lg border-gray-700 flex items-center w-full mt-10 hover:bg-gray-100">*/}
 
 
-                            <IconGoogle/>
-                            <p className="text-base font-medium ml-4 text-gray-700">Login with Google</p>
-                        </button>
+                        {/*    <IconGoogle/>*/}
+                        {/*    <p className="text-base font-medium ml-4 text-gray-700">Login with Google</p>*/}
+                        {/*</button>*/}
 
-                        <div className="w-full flex items-center justify-between py-5">
-                            <hr className="w-full bg-gray-400"/>
-                            <p className="text-base font-medium leading-4 px-2.5 text-gray-500">OR</p>
-                            <hr className="w-full bg-gray-400"/>
-                        </div>
-                        <div>
+                        {/*<div className="w-full flex items-center justify-between py-5">*/}
+                        {/*    <hr className="w-full bg-gray-400"/>*/}
+                        {/*    <p className="text-base font-medium leading-4 px-2.5 text-gray-500">OR</p>*/}
+                        {/*    <hr className="w-full bg-gray-400"/>*/}
+                        {/*</div>*/}
+
+                        <div className="mt-8">
+                            {errorMsg &&
+                                <div className="flex items-center gap-x-2 p-2 mb-2 text-xs text-red-600 border border-red-600 bg-red-50">
+                                    <InformationCircle className="w-4 h-4" />
+                                    {errorMsg}
+                                </div>
+                            }
                             <TextInput type={'email'}
                                        name={'email'}
                                        label={'email'}
@@ -103,12 +121,26 @@ export default function Login() {
                             </TextInput>
 
                         </div>
-                        <div className="mt-8">
+                        <div className="mt-6">
                             <PrimaryButton
+                                disabled={(isLoggingIn)}
                                 onClick={formik.submitForm}
                                 name={"LOGIN"} cClass="w-full"
-                                           class={"w-full h-full mx-0  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none py-4"}/>
+                                           class={"w-full h-full mx-0 disabled:bg-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none py-4"}/>
                         </div>
+
+                        <p
+                            className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">
+                            Don&apos;t have account?{" "}
+                            <Link href="register">
+                                <a
+                                    className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer">
+                                    {" "}
+                                    Sign up here
+                                </a>
+                            </Link>
+
+                        </p>
                     </div>
 
                     <TopReview/>
