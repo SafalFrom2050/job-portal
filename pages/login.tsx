@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import TextInput from "../components/inputs/textInput";
 import PrimaryButton from "../components/buttons/primaryButton";
 import {TopReview} from "../components/login/topReview";
@@ -12,10 +12,13 @@ import {useMutation} from "react-query";
 import {loginUser, registerUser} from "../others/api";
 import {InformationCircleIcon} from "@heroicons/react/solid";
 import { InformationCircle } from "heroicons-react";
+import {TokenContext} from "../contexts/tokenContext";
+import {TokenContextType} from "../@types/token";
 
 
 export default function Login() {
 
+    const {token, setToken} = useContext(TokenContext) as TokenContextType;
     const [showpass, setShowPass] = useState(false)
     const [errorMsg, setErrorMsg] = useState(false);
 
@@ -45,7 +48,9 @@ export default function Login() {
     const { isLoading: isLoggingIn, mutate: initiateLogin } = useMutation<any, Error>(
         async () => {
             return await loginUser(formik.values).then(response => {
-                if (response.status == 400) {
+                if (response.status == 201){
+                    setToken(response.data)
+                }else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }else if (response.status == 401) {
                     if (response.data.detail != null) {
@@ -132,7 +137,7 @@ export default function Login() {
                         <p
                             className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500">
                             Don&apos;t have account?{" "}
-                            <Link href="register">
+                            <Link href="/register">
                                 <a
                                     className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer">
                                     {" "}

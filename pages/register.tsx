@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import TextInput from "../components/inputs/textInput";
 import PrimaryButton from "../components/buttons/primaryButton";
 import {TopReview} from "../components/login/topReview";
@@ -10,11 +10,14 @@ import Header from "../components/navigation/header";
 import {useMutation, useQuery} from "react-query";
 import Link from "next/link";
 import {registerUser} from "../others/api";
+import {TokenContext} from "../contexts/tokenContext";
+import {TokenContextType} from "../@types/token";
 
 
 export default function Register() {
 
     const [showpass, setShowPass] = useState(false)
+    const {token, setToken} = useContext(TokenContext) as TokenContextType;
 
     const validationSchema = yup.object({
         first_name: yup
@@ -50,7 +53,9 @@ export default function Register() {
     const { isLoading: isRegisteringUser, mutate: initiateRegistration } = useMutation<any, Error>(
         async () => {
             return await registerUser(formik.values).then(response => {
-                if (response.status == 400) {
+                if (response.status == 201){
+                    setToken(response.data)
+                }else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }
             })
