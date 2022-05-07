@@ -7,6 +7,7 @@ import {IconShowHidePassword} from "../components/icons/iconShowHidePassword";
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import Header from "../components/navigation/header";
+import {useQuery} from "react-query";
 
 
 export default function Login() {
@@ -14,10 +15,10 @@ export default function Login() {
     const [showpass, setShowPass] = useState(false)
 
     const validationSchema = yup.object({
-        firstname: yup
+        first_name: yup
             .string()
             .required('First name is required'),
-        lastname: yup
+        last_name: yup
             .string()
             .required('Last name is required'),
         email: yup
@@ -33,8 +34,8 @@ export default function Login() {
 
     const formik = useFormik({
         initialValues: {
-            firstname: '',
-            lastname: '',
+            first_name: '',
+            last_name: '',
             email: '',
             password: '',
         },
@@ -43,6 +44,14 @@ export default function Login() {
             alert(JSON.stringify(values, null, 2));
         },
     })
+
+
+    const { isLoading, error, data } = useQuery('repoData', () =>
+        fetch('https://api.github.com/repos/tannerlinsley/react-query').then(res =>
+            res.json()
+        )
+    )
+
 
 
     return (
@@ -55,7 +64,7 @@ export default function Login() {
                         <div className="w-full">
                             <p className="text-3xl font-bold leading-none text-gray-600">JOB PORTAL</p>
                         </div>
-                    </div>
+                    </div>-
                     <div
                         className="bg-white shadow-lg rounded xl:w-1/3 lg:w-5/12 md:w-1/2 w-full lg:px-10 sm:px-6 sm:py-10 px-2 py-6">
                         <p className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
@@ -85,23 +94,23 @@ export default function Login() {
                         </div>
                         <div>
                             <TextInput type={'text'}
-                                       name={'firstname'}
+                                       name={'first_name'}
                                        label={'first name'}
-                                       value={formik.values.firstname}
+                                       value={formik.values.first_name}
                                        onChange={formik.handleChange}
-                                       error={formik.touched.firstname && Boolean(formik.errors.firstname)}
-                                       errorMsg={formik.touched.firstname && formik.errors.firstname}
+                                       error={formik.touched.first_name && Boolean(formik.errors.first_name)}
+                                       errorMsg={formik.touched.first_name && formik.errors.first_name}
                             />
                         </div>
 
                         <div className={"mt-6"}>
                             <TextInput type={'text'}
-                                       name={'lastname'}
+                                       name={'last_name'}
                                        label={'last name'}
-                                       value={formik.values.lastname}
+                                       value={formik.values.last_name}
                                        onChange={formik.handleChange}
-                                       error={formik.touched.lastname && Boolean(formik.errors.lastname)}
-                                       errorMsg={formik.touched.lastname && formik.errors.lastname}
+                                       error={formik.touched.last_name && Boolean(formik.errors.last_name)}
+                                       errorMsg={formik.touched.last_name && formik.errors.last_name}
                             />
                         </div>
 
