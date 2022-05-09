@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import Header from "../components/navigation/header";
 import Link from "next/link";
 import {useMutation} from "react-query";
-import {loginUser, registerUser} from "../others/api";
+import {loginUser, registerUser} from "../API/user.api";
 import {InformationCircleIcon} from "@heroicons/react/solid";
 import { InformationCircle } from "heroicons-react";
 import {TokenContext} from "../contexts/tokenContext";
@@ -48,7 +48,7 @@ export default function Login() {
     const { isLoading: isLoggingIn, mutate: initiateLogin } = useMutation<any, Error>(
         async () => {
             return await loginUser(formik.values).then(response => {
-                if (response.status == 201){
+                if (response.status == 200){
                     setToken(response.data)
                 }else if (response.status == 400) {
                     formik.setErrors(response.data)

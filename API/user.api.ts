@@ -1,5 +1,6 @@
 import axios, {AxiosError} from 'axios'
-import {BASE_URL} from "./config";
+
+import http, {Response} from "./http-common";
 
 export type User = {
     first_name: string,
@@ -20,22 +21,12 @@ export type RegisterUserResponse = {
     password: string
 }
 
-export type Response = {
-    data: any,
-    status: number | null
-}
-
 export const registerUser = async (user: User) => {
 
     try {
-        const {data, status} = await axios.post<RegisterUserResponse>(
-            BASE_URL + 'user/auth/register/',
-            user,
-            {
-                headers: {
-                    Accept: 'application/json',
-                }
-            },
+        const {data, status} = await http.post<RegisterUserResponse>(
+            'user/auth/register/',
+            user
         );
 
         console.log(JSON.stringify(data));
@@ -54,14 +45,9 @@ export const registerUser = async (user: User) => {
 export const loginUser = async (credentials: LoginCredential) => {
 
     try {
-        const {data, status} = await axios.post<RegisterUserResponse>(
-            BASE_URL + 'user/auth/login/',
-            credentials,
-            {
-                headers: {
-                    Accept: 'application/json',
-                }
-            },
+        const {data, status} = await http.post<RegisterUserResponse>(
+            'user/auth/login/',
+            credentials
         );
 
         console.log(JSON.stringify(data));

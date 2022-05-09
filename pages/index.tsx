@@ -6,6 +6,12 @@ import TextInput from "../components/inputs/textInput";
 import Header from "../components/navigation/header";
 import PrimaryButton from "../components/buttons/primaryButton";
 import WhiteButton from "../components/buttons/whiteButton";
+import Search from "../components/index/Search";
+import PostListItem from "../components/post/PostListItem";
+import {useContext} from "react";
+import {AxiosContext} from "../contexts/axiosContext";
+import {AxiosContextType} from "../@types/axiosInstance";
+import {getPosts} from "../API/post.api";
 
 const Home: NextPage = () => {
 
@@ -24,6 +30,14 @@ const Home: NextPage = () => {
         {key: "4", value: "Backend"}
     ]
 
+    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType;
+
+    if (axiosInstance) {
+        getPosts(axiosInstance).then((value)=>{
+            console.log(value)
+        })
+    }
+
     return (
         <div>
             <Head>
@@ -36,21 +50,15 @@ const Home: NextPage = () => {
             <BottomNav/>
 
             <div className={"flex flex-col justify-center w-full"}>
-                <div className={"shadow rounded bg-white p-6 pb-2 flex flex-col gap-3 w-72 mx-auto mt-8"}>
-                    <Dropdown options={titleTypes} onSelect={()=>false} label="Title/Type" />
 
-                    <Dropdown options={positionTypes} onSelect={()=>false} label="Position/Post"/>
 
-                    <TextInput  name="location" placeholder="Location" type="text" iClass="bg-white mt-0 text-sm px-5 font-medium text-gray-600 placeholder-gray-400"/>
-
-                    <div className="flex w-full justify-center mt-auto">
-                        <WhiteButton name="Add Filter" />
-
-                        <PrimaryButton name="Search Job" />
-                    </div>
-                </div>
-
+                <Search />
             </div>
+
+            <main>
+                <h2 className="max-w-[800px] mx-auto px-4 font-medium text-xl mt-6 text-gray-700">All Jobs</h2>
+                <PostListItem />
+            </main>
 
         </div>
     )

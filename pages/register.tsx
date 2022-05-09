@@ -9,7 +9,7 @@ import {useFormik} from 'formik';
 import Header from "../components/navigation/header";
 import {useMutation, useQuery} from "react-query";
 import Link from "next/link";
-import {registerUser} from "../others/api";
+import {registerUser} from "../API/user.api";
 import {TokenContext} from "../contexts/tokenContext";
 import {TokenContextType} from "../@types/token";
 
