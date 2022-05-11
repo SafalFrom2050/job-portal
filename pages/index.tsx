@@ -34,11 +34,11 @@ const Home: NextPage = () => {
 
     console.log(token)
 
-    const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: true, retryOnMount: true})
+    const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retryOnMount: true})
 
     const posts = data?.data as Post[]
 
-    console.log(data)
+    console.log(axiosInstance)
 
     function fetchPosts() {
         return getPosts(axiosInstance)
