@@ -31,6 +31,8 @@ export const TokenProvider: React.FC<Props> = ({children}) => {
                 Router.push('/login')
             }
             setToken({access: accessToken, refresh: null})
+
+            console.log("access token: " + accessToken)
         };
     }, []);
 

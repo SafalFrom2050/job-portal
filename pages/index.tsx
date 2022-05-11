@@ -32,13 +32,10 @@ const Home: NextPage = () => {
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
     const {token} = useContext(TokenContext) as TokenContextType
 
-    console.log(token)
 
     const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retryOnMount: true})
 
     const posts = data?.data as Post[]
-
-    console.log(axiosInstance)
 
     function fetchPosts() {
         return getPosts(axiosInstance)
