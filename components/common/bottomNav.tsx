@@ -5,7 +5,7 @@ function BottomNav() {
     return (
         <div>
             <div
-                className={"w-full fixed bottom-0 sm:relative bg-gray-800 shadow md:h-full flex-col justify-between sm:hidden transition duration-150 ease-in-out transform -translate-x-0"}
+                className={"w-full fixed bottom-0 z-30 sm:relative bg-gray-800 shadow md:h-full flex-col justify-between sm:hidden transition duration-150 ease-in-out transform -translate-x-0"}
                 id="mobile-nav">
 
                 <div className="px-8 border-t border-gray-700">

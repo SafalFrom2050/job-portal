@@ -8,6 +8,7 @@ import {AxiosContextType} from "../@types/axiosInstance";
 import {getPosts, Post} from "../API/post.api";
 import {useQuery} from "react-query";
 import Spinner from "../components/common/spinner";
+import Heading from "../components/common/heading";
 
 const Home: NextPage = () => {
 
@@ -52,7 +53,7 @@ const Home: NextPage = () => {
             </div>
 
             <main>
-                <h2 className="max-w-[800px] mx-auto px-4 font-medium text-xl mt-6 text-gray-700">All Jobs</h2>
+                <Heading heading={"All Jobs"} count={200} />
 
                 <div>
                     {isLoading && <Spinner />}

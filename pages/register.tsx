@@ -12,6 +12,7 @@ import Link from "next/link";
 import {registerUser} from "../API/user.api";
 import {TokenContext} from "../contexts/tokenContext";
 import {TokenContextType} from "../@types/token";
+import Router from "next/router";
 
 
 export default function Register() {
@@ -55,6 +56,7 @@ export default function Register() {
             return await registerUser(formik.values).then(response => {
                 if (response.status == 201) {
                     saveToken({access: response.data.access_token, refresh: null})
+                    Router.replace('/')
                 } else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }

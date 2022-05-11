@@ -2,12 +2,13 @@ import axios, {AxiosError} from 'axios'
 
 import http, {Response} from "./http-common";
 
-export type User = {
+export type RegistrationCredential = {
     first_name: string,
     last_name: string,
     email: string,
     password: string
 }
+
 
 export type LoginCredential = {
     email: string,
@@ -21,12 +22,12 @@ export type RegisterUserResponse = {
     password: string
 }
 
-export const registerUser = async (user: User) => {
+export const registerUser = async (credential: RegistrationCredential) => {
 
     try {
         const {data, status} = await http.post<RegisterUserResponse>(
             'user/auth/register/',
-            user
+            credential
         );
 
         console.log(JSON.stringify(data));

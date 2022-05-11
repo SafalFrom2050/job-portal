@@ -5,6 +5,7 @@ import {TokenProvider} from "../contexts/tokenContext";
 import {AxiosProvider} from "../contexts/axiosContext";
 import Header from "../components/navigation/header";
 import BottomNav from "../components/common/bottomNav";
+import Footer from "../components/navigation/footer";
 
 const queryClient = new QueryClient()
 
@@ -21,6 +22,7 @@ function MyApp({Component, pageProps}: AppProps) {
                         <BottomNav/>
                         <Component {...pageProps} />
 
+                        <Footer />
                     </>
                 </QueryClientProvider>
             </AxiosProvider>

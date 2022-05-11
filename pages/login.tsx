@@ -14,6 +14,7 @@ import {InformationCircleIcon} from "@heroicons/react/solid";
 import { InformationCircle } from "heroicons-react";
 import {TokenContext} from "../contexts/tokenContext";
 import {TokenContextType} from "../@types/token";
+import Router from "next/router";
 
 
 export default function Login() {
@@ -50,6 +51,7 @@ export default function Login() {
             return await loginUser(formik.values).then(response => {
                 if (response.status == 200){
                     saveToken(response.data)
+                    Router.replace('/')
                 }else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }else if (response.status == 401) {
