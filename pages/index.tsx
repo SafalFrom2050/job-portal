@@ -29,11 +29,10 @@ const Home: NextPage = () => {
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType;
 
-    const {data, isLoading, isError, isLoadingError} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null})
+    const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retry: true})
 
     const posts = data?.data as Post[]
 
-    console.log(isLoadingError)
 
     function fetchPosts() {
         return getPosts(axiosInstance)
@@ -57,7 +56,6 @@ const Home: NextPage = () => {
 
                 <div>
                     {isLoading && <Spinner />}
-                    {isError && <p>error</p>}
                     {posts?.map((post, i) => (
                         <PostListItem key={i} post={post}/>
                     ))}
