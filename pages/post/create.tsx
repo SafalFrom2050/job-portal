@@ -95,6 +95,7 @@ function Create(props: {}) {
                 if (response.status == 200){
                     // TODO: Success
                     console.log(response.data)
+                    formik.resetForm()
                 }else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }else if (response.status == 401) {
