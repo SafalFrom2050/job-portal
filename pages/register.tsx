@@ -17,7 +17,7 @@ import {TokenContextType} from "../@types/token";
 export default function Register() {
 
     const [showpass, setShowPass] = useState(false)
-    const {token, setToken} = useContext(TokenContext) as TokenContextType;
+    const {token, saveToken} = useContext(TokenContext) as TokenContextType;
 
     const validationSchema = yup.object({
         first_name: yup
@@ -50,12 +50,12 @@ export default function Register() {
         },
     })
 
-    const { isLoading: isRegisteringUser, mutate: initiateRegistration } = useMutation<any, Error>(
+    const {isLoading: isRegisteringUser, mutate: initiateRegistration} = useMutation<any, Error>(
         async () => {
             return await registerUser(formik.values).then(response => {
-                if (response.status == 201){
-                    setToken(response.data)
-                }else if (response.status == 400) {
+                if (response.status == 201) {
+                    saveToken({access: response.data.access_token, refresh: null})
+                } else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }
             })
@@ -64,7 +64,6 @@ export default function Register() {
 
     return (
         <>
-            <Header guest={true}/>
             <div>
                 <div
                     className="xl:px-20 md:px-10 sm:px-6 px-4 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center">

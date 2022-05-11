@@ -18,7 +18,7 @@ import {TokenContextType} from "../@types/token";
 
 export default function Login() {
 
-    const {token, setToken} = useContext(TokenContext) as TokenContextType;
+    const {token, saveToken} = useContext(TokenContext) as TokenContextType;
     const [showpass, setShowPass] = useState(false)
     const [errorMsg, setErrorMsg] = useState(false);
 
@@ -49,7 +49,7 @@ export default function Login() {
         async () => {
             return await loginUser(formik.values).then(response => {
                 if (response.status == 200){
-                    setToken(response.data)
+                    saveToken(response.data)
                 }else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }else if (response.status == 401) {
@@ -63,8 +63,8 @@ export default function Login() {
 
     return (
         <>
-            <Header guest={true} />
-            <div>
+
+            <form method={"POST"} onSubmit={(e) => { e.preventDefault(); formik.submitForm()}}>
                 <div
                     className="xl:px-20 md:px-10 sm:px-6 px-4 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center">
                     <div className=" md:hidden sm:mb-8 mb-6">
@@ -150,7 +150,7 @@ export default function Login() {
 
                     <TopReview/>
                 </div>
-            </div>
+            </form>
         </>
     );
 }

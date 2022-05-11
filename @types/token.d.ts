@@ -7,5 +7,5 @@ export interface Token {
 
 export interface TokenContextType {
     token: Token,
-    setToken: (token: Token) => void
+    saveToken: (token: Token) => void
 }

@@ -1,5 +1,5 @@
 import axios, {AxiosError, AxiosInstance} from "axios";
-
+import {Response} from "./http-common";
 export type Post = {
     id?: number;
     title?: string;
@@ -22,22 +22,43 @@ export type PostListResponse = {
 
 
 
-export const getPosts = async (http: AxiosInstance) => {
+export const getPosts = async (http: AxiosInstance | null) => {
+
+    if (http == null) return {data: [], status: null};
 
     try {
         const {data, status} = await http.get<PostListResponse>(
             'post/'
         );
 
-        console.log(JSON.stringify(data));
-
-        return {data, status} as unknown as Response;
+        return {data, status} as Response;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const e = error as AxiosError
             return {data:e.response?.data, status: e.response?.status};
         } else {
-            return {data: 'An unexpected error occurred', status: null} as unknown as Response;
+            return {data: [], status: null} as Response;
+        }
+    }
+}
+
+export const createPost = async (http: AxiosInstance, post: Post) => {
+
+    try {
+        const {data, status} = await http.post<PostListResponse>(
+            'post/',
+            post
+        );
+
+        console.log(JSON.stringify(data));
+
+        return {data, status} as Response;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const e = error as AxiosError
+            return {data:e.response?.data, status: e.response?.status};
+        } else {
+            return {data: 'An unexpected error occurred', status: null} as Response;
         }
     }
 }

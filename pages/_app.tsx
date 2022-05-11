@@ -3,6 +3,8 @@ import type {AppProps} from 'next/app'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import {TokenProvider} from "../contexts/tokenContext";
 import {AxiosProvider} from "../contexts/axiosContext";
+import Header from "../components/navigation/header";
+import BottomNav from "../components/common/bottomNav";
 
 const queryClient = new QueryClient()
 
@@ -12,7 +14,14 @@ function MyApp({Component, pageProps}: AppProps) {
         <TokenProvider>
             <AxiosProvider>
                 <QueryClientProvider client={queryClient}>
-                    <Component {...pageProps} />
+                    <>
+                        <Header />
+
+                        {/* Only in Mobile */}
+                        <BottomNav/>
+                        <Component {...pageProps} />
+
+                    </>
                 </QueryClientProvider>
             </AxiosProvider>
         </TokenProvider>

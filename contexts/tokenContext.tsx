@@ -1,5 +1,7 @@
 import * as React from "react"
 import {Token, TokenContextType} from "../@types/token"
+import {useEffect} from "react";
+import Router from 'next/router';
 
 
 export const TokenContext = React.createContext<TokenContextType | null>(null)
@@ -14,5 +16,24 @@ export const TokenProvider: React.FC<Props> = ({children}) => {
         refresh: null
     });
 
-    return <TokenContext.Provider value={{token, setToken}}>{children}</TokenContext.Provider>
+    function saveToken(token: Token) {
+        setToken(token)
+        if (token.access != null){
+            localStorage.setItem("accessToken", token.access)
+        }
+    }
+
+    useEffect(() => {
+        return () => {
+            const accessToken = localStorage.getItem("accessToken")
+
+            if (accessToken == null || accessToken == '') {
+                Router.push('/login')
+            }
+            setToken({access: accessToken, refresh: null})
+        };
+    }, []);
+
+
+    return <TokenContext.Provider value={{token, saveToken}}>{children}</TokenContext.Provider>
 }

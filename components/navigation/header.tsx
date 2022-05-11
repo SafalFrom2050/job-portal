@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, {useState} from "react";
 
-export default function Header(props: { guest?:boolean }) {
+export default function Header(props: { guest?: boolean }) {
 
     let arr = [false]
     const [style, setStyle] = useState(arr);
@@ -22,6 +22,42 @@ export default function Header(props: { guest?:boolean }) {
         setDropDown(true);
     }
 
+    const navItems = [
+        {
+            name: 'Help Guidance',
+            path: '/help'
+        },
+        {
+            name: 'Jobs',
+            path: '/jobs'
+        },
+        {
+            name: 'Hire Staff',
+            path: '/post/create'
+        },
+        {
+            name: 'Admission',
+            path: '/admission'
+        },
+        {
+            name: 'Top Staff',
+            path: '/staff/top'
+        },
+        {
+            name: 'Student Services',
+            path: '/student-services'
+        },
+        {
+            name: 'Training',
+            path: '/training'
+        },
+        {
+            name: 'Intern',
+            path: '/intern'
+        },
+
+    ]
+
     return (
         <div className="2xl:container 2xl:mx-auto w-full">
             <div className="bg-white rounded py-5 px-7">
@@ -29,43 +65,25 @@ export default function Header(props: { guest?:boolean }) {
                     <div className="flex items-center space-x-3 lg:pr-16 pr-6">
 
                         <Link href={'/'}>
-                            <a>
+                            <a onClick={() => selected(-1)}>
                                 <h2 className="font-normal text-2xl leading-6 text-gray-800">Job Portal</h2>
                             </a>
                         </Link>
                     </div>
-                    {/* For medium and plus sized devices */}
+                    {/* For medium and plus-sized devices */}
                     <ul className="hidden md:flex flex-auto space-x-2">
                         {!props.guest &&
                             <>
-                                <li onClick={() => selected(0)}
-                                    className={`${style[0] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'}  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>Help
-                                    Guidance
-                                </li>
-                                <li onClick={() => selected(1)}
-                                    className={`${style[1] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>Jobs
-                                </li>
-                                <li onClick={() => selected(2)}
-                                    className={`${style[2] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>Hire
-                                    Teacher
-                                </li>
-                                <li onClick={() => selected(3)}
-                                    className={`${style[3] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>Admission
-                                </li>
-                                <li onClick={() => selected(4)}
-                                    className={`${style[4] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>Top
-                                    Staffs
-                                </li>
-                                <li onClick={() => selected(5)}
-                                    className={`${style[5] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>Student
-                                    Service
-                                </li>
-                                <li onClick={() => selected(6)}
-                                    className={`${style[6] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>Training
-                                </li>
-                                <li onClick={() => selected(7)}
-                                    className={`${style[7] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>Intern
-                                </li>
+
+                                {navItems.map((navItem, i) => (
+                                    <Link key={i} href={navItem.path}>
+                                        <li
+                                            onClick={() => selected(i)}
+                                            className={`${style[i] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'}  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>
+                                            {navItem.name}
+                                        </li>
+                                    </Link>
+                                ))}
                             </>
                         }
                         <li onClick={() => selected(8)}
@@ -76,11 +94,11 @@ export default function Header(props: { guest?:boolean }) {
                     </ul>
                     {!props.guest && <>
                         <div className=" flex space-x-5 justify-center items-center pl-2">
-                            <Link href={'register'}>
+                            <Link href={'/register'}>
                                 <button>Register</button>
                             </Link>
 
-                            <Link href={'login'}>
+                            <Link href={'/login'}>
                                 <button>Login</button>
                             </Link>
                         </div>

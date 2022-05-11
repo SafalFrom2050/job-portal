@@ -71,9 +71,9 @@ function Search() {
                                     <div className={"flex flex-col gap-3"}>
                                         {/* Interaction */}
 
-                                        <Dropdown options={titleTypes} onSelect={()=>false} label="Title/Type" />
+                                        <Dropdown name={"title"} options={titleTypes} onSelect={()=>false} label="Title" cClass={"bg-white border border-gray-200"} />
 
-                                        <Dropdown options={positionTypes} onSelect={()=>false} label="Position/Post"/>
+                                        <Dropdown name={"post"} options={positionTypes} onSelect={()=>false} label="Position" cClass={"bg-white border border-gray-200"}/>
 
                                         <TextInput  name="location" placeholder="Location" type="text" iClass="bg-white mt-0 text-sm px-5 font-medium text-gray-600 placeholder-gray-400"/>
 
@@ -88,42 +88,6 @@ function Search() {
                         </div>
                     </div>
                 </div>
-
-                <style>
-                    {
-                        `
-      input[type="radio"]:checked + label {
-
-        color: rgb(67 56 202);
-      
-      }
-      @media (max-width: 492px) {
-        .sets{
-          justify-content: start;
-        }
-        /* width */
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
-    
-      `
-                    }
-                </style>
             </div>
         </>
     );
