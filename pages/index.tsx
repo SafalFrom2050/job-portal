@@ -9,6 +9,8 @@ import {getPosts, Post} from "../API/post.api";
 import {useQuery} from "react-query";
 import Spinner from "../components/common/spinner";
 import Heading from "../components/common/heading";
+import {TokenContext} from "../contexts/tokenContext";
+import {TokenContextType} from "../@types/token";
 
 const Home: NextPage = () => {
 
@@ -27,12 +29,17 @@ const Home: NextPage = () => {
         {key: "4", value: "Backend"}
     ]
 
-    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType;
+    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
+    const {token} = useContext(TokenContext) as TokenContextType
 
+    console.log(token)
+
+    console.log("From Local Storage: " + localStorage.getItem("accessToken"))
     const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retry: true})
 
     const posts = data?.data as Post[]
 
+    console.log(data)
 
     function fetchPosts() {
         return getPosts(axiosInstance)
