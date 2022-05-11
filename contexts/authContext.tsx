@@ -6,6 +6,8 @@ import {AuthContextType, User} from "../@types/user";
 import {TokenContext} from "./tokenContext";
 import {AxiosContext} from "./axiosContext";
 import {AxiosContextType} from "../@types/axiosInstance";
+import {AxiosError} from "axios";
+import {getCurrentUser} from "../API/auth.api";
 
 
 export const AuthContext = React.createContext<AuthContextType | null>(null)
@@ -22,13 +24,23 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType;
 
-    // TODO: Check authentication status and save user but redirect if unsuccessful
-    axiosInstance?.get('user')
-
     function saveUser(user: User) {
         setUser(user)
         setIsLoggedIn(true)
     }
+
+    useEffect(() => {
+        // TODO: Check authentication status and save user but redirect if unsuccessful
+
+        if (axiosInstance){
+            getCurrentUser(axiosInstance).then((v)=>{
+                saveUser(v?.data)
+                console.log(v)
+            })
+        }
+
+    }, [axiosInstance]);
+
 
     return <AuthContext.Provider value={{user, isLoggedIn}}>{children}</AuthContext.Provider>
 }

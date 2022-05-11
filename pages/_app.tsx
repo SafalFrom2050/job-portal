@@ -6,6 +6,7 @@ import {AxiosProvider} from "../contexts/axiosContext";
 import Header from "../components/navigation/header";
 import BottomNav from "../components/common/bottomNav";
 import Footer from "../components/navigation/footer";
+import {AuthProvider} from "../contexts/authContext";
 
 const queryClient = new QueryClient()
 
@@ -14,17 +15,19 @@ function MyApp({Component, pageProps}: AppProps) {
     return (
         <TokenProvider>
             <AxiosProvider>
-                <QueryClientProvider client={queryClient}>
-                    <>
-                        <Header />
+                <AuthProvider>
+                    <QueryClientProvider client={queryClient}>
+                        <>
+                            <Header/>
 
-                        {/* Only in Mobile */}
-                        <BottomNav/>
-                        <Component {...pageProps} />
+                            {/* Only in Mobile */}
+                            <BottomNav/>
+                            <Component {...pageProps} />
 
-                        <Footer />
-                    </>
-                </QueryClientProvider>
+                            <Footer/>
+                        </>
+                    </QueryClientProvider>
+                </AuthProvider>
             </AxiosProvider>
         </TokenProvider>
     )

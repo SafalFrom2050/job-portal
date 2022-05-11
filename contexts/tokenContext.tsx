@@ -23,7 +23,6 @@ export const TokenProvider: React.FC<Props> = ({children}) => {
         }
     }
 
-    console.log("accessToken context triggered!")
 
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken")
@@ -32,8 +31,8 @@ export const TokenProvider: React.FC<Props> = ({children}) => {
             Router.push('/login')
         }
         setToken({access: accessToken, refresh: null})
+        console.log(accessToken)
 
-        console.log("access token: " + accessToken)
     }, []);
 
 

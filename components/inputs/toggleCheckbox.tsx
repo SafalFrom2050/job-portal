@@ -22,7 +22,7 @@ function ToggleCheckbox(props: {
             }
 
             <div className="cursor-pointer rounded-full bg-indigo-700 relative shadow-sm">
-                <input defaultChecked={props.defaultChecked} type="checkbox" name="toggle" id="toggle2"
+                <input defaultChecked={props.defaultChecked} type="checkbox" name={props.name} id={props.id}
                        className="focus:outline-none checkbox w-6 h-6 rounded-full bg-gray-200 absolute shadow-sm appearance-none cursor-pointer border border-transparent top-0 bottom-0 m-auto"/>
                 <label htmlFor="toggle2"
                        className="toggle-label dark:bg-gray-700 block w-12 h-4 overflow-hidden rounded-full bg-gray-300 cursor-pointer"/>

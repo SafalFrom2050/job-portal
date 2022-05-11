@@ -1,5 +1,10 @@
 import Link from "next/link";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
+import {AuthContext} from "../../contexts/authContext";
+import {AuthContextType} from "../../@types/user";
+import {TokenContext} from "../../contexts/tokenContext";
+import {TokenContextType} from "../../@types/token";
+import Router from "next/router";
 
 export default function Header(props: { guest?: boolean }) {
 
@@ -7,6 +12,10 @@ export default function Header(props: { guest?: boolean }) {
     const [style, setStyle] = useState(arr);
     const [dropDown, setDropDown] = useState(true);
     const [text, setText] = useState("Home");
+    const [showAccountMenu, setShowAccountMenu] = useState(false);
+
+    const {user, isLoggedIn} = useContext(AuthContext) as AuthContextType;
+    const {saveToken} = useContext(TokenContext) as TokenContextType;
 
     const selected = (props: any) => {
         let newArr = [...arr];
@@ -58,6 +67,12 @@ export default function Header(props: { guest?: boolean }) {
 
     ]
 
+    function logout() {
+        // Local storage cannot have null values
+        saveToken({access: "", refresh: ""})
+        Router.replace('/login')
+    }
+
     return (
         <div className="2xl:container 2xl:mx-auto w-full">
             <div className="bg-white rounded py-5 px-7">
@@ -92,19 +107,53 @@ export default function Header(props: { guest?: boolean }) {
                         </li>
 
                     </ul>
-                    {!props.guest && <>
+                    {isLoggedIn && <>
                         <div className=" flex space-x-5 justify-center items-center pl-2">
-                            <Link href={'/register'}>
-                                <button>Register</button>
-                            </Link>
-
-                            <Link href={'/login'}>
-                                <button>Login</button>
-                            </Link>
+                            <button onClick={() => setShowAccountMenu(true)}>
+                                <div
+                                    className="h-8 w-8 mb-4 lg:mb-0 mr-4 rounded-full overflow-hidden shadow hover:outline hover:outline-indigo-700 hover:outline-2">
+                                    <img
+                                        src="https://images.pexels.com/photos/3760260/pexels-photo-3760260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                        className="h-full w-full"/>
+                                </div>
+                            </button>
                         </div>
+
+
                     </>
                     }
                 </nav>
+
+                {isLoggedIn && showAccountMenu && <>
+                    <div className={"fixed bottom-0 top-0 left-0 right-0 z-50"}
+                         onClick={() => setShowAccountMenu(false)}></div>
+
+                    <div
+                        className="z-[51] w-36 absolute transition duration-150 ease-in-out right-4 top-20 shadow-lg bg-white rounded">
+                        <svg className="absolute -mt-2 top-0 w-full" width="9px" height="16px" viewBox="0 0 9 16"
+                             version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                            <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
+                                <g id="Tooltips-" transform="translate(-874.000000, -1029.000000)" fill="#FFFFFF">
+                                    <g id="Group-3-Copy-16" transform="translate(850.000000, 975.000000)">
+                                        <g id="Group-2" transform="translate(50.000000, 0.000000)">
+                                            <polygon id="Triangle"
+                                                     transform="translate(4.500000, 4.500000) translate(-4.500000, -4.500000) "
+                                                     points="4.5 57.5 12.5 66.5 -3.5 66.5"/>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                        <Link href={"/account"} passHref={true}>
+                            <div className={"p-4 cursor-pointer hover:bg-gray-100"} onClick={()=>setShowAccountMenu(false)}><p
+                                className={"text-xs font-medium text-gray-800"}>Manage Account</p></div>
+                        </Link>
+
+                        <div className={"p-4 cursor-pointer hover:bg-gray-100"} onClick={logout}><p className={"text-xs font-medium text-gray-800"}>Logout</p></div>
+                    </div>
+                </>
+                }
+
                 {/* for smaller devices */}
                 <div className="block md:hidden w-full mt-5 ">
                     <div onClick={() => setDropDown(!dropDown)}

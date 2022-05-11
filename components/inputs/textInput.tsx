@@ -17,7 +17,8 @@ function TextInput(props: {
     error?: boolean,
     errorMsg?: string| false | undefined,
     required?: boolean,
-    leftLabel?: string
+    leftLabel?: string,
+    rightLabel? :string
 }) {
 
     return (
@@ -49,6 +50,14 @@ function TextInput(props: {
                     onChange={props.onChange}
                     value={props.value}
                 />
+                {props.rightLabel &&
+                    <label htmlFor={props.name}
+                           className={overrideTailwindClasses(`text-sm my-3 font-medium leading-none text-gray-800 ${props.lClass} ${props.error ? "text-red-600" : ""}`)}>
+                        {upperFirst(props.rightLabel)}
+
+                        <span className="text-red-500">{props.required ? "*" : ""}</span>
+                    </label>
+                }
                 {props.children}
             </div>
 

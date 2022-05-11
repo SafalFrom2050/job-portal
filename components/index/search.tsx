@@ -10,7 +10,7 @@ import WhiteButton from "../buttons/whiteButton";
 
 function Search() {
 
-    const [showAdvanceOptions, setShowAdvanceOptions] = useState(false);
+    const [showFilters, setShowFilters] = useState(false);
 
 
     const titleTypes = [
@@ -29,7 +29,7 @@ function Search() {
     ]
 
     function toggleAdvanceOptions() {
-        setShowAdvanceOptions((v) => !v)
+        setShowFilters((v) => !v)
     }
 
     return (
@@ -52,20 +52,20 @@ function Search() {
                                     <div className="flex justify-between w-full h-10 mt-3 gap-x-2 flex-wrap">
 
                                         <TextButton
-                                            name={"Advanced"}
+                                            name={"Filters"}
                                             onClick={toggleAdvanceOptions}
                                             class={"text-sm"}
                                             cClass={"h-full flex items-center"}
-                                            iconRight={<ArrowDown className={`w-4 h-4 transform duration-150 ${showAdvanceOptions ? "rotate-180" : ""}`} />}
+                                            iconRight={<ArrowDown className={`w-4 h-4 transform duration-150 ${showFilters ? "rotate-180" : ""}`} />}
                                         />
 
                                         <PrimaryButton
                                             name={'Search'}
                                             cClass="h-full flex items-center"
-                                            class={`${showAdvanceOptions ? "hidden" : ""} font-medium text-base mx-0`}/>
+                                            class={`${showFilters ? "hidden" : ""} font-medium text-base mx-0`}/>
                                     </div>
                                 </div>
-                                <div className={` transition-all duration-150 ${showAdvanceOptions ? "h-auto min-h-0 max-h-screen" : "max-h-0 overflow-hidden"} `}>
+                                <div className={` transition-all duration-150 ${showFilters ? "h-auto min-h-0 max-h-screen" : "max-h-0 overflow-hidden"} `}>
                                     <hr className="bg-[#F1F5F9] my-6"/>
 
                                     <div className={"flex flex-col gap-3"}>
@@ -80,7 +80,7 @@ function Search() {
                                     </div>
                                     <div
                                         className="flex flex-col items-center justify-end w-full gap-4 mt-12 lg:flex-row">
-                                        <WhiteButton name={"Add Filter"} class="font-medium text-sm" />
+                                        <WhiteButton name={"Advanced"} class="font-medium text-sm" />
                                         <PrimaryButton name={"Search"} class="font-medium text-base" />
                                     </div>
                                 </div>

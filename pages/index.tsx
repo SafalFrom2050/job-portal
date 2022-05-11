@@ -11,6 +11,7 @@ import Spinner from "../components/common/spinner";
 import Heading from "../components/common/heading";
 import {TokenContext} from "../contexts/tokenContext";
 import {TokenContextType} from "../@types/token";
+import SideAlert from "../components/alerts/sideAlert";
 
 const Home: NextPage = () => {
 
@@ -30,8 +31,6 @@ const Home: NextPage = () => {
     ]
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
-    const {token} = useContext(TokenContext) as TokenContextType
-
 
     const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retryOnMount: true})
 
@@ -40,14 +39,6 @@ const Home: NextPage = () => {
     function fetchPosts() {
         return getPosts(axiosInstance)
     }
-
-    useEffect(() => {
-        return () => {
-            console.log("From Local Storage: " + localStorage.getItem("accessToken"))
-
-        };
-    }, [axiosInstance]);
-
 
     return (
         <div>
@@ -59,6 +50,7 @@ const Home: NextPage = () => {
             <div className={"flex flex-col justify-center w-full"}>
 
 
+                <SideAlert />
                 <Search/>
             </div>
 

@@ -10,7 +10,7 @@ const Heading = (props: {heading: string, count?:number}) => {
                     <div className="mt-2 flex flex-row justify-end items-center space-x-3">
                         <p className="text-2xl font-semibold leading-normal text-gray-800">{props.heading}</p>
                         {props.count &&
-                            <p className="text-base leading-4 text-gray-600 mt-2">({props.count} jobs)</p>
+                            <p className="text-base leading-4 text-gray-600">({props.count} jobs)</p>
                         }
                     </div>
                 </div>

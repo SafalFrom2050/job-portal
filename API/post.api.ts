@@ -13,7 +13,12 @@ export type Post = {
     lodging?: boolean;
     created_date?: string;
     published_date?: string;
-    author?: number;
+    author?: {
+        first_name?: string,
+        last_name?: string,
+        id?: string,
+        avatar?: string
+    };
 }
 
 export type PostListResponse = {
