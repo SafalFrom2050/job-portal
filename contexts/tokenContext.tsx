@@ -23,6 +23,8 @@ export const TokenProvider: React.FC<Props> = ({children}) => {
         }
     }
 
+    console.log("accessToken context triggered!")
+
     useEffect(() => {
         return () => {
             const accessToken = localStorage.getItem("accessToken")
