@@ -53,7 +53,7 @@ const Home: NextPage = () => {
             </div>
 
             <main>
-                <Heading heading={"All Jobs"} count={200} />
+                <Heading heading={"All Jobs"} count={posts?.length} />
 
                 <div>
                     {isLoading && <Spinner />}
