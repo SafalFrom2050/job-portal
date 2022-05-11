@@ -34,7 +34,7 @@ const Home: NextPage = () => {
 
     console.log(token)
 
-    const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retry: true})
+    const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retryOnMount: true})
 
     const posts = data?.data as Post[]
 
@@ -49,7 +49,7 @@ const Home: NextPage = () => {
             console.log("From Local Storage: " + localStorage.getItem("accessToken"))
 
         };
-    }, []);
+    }, [axiosInstance]);
 
 
     return (
