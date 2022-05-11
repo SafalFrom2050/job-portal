@@ -2,7 +2,7 @@ import type {NextPage} from 'next'
 import Head from 'next/head'
 import Search from "../components/index/search";
 import PostListItem from "../components/post/PostListItem";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {AxiosContext} from "../contexts/axiosContext";
 import {AxiosContextType} from "../@types/axiosInstance";
 import {getPosts, Post} from "../API/post.api";
@@ -34,7 +34,6 @@ const Home: NextPage = () => {
 
     console.log(token)
 
-    console.log("From Local Storage: " + localStorage.getItem("accessToken"))
     const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retry: true})
 
     const posts = data?.data as Post[]
@@ -44,6 +43,14 @@ const Home: NextPage = () => {
     function fetchPosts() {
         return getPosts(axiosInstance)
     }
+
+    useEffect(() => {
+        return () => {
+            console.log("From Local Storage: " + localStorage.getItem("accessToken"))
+
+        };
+    }, []);
+
 
     return (
         <div>
