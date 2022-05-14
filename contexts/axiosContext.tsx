@@ -52,6 +52,8 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
                     setAlert({type: 2, title: "Authentication required!"})
 
                     await Router.replace('/login')
+                }else if (error.response.status == 500) {
+                    setAlert({type: 2, title: "The server has encountered an issue and could not process your request.", duration: 5000})
                 }
             }
         )
