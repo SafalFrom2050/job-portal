@@ -24,9 +24,7 @@ const SideAlert = (props: { alert: Alert }) => {
     }, [props.alert.duration]);
 
     useEffect(() => {
-        return () => {
-            setFlag(true)
-        };
+        setFlag(true)
     }, []);
 
 
