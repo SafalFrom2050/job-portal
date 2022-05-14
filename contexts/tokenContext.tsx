@@ -4,6 +4,7 @@ import {useContext, useEffect} from "react";
 import Router from 'next/router';
 import {AlertContext} from "./alertContext";
 import {AlertContextType} from "../@types/alert";
+import {ALERT_TYPE_WARNING} from "../constants";
 
 
 export const TokenContext = React.createContext<TokenContextType | null>(null)
@@ -33,7 +34,7 @@ export const TokenProvider: React.FC<Props> = ({children}) => {
 
         if (accessToken == null || accessToken == '') {
             Router.push('/login')
-            setAlert({type: 2, title: "Please login to continue"})
+            setAlert({type: ALERT_TYPE_WARNING, title: "Please login to continue"})
         }
         setToken({access: accessToken, refresh: null})
         console.log(accessToken)
