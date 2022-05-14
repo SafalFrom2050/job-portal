@@ -3,7 +3,7 @@ import {APP_NAME} from "../../others/config";
 
 const Footer = () => {
     return (
-        <div className="mx-auto container py-16 xl:px-20 lg:px-12 sm:px-6 px-4 mt-12 bg-white">
+        <div className="2xl:mx-auto 2xl:container py-16 xl:px-20 lg:px-12 sm:px-6 px-4 mt-12 bg-white">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 gap-4">
                 <div className="flex flex-col flex-shrink-0">
                     <div>

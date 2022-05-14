@@ -33,7 +33,7 @@ export default function Header(props: { guest?: boolean }) {
 
     const navItems = [
         {
-            name: 'Help Guidance',
+            name: 'Help',
             path: '/help'
         },
         {
@@ -74,7 +74,7 @@ export default function Header(props: { guest?: boolean }) {
     }
 
     return (
-        <div className="2xl:container 2xl:mx-auto w-full">
+        <div className="relative 2xl:container 2xl:mx-auto w-full">
             <div className="bg-white rounded py-5 px-7">
                 <nav className="flex justify-between">
                     <div className="flex items-center space-x-3 lg:pr-16 pr-6">
@@ -126,7 +126,7 @@ export default function Header(props: { guest?: boolean }) {
 
                 {isLoggedIn && showAccountMenu && <>
                     <div className={"fixed bottom-0 top-0 left-0 right-0 z-50"}
-                         onClick={() => setShowAccountMenu(false)}></div>
+                         onClick={() => setShowAccountMenu(false)} />
 
                     <div
                         className="z-[51] w-36 absolute transition duration-150 ease-in-out right-4 top-20 shadow-lg bg-white rounded">
@@ -145,11 +145,13 @@ export default function Header(props: { guest?: boolean }) {
                             </g>
                         </svg>
                         <Link href={"/account"} passHref={true}>
-                            <div className={"p-4 cursor-pointer hover:bg-gray-100"} onClick={()=>setShowAccountMenu(false)}><p
+                            <div className={"p-4 cursor-pointer hover:bg-gray-100"}
+                                 onClick={() => setShowAccountMenu(false)}><p
                                 className={"text-xs font-medium text-gray-800"}>Manage Account</p></div>
                         </Link>
 
-                        <div className={"p-4 cursor-pointer hover:bg-gray-100"} onClick={logout}><p className={"text-xs font-medium text-gray-800"}>Logout</p></div>
+                        <div className={"p-4 cursor-pointer hover:bg-gray-100"} onClick={logout}><p
+                            className={"text-xs font-medium text-gray-800"}>Logout</p></div>
                     </div>
                 </>
                 }
@@ -171,34 +173,16 @@ export default function Header(props: { guest?: boolean }) {
                     <div className=" relative  z-50">
                         <ul id="list"
                             className={`${dropDown ? 'hidden' : 'block'} font-normal text-base leading-4 absolute top-2  w-full rounded shadow-md bg-white`}>
-                            <li onClick={() => setSelectedText("Arts")}
-                                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">Help
-                                Guidance
-                            </li>
-                            <li onClick={() => setSelectedText("Jobs")}
-                                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">Jobs
-                            </li>
-                            <li onClick={() => setSelectedText("Hire Teacher")}
-                                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">Hire
-                                Teacher
-                            </li>
-                            <li onClick={() => setSelectedText("Admission")}
-                                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">Admission
-                            </li>
-                            <li onClick={() => setSelectedText("Student Service")}
-                                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">Student
-                                Service
-                            </li>
-                            <li onClick={() => setSelectedText("Training")}
-                                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">Training
-                            </li>
-                            <li onClick={() => setSelectedText("Intern")}
-                                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">Intern
-                            </li>
-                            <li onClick={() => setSelectedText("About Us")}
-                                className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">About
-                                Us
-                            </li>
+
+                            {navItems.map((navItem, i) => (
+                                <Link key={i} href={navItem.path}>
+                                    <li onClick={() => setSelectedText(navItem.name)}
+                                        className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">
+                                        {navItem.name}
+                                    </li>
+                                </Link>
+                            ))}
+
                         </ul>
                     </div>
                 </div>

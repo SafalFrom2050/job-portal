@@ -18,6 +18,7 @@ export interface User {
   subject?: string,
   is_superuser?: boolean,
   is_staff?: boolean,
+  is_available?: boolean
 }
 
 export interface AuthContextType {
