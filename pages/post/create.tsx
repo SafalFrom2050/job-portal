@@ -12,7 +12,7 @@ import {useMutation} from "react-query";
 import {loginUser} from "../../API/user.api";
 import {createPost, Post} from "../../API/post.api";
 import {AxiosContext} from "../../contexts/axiosContext";
-import {AxiosContextType} from "../../@types/axiosInstance";
+import {AxiosContextType} from "../../@types/axiosContextType";
 import {now} from "lodash";
 import moment from "moment";
 import SuccessModal from "../../components/modals/successModal";
@@ -76,7 +76,6 @@ function Create(props: {}) {
             salary_high: '100000',
             description: '',
             lodging: false,
-            author: {},
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
@@ -86,9 +85,11 @@ function Create(props: {}) {
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType;
     const { isLoading: isCreatingPost, mutate: initiateCreatePost } = useMutation<any, Error>(
         async () => {
+            console.log("axiosInstance: ")
+            console.log(axiosInstance)
             if (axiosInstance == null) return false
 
-            const post: Post = {...formik.values ,time_high: 1, time_low: 2, published_date: new Date().toISOString()}
+            const post: Post = {...formik.values ,time_high: 1, time_low: 2}
 
             return await createPost(axiosInstance, post).then(response => {
 
@@ -105,6 +106,14 @@ function Create(props: {}) {
             })
         }
     );
+
+    useEffect(() => {
+        return () => {
+            console.log(formik.errors)
+        };
+    }, [formik.errors]);
+
+
 
     function newForm() {
         formik.resetForm()

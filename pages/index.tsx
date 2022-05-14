@@ -2,16 +2,16 @@ import type {NextPage} from 'next'
 import Head from 'next/head'
 import Search from "../components/index/search";
 import PostListItem from "../components/post/PostListItem";
-import {useContext, useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import {AxiosContext} from "../contexts/axiosContext";
-import {AxiosContextType} from "../@types/axiosInstance";
+import {AxiosContextType} from "../@types/axiosContextType";
 import {getPosts, Post} from "../API/post.api";
 import {useQuery} from "react-query";
 import Spinner from "../components/common/spinner";
 import Heading from "../components/common/heading";
-import {TokenContext} from "../contexts/tokenContext";
-import {TokenContextType} from "../@types/token";
 import SideAlert from "../components/alerts/sideAlert";
+import {GENERIC_ALERT} from "../constants";
+
 
 const Home: NextPage = () => {
 
@@ -48,14 +48,11 @@ const Home: NextPage = () => {
             </Head>
 
             <div className={"flex flex-col justify-center w-full"}>
-
-
-                <SideAlert />
                 <Search/>
             </div>
 
             <main>
-                <Heading heading={"All Jobs"} count={posts?.length} />
+                <Heading heading={"All Jobs"} count={posts ? posts.length : 0} sort={true} />
 
                 <div>
                     {isLoading && <Spinner />}

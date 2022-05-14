@@ -13,12 +13,15 @@ import {registerUser} from "../API/user.api";
 import {TokenContext} from "../contexts/tokenContext";
 import {TokenContextType} from "../@types/token";
 import Router from "next/router";
+import {AlertContext} from "../contexts/alertContext";
+import {AlertContextType} from "../@types/alert";
 
 
 export default function Register() {
 
     const [showpass, setShowPass] = useState(false)
     const {token, saveToken} = useContext(TokenContext) as TokenContextType;
+    const {setAlert} = useContext(AlertContext) as AlertContextType;
 
     const validationSchema = yup.object({
         first_name: yup
@@ -57,12 +60,24 @@ export default function Register() {
                 if (response.status == 201) {
                     saveToken({access: response.data.access_token, refresh: null})
                     Router.replace('/')
+                    setAlert({
+                        type: 0,
+                        title: "Your account has been created",
+                        message: "Please verify your email and phone to access all the features.",
+                        duration: 120000,
+                        action: pushToVerification,
+                        actionButtonText: "Verify"
+                    })
                 } else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }
             })
         }
     );
+
+    function pushToVerification() {
+        Router.push('/verify')
+    }
 
     return (
         <>

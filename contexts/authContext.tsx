@@ -5,7 +5,7 @@ import Router from 'next/router';
 import {AuthContextType, User} from "../@types/user";
 import {TokenContext} from "./tokenContext";
 import {AxiosContext} from "./axiosContext";
-import {AxiosContextType} from "../@types/axiosInstance";
+import {AxiosContextType} from "../@types/axiosContextType";
 import {AxiosError} from "axios";
 import {getCurrentUser} from "../API/auth.api";
 
@@ -35,7 +35,6 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
         if (axiosInstance){
             getCurrentUser(axiosInstance).then((v)=>{
                 saveUser(v?.data)
-                console.log(v)
             })
         }
 

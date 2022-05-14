@@ -7,29 +7,34 @@ import Header from "../components/navigation/header";
 import BottomNav from "../components/common/bottomNav";
 import Footer from "../components/navigation/footer";
 import {AuthProvider} from "../contexts/authContext";
+import {AlertProvider} from "../contexts/alertContext";
 
 const queryClient = new QueryClient()
 
 
 function MyApp({Component, pageProps}: AppProps) {
     return (
-        <TokenProvider>
-            <AxiosProvider>
-                <AuthProvider>
-                    <QueryClientProvider client={queryClient}>
-                        <>
-                            <Header/>
+        <AlertProvider>
+            <TokenProvider>
+                <AxiosProvider>
+                    <AuthProvider>
+                        <QueryClientProvider client={queryClient}>
 
-                            {/* Only in Mobile */}
-                            <BottomNav/>
-                            <Component {...pageProps} />
+                            <>
+                                <Header/>
 
-                            <Footer/>
-                        </>
-                    </QueryClientProvider>
-                </AuthProvider>
-            </AxiosProvider>
-        </TokenProvider>
+                                {/* Only in Mobile */}
+                                <BottomNav/>
+                                <Component {...pageProps} />
+
+                                <Footer/>
+                            </>
+                        </QueryClientProvider>
+                    </AuthProvider>
+                </AxiosProvider>
+            </TokenProvider>
+        </AlertProvider>
+
     )
 }
 

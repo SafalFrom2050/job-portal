@@ -15,11 +15,14 @@ import { InformationCircle } from "heroicons-react";
 import {TokenContext} from "../contexts/tokenContext";
 import {TokenContextType} from "../@types/token";
 import Router from "next/router";
+import {AlertContext} from "../contexts/alertContext";
+import {AlertContextType} from "../@types/alert";
 
 
 export default function Login() {
 
     const {token, saveToken} = useContext(TokenContext) as TokenContextType;
+    const {setAlert} = useContext(AlertContext) as AlertContextType;
     const [showpass, setShowPass] = useState(false)
     const [errorMsg, setErrorMsg] = useState(false);
 
@@ -52,6 +55,7 @@ export default function Login() {
                 if (response.status == 200){
                     saveToken(response.data)
                     Router.replace('/')
+                    setAlert({type: 0, title: "You are logged in", duration: 3000})
                 }else if (response.status == 400) {
                     formik.setErrors(response.data)
                 }else if (response.status == 401) {
