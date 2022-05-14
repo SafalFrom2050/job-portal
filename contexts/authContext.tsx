@@ -1,12 +1,10 @@
 import * as React from "react"
-import {Token, TokenContextType} from "../@types/token"
-import {useContext, useEffect, useState} from "react";
-import Router from 'next/router';
+import {useContext, useEffect, useState} from "react"
+import {TokenContextType} from "../@types/token"
 import {AuthContextType, User} from "../@types/user";
 import {TokenContext} from "./tokenContext";
 import {AxiosContext} from "./axiosContext";
 import {AxiosContextType} from "../@types/axiosContextType";
-import {AxiosError} from "axios";
 import {getCurrentUser} from "../API/auth.api";
 
 

@@ -8,6 +8,7 @@ import {BASE_URL} from "../others/config";
 import Router from "next/router";
 import {AlertContext} from "./alertContext";
 import {AlertContextType} from "../@types/alert";
+import {ALERT_TYPE_WARNING} from "../constants";
 
 
 export const AxiosContext = React.createContext<AxiosContextType | null>(null)
@@ -49,7 +50,7 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
             (response) => response,
             async (error) => {
                 if (error.response.status == 401) {
-                    setAlert({type: 2, title: "Authentication required!"})
+                    setAlert({type: ALERT_TYPE_WARNING, title: "Authentication required!"})
 
                     await Router.replace('/login')
                 }else if (error.response.status == 500) {
