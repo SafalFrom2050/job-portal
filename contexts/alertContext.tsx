@@ -18,7 +18,10 @@ export const AlertProvider: React.FC<Props> = ({children}) => {
     const [hiding, setHiding] = useState(false);
 
     useEffect(() => {
+        console.log("Alert context: ")
         if (alert == undefined) return
+        console.log("alert: ")
+        console.log(alert)
 
         const timeout = setTimeout(() => {
             setHiding(true)
