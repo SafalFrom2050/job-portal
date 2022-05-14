@@ -1,6 +1,7 @@
 import React, {Dispatch, useEffect, useState} from "react";
-import {ALERT_TYPES} from "../../constants";
+import {ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS, ALERT_TYPE_WARNING, ALERT_TYPES} from "../../constants";
 import {Alert} from "../../@types/alert";
+import {CheckCircleOutline, EmojiSadOutline, InformationCircleOutline} from "heroicons-react";
 
 
 const SideAlert = (props: { alert: Alert }) => {
@@ -39,11 +40,21 @@ const SideAlert = (props: { alert: Alert }) => {
                         <div className="flex items-center gap-x-2">
                             <div
                                 className={`mr-2 ${alertType?.type == 0 ? "text-lime-500" : alertType?.type == 1 ? "text-yellow-400" : alertType?.type == 2 ? "text-red-500" : "text-white"}`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={20} height={20}
-                                     fill="currentColor">
-                                    <path className="heroicon-ui"
-                                          d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 9a1 1 0 0 1-1-1V8a1 1 0 0 1 2 0v4a1 1 0 0 1-1 1zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                                </svg>
+
+                                {alertType?.type == ALERT_TYPE_SUCCESS && <>
+                                    <CheckCircleOutline className={"w-6 h-6"} />
+                                </>
+                                }
+
+                                {alertType?.type == ALERT_TYPE_WARNING && <>
+                                    <InformationCircleOutline className={"w-6 h-6"} />
+                                </>
+                                }
+                                {alertType?.type == ALERT_TYPE_DANGER && <>
+                                    <EmojiSadOutline className={"w-6 h-6"} />
+                                </>
+                                }
+
                             </div>
                             <p className="mr-2  text-base font-bold text-gray-800 dark:text-gray-100">{props.alert.title}</p>
                         </div>
