@@ -11,11 +11,11 @@ const Index = () => {
             </div>
 
             <div className="lg:mt-14 sm:mt-10 mt-12">
-                <img className="lg:block hidden w-full" src="https://i.ibb.co/GvwJnvn/Group-736.png"
+                <img className="lg:block hidden w-full h-[500px] object-cover" src="https://images.pexels.com/photos/3184302/pexels-photo-3184302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                      alt="Group of people Chilling"/>
-                <img className="lg:hidden sm:block hidden w-full" src="https://i.ibb.co/5sZTmHq/Rectangle-116.png"
+                <img className="lg:hidden sm:block hidden h-[400px] w-full object-cover" src="https://images.pexels.com/photos/3184302/pexels-photo-3184302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                      alt="Group of people Chilling"/>
-                <img className="sm:hidden block w-full" src="https://i.ibb.co/zSxXJGQ/Rectangle-122.png"
+                <img className="sm:hidden block w-full h-[300px] object-cover" src="https://images.pexels.com/photos/3184302/pexels-photo-3184302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                      alt="Group of people Chilling"/>
             </div>
 
