@@ -8,28 +8,44 @@ import WhiteButton from "../../components/buttons/whiteButton";
 import PrimaryButton from "../../components/buttons/primaryButton";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {useMutation} from "react-query";
+import {useMutation, useQuery} from "react-query";
 import {loginUser} from "../../API/user.api";
-import {createPost, Post} from "../../API/post.api";
+import {createPost, getPostFields, Post, PostField, PostRequest} from "../../API/post.api";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
 import {now} from "lodash";
 import moment from "moment";
 import SuccessModal from "../../components/modals/successModal";
 import Router from "next/router";
+import {AuthContext} from "../../contexts/authContext";
+import {AuthContextType} from "../../@types/user";
 
 function Create(props: {}) {
 
     const [errorMsg, setErrorMsg] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-    const titleTypes = [
-        {key: "School/College", value: "School/College"},
-        {key: "Security", value: "Security"},
-        {key: "IT", value: "IT"},
-        {key: "Banking", value: "Banking"},
-        {key: "Receptionist", value: "Receptionist"},
-    ]
+    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
+    const {user} = useContext(AuthContext) as AuthContextType;
+
+    const {data} = useQuery("postFields", fetchPostFields, {
+        enabled: axiosInstance != null,
+        retryOnMount: true
+    })
+
+    const postFields = data?.data as PostField[]
+
+
+    function fetchPostFields() {
+        return getPostFields(axiosInstance)
+    }
+
+    const getFieldTypes = () => {
+        if (!postFields) return []
+        return postFields.map((field) => ({key: field.id || "", value: field.name || ""}))
+    }
+
+    const fieldTypes = getFieldTypes()
 
     const positionTypes = [
         {key: "Teacher", value: "Teacher"},
@@ -42,7 +58,10 @@ function Create(props: {}) {
         title: yup
             .string()
             .required('Job Title is required'),
-        post: yup
+        field: yup
+            .string()
+            .required('Field is required'),
+        position: yup
             .string()
             .required('Position is required'),
         location: yup
@@ -67,8 +86,9 @@ function Create(props: {}) {
 
     const formik = useFormik({
         initialValues: {
-            title: '',
-            post: '',
+            title:'',
+            field: '',
+            position: '',
             location: '',
             time_low: '',
             time_high: '',
@@ -79,17 +99,17 @@ function Create(props: {}) {
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
+            console.log("submitting...")
             initiateCreatePost()
         },
     })
-    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType;
     const { isLoading: isCreatingPost, mutate: initiateCreatePost } = useMutation<any, Error>(
         async () => {
             console.log("axiosInstance: ")
             console.log(axiosInstance)
             if (axiosInstance == null) return false
 
-            const post: Post = {...formik.values ,time_high: 1, time_low: 2}
+            const post: PostRequest = {...formik.values ,time_high: 1, time_low: 2}
 
             return await createPost(axiosInstance, post).then(response => {
 
@@ -146,25 +166,39 @@ function Create(props: {}) {
                 <div className="max-w-[700px] mx-auto bg-white rounded p-6 mt-3">
                     <form method={"POST"} onSubmit={(e) => { e.preventDefault(); formik.submitForm()}}>
                         <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-4">
-                            <input name={"author"} hidden aria-hidden/>
-                            <Dropdown name={"title"}
-                                      options={titleTypes}
+                            <input name={"author"} value={`${user.first_name} ${user.last_name}`}  hidden aria-hidden/>
+                            <div className={"col-span-2"}>
+                                <TextInput name="title"
+                                           placeholder="We are looking for..."
+                                           type="text"
 
-                                      onSelect={(v)=> !formik.setFieldValue("title", v, true)}
-                                      error={formik.touched.title && Boolean(formik.errors.title)}
-                                      errorMsg={formik.touched.title && formik.errors.title}
+                                           value={formik.values.title}
+                                           onChange={formik.handleChange}
+                                           error={formik.touched.title && Boolean(formik.errors.title)}
+                                           errorMsg={formik.touched.title && formik.errors.title}
 
-                                      label="Job Title"
+                                           label={"Job Title"}
+                                           required={true}
+                                />
+                            </div>
+                            <Dropdown name={"field"}
+                                      options={fieldTypes}
+
+                                      onSelect={(v)=> !formik.setFieldValue("field", v, true)}
+                                      error={formik.touched.field && Boolean(formik.errors.field)}
+                                      errorMsg={formik.touched.field && formik.errors.field}
+
+                                      label="Field"
                                       separateLabel={true}
                                       required={true}/>
 
-                            <Dropdown name={"post"}
+                            <Dropdown name={"position"}
                                       options={positionTypes}
 
 
-                                      onSelect={(v)=> !formik.setFieldValue("post", v, true)}
-                                      error={formik.touched.post && Boolean(formik.errors.post)}
-                                      errorMsg={formik.touched.post && formik.errors.post}
+                                      onSelect={(v)=> !formik.setFieldValue("position", v, true)}
+                                      error={formik.touched.position && Boolean(formik.errors.position)}
+                                      errorMsg={formik.touched.position && formik.errors.position}
 
                                       label="Position"
                                       separateLabel={true}

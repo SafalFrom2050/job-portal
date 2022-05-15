@@ -22,7 +22,7 @@ function PostListItem(props: {
 
                     <div className="pt-6 p-4">
                         <div className="flex items-center">
-                            <h2 className="text-lg font-semibold">{post.title}</h2>
+                            <h2 className="text-lg font-semibold">{post.position}</h2>
                             {moment(post.published_date).isValid() &&
                                 <p className="text-xs text-gray-600 pl-5">Posted {moment(post.published_date).fromNow()}</p>
                             }
@@ -30,7 +30,7 @@ function PostListItem(props: {
                         <p className="text-xs text-gray-600 mt-3">{post.description}</p>
                         <div className="flex mt-4">
                             <div>
-                                <p className="text-xs text-gray-600 px-2 bg-gray-200 py-1">Top 10</p>
+                                <p className="text-xs text-gray-600 px-2 bg-gray-200 py-1">{post.field?.name}</p>
                             </div>
                             <div className="pl-2">
                                 <p className="text-xs text-gray-600 px-2 bg-gray-200 py-1">{`${post.author?.first_name} ${post.author?.last_name}`}</p>

@@ -9,8 +9,6 @@ import {getPosts, Post} from "../API/post.api";
 import {useQuery} from "react-query";
 import Spinner from "../components/common/spinner";
 import Heading from "../components/common/heading";
-import SideAlert from "../components/alerts/sideAlert";
-import {GENERIC_ALERT} from "../constants";
 
 
 const Home: NextPage = () => {
@@ -35,6 +33,7 @@ const Home: NextPage = () => {
     const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstance != null, retryOnMount: true})
 
     const posts = data?.data as Post[]
+
 
     function fetchPosts() {
         return getPosts(axiosInstance)
