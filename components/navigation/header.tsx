@@ -101,10 +101,12 @@ export default function Header(props: { guest?: boolean }) {
                                 ))}
                             </>
                         }
-                        <li onClick={() => selected(8)}
-                            className={`${style[8] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>About
-                            Us
-                        </li>
+                        <Link href={"/about"}>
+                            <li onClick={() => selected(8)}
+                                className={`${style[8] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>
+                                About Us
+                            </li>
+                        </Link>
 
                     </ul>
                     {isLoggedIn && <>
@@ -126,7 +128,7 @@ export default function Header(props: { guest?: boolean }) {
 
                 {isLoggedIn && showAccountMenu && <>
                     <div className={"fixed bottom-0 top-0 left-0 right-0 z-50"}
-                         onClick={() => setShowAccountMenu(false)} />
+                         onClick={() => setShowAccountMenu(false)}/>
 
                     <div
                         className="z-[51] w-36 absolute transition duration-150 ease-in-out right-4 top-20 shadow-lg bg-white rounded">

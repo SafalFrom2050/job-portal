@@ -8,10 +8,10 @@ const Heading = (props: { heading: string, count?: number, sort?: boolean }) => 
             className={overrideTailwindClasses(`mx-auto pb-4 pt-8 px-4 2xl:mx-auto flex justify-center items-center max-w-[800px]`)}>
             <div className="flex justify-between items-center w-full">
                 <div className="flex flex-col justify-start items-start">
-                    <div className="mt-2 flex flex-row justify-end items-center space-x-3">
+                    <div className="mt-2 flex flex-row items-center gap-x-3">
                         <p className="text-2xl font-semibold leading-normal text-gray-800">{props.heading}</p>
-                        {props.count && props.count != 0 &&
-                            <p className="text-base leading-4 text-gray-600">({props.count} jobs)</p>
+                        {props.count || props.count == 0 &&
+                            <p className=" text-base leading-4 text-gray-600">({props.count} jobs)</p>
                         }
                     </div>
                 </div>
