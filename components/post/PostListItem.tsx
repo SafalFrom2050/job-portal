@@ -1,6 +1,7 @@
 import React from 'react';
 import {Post} from "../../API/post.api";
 import moment from "moment";
+import Router from "next/router";
 
 function PostListItem(props: {
     post: Post
@@ -11,7 +12,8 @@ function PostListItem(props: {
     return (
         <div className={"px-4"}>
             <div
-                className="flex flex-col md:flex-row md:max-w-[800px] w-full md:mx-auto lg:mb-0 mt-3 mb-24 rounded bg-white overflow-hidden">
+                onClick={()=>{Router.push('profile/1')}}
+                className="cursor-pointer flex flex-col md:flex-row md:max-w-[800px] w-full md:mx-auto lg:mb-0 mt-3 mb-24 rounded bg-white overflow-hidden">
                 <div>
                     <img src="https://cdn.tuk.dev/assets/templates/classified/Bitmap (1).png"
                          className="w-full h-44 md:w-80 md:h-full object-cover"/>
