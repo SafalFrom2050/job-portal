@@ -1,22 +1,19 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import TextInput from "../components/inputs/textInput";
 import PrimaryButton from "../components/buttons/primaryButton";
 import {TopReview} from "../components/login/topReview";
-import {IconGoogle} from "../components/icons/iconGoogle";
 import {IconShowHidePassword} from "../components/icons/iconShowHidePassword";
 import * as yup from 'yup';
-import { useFormik } from 'formik';
-import Header from "../components/navigation/header";
+import {useFormik} from 'formik';
 import Link from "next/link";
 import {useMutation} from "react-query";
-import {loginUser, registerUser} from "../API/user.api";
-import {InformationCircleIcon} from "@heroicons/react/solid";
-import { InformationCircle } from "heroicons-react";
+import {loginUser} from "../API/user.api";
 import {TokenContext} from "../contexts/tokenContext";
 import {TokenContextType} from "../@types/token";
 import Router from "next/router";
 import {AlertContext} from "../contexts/alertContext";
 import {AlertContextType} from "../@types/alert";
+import {FormErrorMessage} from "../components/common/formErrorMessage";
 
 
 export default function Login() {
@@ -100,10 +97,7 @@ export default function Login() {
 
                         <div className="mt-8">
                             {errorMsg &&
-                                <div className="flex items-center gap-x-2 p-2 mb-2 text-xs text-red-600 border border-red-600 bg-red-50">
-                                    <InformationCircle className="w-4 h-4" />
-                                    {errorMsg}
-                                </div>
+                                <FormErrorMessage errorMsg={errorMsg}/>
                             }
                             <TextInput type={'email'}
                                        name={'email'}

@@ -28,8 +28,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
     }
 
     useEffect(() => {
-        // TODO: Check authentication status and save user but redirect if unsuccessful
-
+        // Checks authentication status and saves user but redirects if unsuccessful
         if (axiosInstance){
             getCurrentUser(axiosInstance).then((v)=>{
                 saveUser(v?.data)
@@ -38,6 +37,14 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
 
     }, [axiosInstance]);
 
+    function syncUser() {
+        if (axiosInstance){
+            getCurrentUser(axiosInstance).then((v)=>{
+                saveUser(v?.data)
+            })
+        }
+    }
 
-    return <AuthContext.Provider value={{user, isLoggedIn}}>{children}</AuthContext.Provider>
+
+    return <AuthContext.Provider value={{user, isLoggedIn, syncUser}}>{children}</AuthContext.Provider>
 }

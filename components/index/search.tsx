@@ -59,7 +59,9 @@ function Search() {
 
     return (
         <>
-            <form onSubmit={(e) => { e.preventDefault();}}>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+            }}>
 
                 <div className="relative">
                     <div className="py-4 px-7">
@@ -67,7 +69,8 @@ function Search() {
                             <div className={`px-8 py-6 mt-12 transition-all`} id="interaction">
                                 <div className="flex flex-col w-full gap-y-2">
                                     <div className="relative w-full">
-                                        <input placeholder="Search Job"
+                                        <input name={"title"}
+                                               placeholder="Search Job"
                                                className="p-4 py-2 outline-none focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"/>
 
                                         <SearchIcon
@@ -112,7 +115,7 @@ function Search() {
                                     <div
                                         className="flex flex-col items-center justify-end w-full gap-4 mt-12 lg:flex-row">
                                         <WhiteButton name={"Advanced"} class="font-medium text-sm"/>
-                                        <PrimaryButton name={"Search"} class="font-medium text-base"/>
+                                        <PrimaryButton isSubmitType={true} name={"Search"} class="font-medium text-base"/>
                                     </div>
                                 </div>
                             </div>

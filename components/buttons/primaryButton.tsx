@@ -5,6 +5,7 @@ function PrimaryButton(props: { name: string, cClass?: string, class?: string, o
     return (
         <div className={props.cClass}>
         <button
+            autoFocus={true}
             type={props.isSubmitType ? "submit" : "button"}
             disabled={props.disabled}
             onClick={props.onClick}

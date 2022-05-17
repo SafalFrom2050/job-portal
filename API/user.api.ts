@@ -23,6 +23,11 @@ export type RegisterUserResponse = {
     password: string
 }
 
+export type UpdateUserProfilePictureRequest = {
+    id?: number
+    avatar?: string
+}
+
 export const registerUser = async (credential: RegistrationCredential) => {
 
     try {
@@ -65,13 +70,16 @@ export const loginUser = async (credentials: LoginCredential) => {
     }
 }
 
-export const updateUser = async (axiosInstance: AxiosInstance ,user: User) => {
+export const updateUser = async (axiosInstance: AxiosInstance, user: User | UpdateUserProfilePictureRequest) => {
 
     try {
-        const {data, status} = await axiosInstance.patch<RegisterUserResponse>(
+        const response = await axiosInstance.patch(
             `user/${user.id}/`,
             user
         );
+
+        console.log(response)
+        const {data, status} = response
 
         console.log(JSON.stringify(data));
 

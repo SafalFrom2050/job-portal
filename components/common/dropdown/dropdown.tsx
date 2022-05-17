@@ -42,11 +42,11 @@ const Dropdown = (props: {
     
 
     return (
-        <div className="relative ">
+        <div className="relative flex flex-col">
             {props.label && separateLabel &&
-                <div className="mb-2">
+                <div className="flex flex-col">
                     <label htmlFor={props.label}
-                           className={overrideTailwindClasses(`text-sm font-medium leading-none text-gray-800 ${props.lClass} ${props.error ? "text-red-600" : ""}`)}>
+                           className={overrideTailwindClasses(`py-3 text-sm font-medium leading-none text-gray-800 ${props.lClass} ${props.error ? "text-red-600" : ""}`)}>
                         {upperFirst(props.label)}
                         <span className="text-red-500">{props.required ? "*" : ""}</span>
                     </label>

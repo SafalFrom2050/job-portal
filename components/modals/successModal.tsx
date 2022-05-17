@@ -17,7 +17,7 @@ const SuccessModal = (props: {
     const {show, setShow} = props
 
     return (
-        <div>
+        <form>
             {show && <div
                 className="py-12 flex items-center bg-gray-50 bg-opacity-50 transition duration-150 ease-in-out z-30 fixed top-0 right-0 bottom-0 left-0"
                 id="modal">
@@ -42,7 +42,8 @@ const SuccessModal = (props: {
                                          class={"text-sm font-medium"}
                                          onClick={props.buttonLeftOnClick}/>
 
-                            <PrimaryButton name={props.buttonRightText || ""}
+                            <PrimaryButton isSubmitType={true}
+                                name={props.buttonRightText || ""}
                                            class={"text-sm font-medium"}
                                            onClick={props.buttonRightOnClick}/>
 
@@ -62,7 +63,7 @@ const SuccessModal = (props: {
                     </div>
                 </div>
             </div>}
-        </div>
+        </form>
     );
 };
 export default SuccessModal;
