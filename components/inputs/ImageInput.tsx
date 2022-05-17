@@ -33,7 +33,7 @@ function ImageInput(props: {
     };
 
     return (
-        <div className={overrideTailwindClasses(`w-full h-${size} bg-red flex flex-col items-center relative ${pClassName}`)}>
+        <div className={overrideTailwindClasses(`w-full h-36 h-${size} bg-red flex flex-col items-center relative ${pClassName}`)}>
 
             <label htmlFor={name} className={overrideTailwindClasses(`w-${size} h-${size} relative`)}>
                 <span aria-hidden="true">
