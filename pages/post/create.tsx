@@ -19,6 +19,7 @@ import SuccessModal from "../../components/modals/successModal";
 import Router from "next/router";
 import {AuthContext} from "../../contexts/authContext";
 import {AuthContextType} from "../../@types/user";
+import Heading from "../../components/common/heading";
 
 function Create(props: {}) {
 
@@ -105,8 +106,7 @@ function Create(props: {}) {
     })
     const { isLoading: isCreatingPost, mutate: initiateCreatePost } = useMutation<any, Error>(
         async () => {
-            console.log("axiosInstance: ")
-            console.log(axiosInstance)
+
             if (axiosInstance == null) return false
 
             const post: PostRequest = {...formik.values ,time_high: 1, time_low: 2}
@@ -127,6 +127,7 @@ function Create(props: {}) {
         }
     );
 
+    // TODO: Only For Debugging
     useEffect(() => {
         return () => {
             console.log(formik.errors)
@@ -161,9 +162,9 @@ function Create(props: {}) {
             description={"Thank you for using our platform."}/>
 
             <main>
-                <h2 className="max-w-[800px] mx-auto px-4 font-medium text-xl mt-6 text-gray-700">Hire Staff</h2>
+                <Heading heading={"Hire Staff"}/>
 
-                <div className="max-w-[700px] mx-auto bg-white rounded p-6 mt-3">
+                <div className="max-w-[700px] mx-auto bg-white rounded py-8 px-10 mt-3">
                     <form method={"POST"} onSubmit={(e) => { e.preventDefault(); formik.submitForm()}}>
                         <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-4">
                             <input name={"author"} value={`${user.first_name} ${user.last_name}`}  hidden aria-hidden/>

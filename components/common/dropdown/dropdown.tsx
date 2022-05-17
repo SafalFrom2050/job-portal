@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {overrideTailwindClasses} from "tailwind-override";
 import {upperFirst} from "lodash";
 
@@ -6,6 +6,7 @@ const Dropdown = (props: {
     name: string,
     id?: string,
     options: { key: String, value: String }[],
+    selected?: string,
     onSelect: (key: String) => boolean,
     label?: string,
     cClass?: string,
@@ -13,7 +14,7 @@ const Dropdown = (props: {
     error?: boolean,
     errorMsg?: string | false | undefined,
     separateLabel?: boolean,
-    required?: boolean
+    required?: boolean,
 }) => {
 
     const label = props.label == undefined ? "Select" : props.label
@@ -21,7 +22,7 @@ const Dropdown = (props: {
 
     const [show, setShow] = useState(false);
 
-    const [selectedOption, setSelectedOption] = useState(separateLabel ? "Select" : label);
+    const [selectedOption, setSelectedOption] = useState(props.selected || separateLabel ? "Select" : label);
 
     function toggle() {
         setShow(!show)
@@ -32,6 +33,13 @@ const Dropdown = (props: {
         props.onSelect(key)
         toggle()
     }
+
+    useEffect(() => {
+        if (!props.selected || props.selected === "") return
+        setSelectedOption(props.selected + "")
+
+    }, [props.selected]);
+    
 
     return (
         <div className="relative ">

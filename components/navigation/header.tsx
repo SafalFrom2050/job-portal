@@ -5,6 +5,7 @@ import {AuthContextType} from "../../@types/user";
 import {TokenContext} from "../../contexts/tokenContext";
 import {TokenContextType} from "../../@types/token";
 import Router from "next/router";
+import {APP_NAME} from "../../others/config";
 
 export default function Header(props: { guest?: boolean }) {
 
@@ -81,7 +82,7 @@ export default function Header(props: { guest?: boolean }) {
 
                         <Link href={'/'}>
                             <a onClick={() => selected(-1)}>
-                                <h2 className="font-normal text-2xl leading-6 text-gray-800">Job Portal</h2>
+                                <h2 className="font-normal text-2xl leading-6 text-gray-800">{APP_NAME}</h2>
                             </a>
                         </Link>
                     </div>

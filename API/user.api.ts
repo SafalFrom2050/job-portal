@@ -1,6 +1,7 @@
-import axios, {AxiosError} from 'axios'
+import axios, {AxiosError, AxiosInstance} from 'axios'
 
 import http, {Response} from "./http-common";
+import {User} from "../@types/user";
 
 export type RegistrationCredential = {
     first_name: string,
@@ -49,6 +50,27 @@ export const loginUser = async (credentials: LoginCredential) => {
         const {data, status} = await http.post<RegisterUserResponse>(
             'user/auth/login/',
             credentials
+        );
+
+        console.log(JSON.stringify(data));
+
+        return {data, status} as Response;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const e = error as AxiosError
+            return {data:e.response?.data, status: e.response?.status};
+        } else {
+            return {data: 'An unexpected error occurred', status: null} as Response;
+        }
+    }
+}
+
+export const updateUser = async (axiosInstance: AxiosInstance ,user: User) => {
+
+    try {
+        const {data, status} = await axiosInstance.patch<RegisterUserResponse>(
+            `user/${user.id}/`,
+            user
         );
 
         console.log(JSON.stringify(data));

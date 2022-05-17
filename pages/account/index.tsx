@@ -9,13 +9,23 @@ import Dropdown from "../../components/common/dropdown/dropdown";
 import {overrideTailwindClasses} from "tailwind-override";
 import {upperFirst} from "lodash";
 import {AuthContext} from "../../contexts/authContext";
-import {AuthContextType} from "../../@types/user";
+import {AuthContextType, User} from "../../@types/user";
 import Heading from "../../components/common/heading";
+import {useMutation} from "react-query";
+import {createPost, PostRequest} from "../../API/post.api";
+import {AxiosContext} from "../../contexts/axiosContext";
+import {AxiosContextType} from "../../@types/axiosContextType";
+import {updateUser} from "../../API/user.api";
+import SuccessModal from "../../components/modals/successModal";
 
 function Index(props: {}) {
 
     const {user} = useContext(AuthContext) as AuthContextType;
     const [errorMsg, setErrorMsg] = useState(false);
+    const [formDisabled, setFormDisabled] = useState(true);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
 
     const genderTypes = [
         {
@@ -32,6 +42,11 @@ function Index(props: {}) {
         }
     ]
 
+    function getGenderValue(key: String): string {
+        const genderType = genderTypes.find((type) => type.key == key)
+        return genderType?.value || "Select"
+    }
+
     const validationSchema = yup.object({
         first_name: yup
             .string()
@@ -39,18 +54,12 @@ function Index(props: {}) {
         last_name: yup
             .string()
             .required(),
-        avatar: yup
-            .object(),
         gender: yup
             .string()
             .required(),
         birth_date: yup
-            .date()
-            .required(),
+            .date(),
         phone: yup
-            .string()
-            .required(),
-        email: yup
             .string()
             .required(),
         is_organization: yup
@@ -72,11 +81,9 @@ function Index(props: {}) {
         initialValues: {
             first_name: user.first_name || '',
             last_name: user.last_name || '',
-            avatar: '',         // TODO: Profile image upload
             gender: '',
             birth_date: '',
             phone: '',
-            email: '',             // TODO: Not in the request
             is_organization: false,
             can_shift_location: true,
             expected_salary_low: '',
@@ -86,35 +93,67 @@ function Index(props: {}) {
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
-            alert(values.toJSON())
-            // initiateCreatePost()
+            initiateUpdateAccount()
         },
     })
 
     useEffect(() => {
         formik.setFieldValue("first_name", user.first_name || "")
         formik.setFieldValue("last_name", user.last_name || "")
-        formik.setFieldValue("avatar", user.avatar || "")
         formik.setFieldValue("gender", user.gender || "")
         formik.setFieldValue("birth_date", user.birth_date || "")
         formik.setFieldValue("phone", user.phone || "")
-        formik.setFieldValue("email", user.email || "")
-        formik.setFieldValue("is_organization", user.is_organization || "")
-        formik.setFieldValue("can_shift_location", user.can_shift_location || "")
-        formik.setFieldValue("expected_salary_low", user.expected_salary_low || "")
-        formik.setFieldValue("expected_salary_high", user.expected_salary_high || "")
-        formik.setFieldValue("experience", user.experience || "")
-        formik.setFieldValue("is_available", user.is_available || "")
+        formik.setFieldValue("is_organization", user.is_organization || false)
+        formik.setFieldValue("can_shift_location", user.can_shift_location || false)
+        formik.setFieldValue("expected_salary_low", user.expected_salary_low || 50000)
+        formik.setFieldValue("expected_salary_high", user.expected_salary_high || 200000)
+        formik.setFieldValue("experience", user.experience || 0)
+        formik.setFieldValue("is_available", user.is_available || false)
 
-        console.log(user)
+        setFormDisabled(false)
 
     }, [user]);
 
 
+    const {isLoading: isUpdatingAccount, mutate: initiateUpdateAccount} = useMutation<any, Error>(
+        async () => {
+            if (axiosInstance == null) return false
+
+            const userRequest: User = {...formik.values, id: user.id}
+
+            return await updateUser(axiosInstance, userRequest).then(response => {
+
+                if (response.status == 200) {
+                    // Success
+                    setShowSuccessModal(true)
+                } else if (response.status == 400) {
+                    formik.setErrors(response.data)
+                } else if (response.status == 401) {
+                    if (response.data.detail != null) {
+                        setErrorMsg(response.data.detail)
+                    }
+                }
+            })
+        }
+    );
+
     return (
         <div>
             <Heading heading={"Manage Account"}/>
-            <div className="max-w-[700px] mx-auto bg-white rounded p-6 mt-3">
+
+            <SuccessModal show={showSuccessModal}
+                          setShow={setShowSuccessModal}
+                          buttonLeftText={"Return To Job List"}
+                          buttonRightText={"View Profile"}
+                // buttonRightOnClick={newForm}
+                // buttonLeftOnClick={returnToJobList}
+                          title={"Your account has been updated"}/>
+
+            {errorMsg &&
+                <div>{errorMsg}</div>
+            }
+
+            <div className="max-w-[700px] mx-auto bg-white rounded py-8 px-10 mt-3">
                 <form method={"POST"} onSubmit={(e) => {
                     e.preventDefault();
                     formik.submitForm()
@@ -158,20 +197,9 @@ function Index(props: {}) {
                                    label={"Phone"}
                                    required={true}/>
 
-                        <TextInput name="email"
-                                   placeholder={"john@email.com"}
-                                   type="text"
-
-                                   value={formik.values.email}
-                                   onChange={formik.handleChange}
-                                   error={formik.touched.email && Boolean(formik.errors.email)}
-                                   errorMsg={formik.touched.email && formik.errors.email}
-
-                                   label={"Email"}
-                                   required={true}/>
-
                         <Dropdown name={"gender"}
                                   options={genderTypes}
+                                  selected={getGenderValue(formik.values.gender)}
 
                                   onSelect={(v) => !formik.setFieldValue("gender", v, true)}
                                   error={formik.touched.gender && Boolean(formik.errors.gender)}
@@ -265,8 +293,8 @@ function Index(props: {}) {
                     <div
                         className="flex flex-col-reverse items-center justify-end w-full mt-6 gap-4 md:flex-row">
                         <WhiteButton name={"Go Back"} class="font-medium text-base"/>
-                        <PrimaryButton name={"Save"}
-                            // disabled={isCreatingPost}
+                        <PrimaryButton name={"Save"} isSubmitType={true}
+                                       disabled={formDisabled || isUpdatingAccount}
                             // onClick={formik.submitForm}
                                        class="font-medium text-base"/>
                     </div>
