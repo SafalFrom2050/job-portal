@@ -54,7 +54,7 @@ export default function Header(props: { guest?: boolean }) {
         },
         {
             name: 'Student Services',
-            path: '/student-services'
+            path: '/studentServices'
         },
         {
             name: 'Training',

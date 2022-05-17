@@ -13,7 +13,7 @@ function PostListItem(props: {
         <div className={"px-4"}>
             <div
                 onClick={()=>{Router.push('profile/1')}}
-                className="cursor-pointer flex flex-col md:flex-row md:max-w-[800px] w-full md:mx-auto lg:mb-0 mt-3 mb-24 rounded bg-white overflow-hidden">
+                className="cursor-pointer flex flex-col md:flex-row md:max-w-[800px] w-full md:mx-auto mt-3 rounded bg-white overflow-hidden">
                 <div>
                     <img src="https://cdn.tuk.dev/assets/templates/classified/Bitmap (1).png"
                          className="w-full h-44 md:w-80 md:h-full object-cover"/>
@@ -23,8 +23,8 @@ function PostListItem(props: {
                     <div className="pt-6 p-4">
                         <div className="flex items-center">
                             <h2 className="text-lg font-semibold">{post.position}</h2>
-                            {moment(post.published_date).isValid() &&
-                                <p className="text-xs text-gray-600 pl-5">Posted {moment(post.published_date).fromNow()}</p>
+                            {moment(post.created_date).isValid() &&
+                                <p className="text-xs text-gray-600 pl-5">Posted {moment(post.created_date).fromNow()}</p>
                             }
                         </div>
                         <p className="text-xs text-gray-600 mt-3">{post.description}</p>
