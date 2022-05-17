@@ -14,7 +14,7 @@ import TextInput from "../inputs/textInput";
 import {overrideTailwindClasses} from "tailwind-override";
 import PrimaryButton from "../buttons/primaryButton";
 
-export default function ManageMoreInfo(props) {
+export default function ManageMoreInfo() {
     const {user, syncUser} = useContext(AuthContext) as AuthContextType;
     const [errorMsg, setErrorMsg] = useState(false);
     const [formDisabled, setFormDisabled] = useState(true);
