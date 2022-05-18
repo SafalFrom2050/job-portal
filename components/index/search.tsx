@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import {SearchIcon} from "@heroicons/react/solid";
-import {ArrowDown, ArrowUp} from "heroicons-react";
+import {ArrowDown} from "heroicons-react";
 import PrimaryButton from "../buttons/primaryButton";
 import TextButton from "../buttons/textButton";
 import Dropdown from "../common/dropdown/dropdown";
@@ -8,14 +8,24 @@ import TextInput from "../inputs/textInput";
 import WhiteButton from "../buttons/whiteButton";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
-import {useQuery} from "react-query";
-import {getPostFields, getPosts, Post, PostField} from "../../API/post.api";
+import {useMutation, useQuery} from "react-query";
+import {getPostFields, Post, PostField, SearchPostRequest, searchPosts} from "../../API/post.api";
+import * as yup from "yup";
+import {useFormik} from "formik";
+import Router, {useRouter} from "next/router";
 
+export const searchStates = {
+    notSearching :0,
+    searching: 1,
+    end: 2
+}
 
-function Search() {
+function Search(props: { onSearchStateChange: (state: number) => void, onSearchError: (error: string) => void, onSearchResults: (posts: Post[]) => void }) {
+
+    const { query } = useRouter();
 
     const [showFilters, setShowFilters] = useState(false);
-
+    const [queryChanged, setQueryChanged] = useState(false);
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
 
@@ -25,7 +35,6 @@ function Search() {
     })
 
     const postFields = data?.data as PostField[]
-
 
     function fetchPostFields() {
         return getPostFields(axiosInstance)
@@ -38,14 +47,6 @@ function Search() {
 
     const fieldTypes = getFieldTypes()
 
-    const titleTypes = [
-        {key: "1", value: "School/College"},
-        {key: "2", value: "Security"},
-        {key: "3", value: "IT"},
-        {key: "4", value: "Banking"},
-        {key: "5", value: "Receptionist"},
-    ]
-
     const positionTypes = [
         {key: "1", value: "Teacher"},
         {key: "2", value: "Driver"},
@@ -57,10 +58,102 @@ function Search() {
         setShowFilters((v) => !v)
     }
 
+    const [errorMsg, setErrorMsg] = useState(false);
+    const [formDisabled, setFormDisabled] = useState(true);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+
+    const validationSchema = yup.object({
+        title: yup
+            .string(),
+        field: yup
+            .string(),
+        position: yup
+            .string()
+    });
+
+
+    const formik = useFormik({
+        initialValues: {
+            title: '',
+            field: '',
+            position: '',
+            location: ''
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values: any) => {
+            initiateSearchQuery()
+        },
+    })
+
+
+    const {isLoading: isSearching, mutate: initiateSearchQuery} = useMutation<any, Error>(
+        async () => {
+            if (axiosInstance == null) return false
+            setQueryChanged(true)
+
+            const searchPostRequest: SearchPostRequest = formik.values
+            props.onSearchStateChange(searchStates.searching)
+
+            return await searchPosts(axiosInstance, searchPostRequest).then(response => {
+
+                console.log(response)
+
+                if (response.status == 200) {
+                    // Success
+                    props.onSearchResults(response.data.results)
+                } else if (response.status == 400) {
+                    formik.setErrors(response.data)
+                } else if (response.status == 401) {
+                    if (response.data.detail != null) {
+                        setErrorMsg(response.data.detail)
+                    }
+                }
+
+                console.log(searchPostRequest)
+                Router.push({
+                        pathname: '/',
+                        query: searchPostRequest
+                    },
+                    undefined, {shallow: true}
+                )
+
+                props.onSearchStateChange(searchStates.end)
+
+            })
+        }
+    );
+
+    useEffect(() => {
+
+        if (Object.keys(query).length === 0) return
+
+        if (queryChanged) return
+        console.log(query)
+
+        async function setValues() {
+            await formik.setFieldValue("title", query.title)
+            await formik.setFieldValue("location", query.location)
+            await formik.setFieldValue("field", query.field)
+            await formik.setFieldValue("position", query.position)
+            return true
+        }
+
+        setValues().then((value)=>{
+            // TODO: Perform Search as well
+            //formik.submitForm()
+        })
+
+        setQueryChanged(true)
+
+    }, [query]);
+
+
     return (
         <>
             <form onSubmit={(e) => {
-                e.preventDefault();
+                e.preventDefault()
+                formik.submitForm()
             }}>
 
                 <div className="relative">
@@ -70,8 +163,13 @@ function Search() {
                                 <div className="flex flex-col w-full gap-y-2">
                                     <div className="relative w-full">
                                         <input name={"title"}
+
+                                               onChange={formik.handleChange}
+                                               value={formik.values.title}
+
                                                placeholder="Search Job"
-                                               className="p-4 py-2 outline-none focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"/>
+                                               className="p-4 py-2 outline-none focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"
+                                        />
 
                                         <SearchIcon
                                             className="w-6 h-6 absolute pointer-events-none top-2 right-5 text-gray-600"/>
@@ -102,20 +200,30 @@ function Search() {
                                     <div className={"flex flex-col gap-3"}>
                                         {/* Interaction */}
 
-                                        <Dropdown name={"title"} options={fieldTypes} onSelect={() => false}
+                                        <Dropdown name={"field"} options={fieldTypes}
+
+                                                  selected={formik.values.field}
+                                                  onSelect={(v) => !formik.setFieldValue("field", v, true)}
+
                                                   label="Field" cClass={"bg-white border border-gray-200"}/>
 
-                                        <Dropdown name={"post"} options={positionTypes} onSelect={() => false}
+                                        <Dropdown name={"position"} options={positionTypes}
+
+                                                  selected={formik.values.position}
+                                                  onSelect={(v) => !formik.setFieldValue("position", v, true)}
+
                                                   label="Position" cClass={"bg-white border border-gray-200"}/>
 
                                         <TextInput name="location" placeholder="Location" type="text"
+                                                   onChange={formik.handleChange} value={formik.values.location}
                                                    iClass="bg-white mt-0 text-sm px-5 font-medium text-gray-600 placeholder-gray-400"/>
 
                                     </div>
                                     <div
                                         className="flex flex-col items-center justify-end w-full gap-4 mt-12 lg:flex-row">
                                         <WhiteButton name={"Advanced"} class="font-medium text-sm"/>
-                                        <PrimaryButton isSubmitType={true} name={"Search"} class="font-medium text-base"/>
+                                        <PrimaryButton disabled={isSearching} isSubmitType={true} name={"Search"}
+                                                       class="font-medium text-base"/>
                                     </div>
                                 </div>
                             </div>

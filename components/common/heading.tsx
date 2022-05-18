@@ -12,7 +12,7 @@ const Heading = (props: { heading: string, count?: number, sort?: boolean, cClas
                 <div className="flex flex-col justify-start items-start w-full">
                     <div className="mt-2 flex flex-row items-center gap-x-3 w-full">
                         <p className={overrideTailwindClasses(`font-semibold leading-normal text-2xl text-gray-800 ${props.hClass}`)}>{props.heading}</p>
-                        {props.count || props.count == 0 &&
+                        {(props.count || props.count == 0) &&
                             <p className=" text-base leading-4 text-gray-600">({props.count} jobs)</p>
                         }
                     </div>

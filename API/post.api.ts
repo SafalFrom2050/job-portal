@@ -27,6 +27,11 @@ export type PostRequest = Post & {
     author?: string
 }
 
+export type SearchPostRequest = Post & {
+    field?: string,
+    author?: string
+}
+
 export type PostField = {
     id?: string,
     name?: string,
@@ -34,7 +39,10 @@ export type PostField = {
 }
 
 export type PostListResponse = {
-    posts: Post[]
+    count?: number,
+    next?: string,
+    previous?: string,
+    results?: Post[]
 }
 
 export type PostFieldListResponse = {
@@ -50,6 +58,25 @@ export const getPosts = async (http: AxiosInstance | null) => {
     try {
         const {data, status} = await http.get<PostListResponse>(
             'post/'
+        );
+        return {data, status} as Response;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const e = error as AxiosError
+            return {data:e.response?.data, status: e.response?.status};
+        } else {
+            return {data: [], status: null} as Response;
+        }
+    }
+}
+
+export const searchPosts = async (http: AxiosInstance | null, searchPostRequest: SearchPostRequest) => {
+
+    if (http == null) return {data: [], status: null};
+
+    try {
+        const {data, status} = await http.get<PostListResponse>(
+            'post/', {params: searchPostRequest}
         );
         return {data, status} as Response;
     } catch (error) {

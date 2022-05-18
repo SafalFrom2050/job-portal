@@ -74,7 +74,7 @@ function ManageBasicInfo() {
             first_name: user.first_name || '',
             last_name: user.last_name || '',
             gender: user.gender || '',
-            birth_date: user.birth_date || '',
+            birth_date: user.birth_date || undefined,
             phone: user.phone || '',
             expected_salary_low: user.expected_salary_low || '',
             expected_salary_high: user.expected_salary_high || '',
@@ -90,7 +90,7 @@ function ManageBasicInfo() {
         formik.setFieldValue("first_name", user.first_name || "")
         formik.setFieldValue("last_name", user.last_name || "")
         formik.setFieldValue("gender", user.gender || "")
-        formik.setFieldValue("birth_date", user.birth_date || "")
+        formik.setFieldValue("birth_date", user.birth_date || undefined)
         formik.setFieldValue("phone", user.phone || "")
         formik.setFieldValue("can_shift_location", user.can_shift_location || false)
         formik.setFieldValue("expected_salary_low", user.expected_salary_low || 50000)

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {BASE_URL} from "../others/config";
+import {Post} from "./post.api";
 
 export default axios.create({
     baseURL: BASE_URL,
@@ -9,6 +10,6 @@ export default axios.create({
 });
 
 export type Response = {
-    data: any,
+    data: any | Post[],
     status: number | null
 }
