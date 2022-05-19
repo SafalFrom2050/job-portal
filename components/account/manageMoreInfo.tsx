@@ -13,11 +13,15 @@ import Heading from "../common/heading";
 import TextInput from "../inputs/textInput";
 import {overrideTailwindClasses} from "tailwind-override";
 import PrimaryButton from "../buttons/primaryButton";
+import WhiteButton from "../buttons/whiteButton";
+import ModalPortfolioFiles from "./modalPortfolioFiles";
 
 export default function ManageMoreInfo() {
     const {user, syncUser} = useContext(AuthContext) as AuthContextType;
     const [errorMsg, setErrorMsg] = useState(false);
     const [formDisabled, setFormDisabled] = useState(true);
+
+    const [showPortfolioUploadModal, setShowPortfolioUploadModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
@@ -84,6 +88,9 @@ export default function ManageMoreInfo() {
     );
     return (
         <>
+            <ModalPortfolioFiles setShow={setShowPortfolioUploadModal} show={showPortfolioUploadModal}/>
+
+
             <SuccessModal show={showSuccessModal}
                           setShow={setShowSuccessModal}
                           buttonLeftText={"Return To Job List"}
@@ -152,6 +159,10 @@ export default function ManageMoreInfo() {
                                        onChange={formik.handleChange}
                                        error={formik.touched.experience && Boolean(formik.errors.experience)}
                                        errorMsg={formik.touched.experience && formik.errors.experience}/>
+                        </div>
+
+                        <div className={"flex flex-col-reverse items-center justify-center w-full md:flex-row"}>
+                            <WhiteButton name={"Upload Portfolio/CV"} class={"font-medium"} onClick={()=>setShowPortfolioUploadModal(true)} />
                         </div>
 
                     </div>

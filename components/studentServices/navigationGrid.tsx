@@ -44,7 +44,7 @@ function NavigationGrid() {
         },
         {
             name: "Free Education",
-            path: "/",
+            path: "/education",
             icon: <FontAwesomeIcon icon={faSchoolCircleCheck} className={"w-8 h-8"}/>
         },
     ]

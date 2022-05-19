@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Heading from "../../components/common/heading";
 import ManageBasicInfo from "../../components/account/manageBasicInfo";
 import EditProfilePicture from "../../components/account/editProfilePicture";
@@ -8,8 +8,10 @@ import EditCanShiftLocation from "../../components/account/editCanShiftLocation"
 import EditIsOrganization from "../../components/account/editIsOrganization";
 import EditIsAvailableToWork from "../../components/account/editIsAvailableToWork";
 import ManageMoreInfo from "../../components/account/manageMoreInfo";
+import ModalPortfolioFiles from "../../components/account/modalPortfolioFiles";
 
 function Index() {
+
 
     return (
         <div className={"p-4"}>
@@ -19,15 +21,15 @@ function Index() {
 
 
             <ManageBasicInfo/>
-            <ManageMoreInfo />
+            <ManageMoreInfo/>
 
             <div className={"max-w-[800px] mx-auto grid grid-cols-2 gap-4 mt-4"}>
 
-                <EditCanShiftLocation />
+                <EditCanShiftLocation/>
 
-                <EditIsOrganization />
+                <EditIsOrganization/>
 
-                <EditIsAvailableToWork />
+                <EditIsAvailableToWork/>
 
 
             </div>

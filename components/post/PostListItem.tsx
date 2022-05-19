@@ -12,8 +12,7 @@ function PostListItem(props: {
     return (
         <div className={"px-4"}>
             <div
-                onClick={()=>{Router.push('profile/1')}}
-                className="cursor-pointer flex flex-col md:flex-row md:max-w-[800px] w-full md:mx-auto mt-3 rounded bg-white overflow-hidden">
+                className="flex flex-col md:flex-row md:max-w-[800px] w-full md:mx-auto mt-3 rounded bg-white overflow-hidden">
                 <div>
                     <img src="https://cdn.tuk.dev/assets/templates/classified/Bitmap (1).png"
                          className="w-full h-44 md:w-80 md:h-full object-cover"/>
@@ -32,7 +31,7 @@ function PostListItem(props: {
                             <div>
                                 <p className="text-xs text-gray-600 px-2 bg-gray-200 py-1">{post.field?.name}</p>
                             </div>
-                            <div className="pl-2">
+                            <div className="hover:shadow cursor-pointer ml-2" onClick={()=>{Router.push('org/1')}}>
                                 <p className="text-xs text-gray-600 px-2 bg-gray-200 py-1">{`${post.author?.first_name} ${post.author?.last_name}`}</p>
                             </div>
                         </div>

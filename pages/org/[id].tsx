@@ -16,12 +16,11 @@ function Index() {
                             <div className="flex flex-col lg:flex-row items-start lg:items-center mb-8">
                                 <h1 className="mr-12 text-xl lg:text-2xl text-gray-800 dark:text-gray-100 font-bold lg:w-1/2">Job Posting For XYZ Engineer</h1>
                                 <div className="flex flex-col md:flex-row items-start md:items-center md:w-full justify-end gap-x-4">
-                                    <div className="mt-4 lg:mt-0 mr-0 xl:mr-8 text-sm bg-indigo-100 text-indigo-700 dark:text-indigo-600 rounded font-medium py-2 w-48 flex justify-center">Start Date: 21 May, 2022</div>
-                                    <div className="mt-4 lg:mt-0 mr-0 lg:mr-4 xl:mr-8 text-sm bg-red-100 text-red-500 rounded font-medium py-2 w-48 flex justify-center">End Date: 03 Jun, 2022</div>
+                                    <div className="mt-4 lg:mt-0 mr-0 xl:mr-8 text-sm bg-indigo-100 text-indigo-700 dark:text-indigo-600 rounded font-medium py-2 w-48 flex justify-center">Posted Date: 21 May, 2022</div>
                                 </div>
                             </div>
                             <div className="flex flex-col lg:flex-row items-start lg:items-center">
-                                <div className="w-full lg:w-1/2 pr-0 lg:pr-48">
+                                <div className="w-full lg:w-2/3 pr-0">
                                     <div className="flex items-center">
                                         <div className="w-12 h-12 rounded">
                                             <img className="w-full h-full overflow-hidden object-cover rounded object-center" src="https://tuk-cdn.s3.amazonaws.com/assets/components/grid_cards/gc_28.png" alt="logo" />

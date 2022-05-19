@@ -15,6 +15,7 @@ import Dropdown from "../common/dropdown/dropdown";
 import {overrideTailwindClasses} from "tailwind-override";
 import WhiteButton from "../buttons/whiteButton";
 import PrimaryButton from "../buttons/primaryButton";
+import Router from "next/router";
 
 function ManageBasicInfo() {
 
@@ -130,22 +131,26 @@ function ManageBasicInfo() {
         }
     );
 
+    function showProfilePage() {
+        Router.push('/profile/me')
+    }
+
     return (
         <>
             <SuccessModal show={showSuccessModal}
                           setShow={setShowSuccessModal}
                           buttonLeftText={"Return To Job List"}
                           buttonRightText={"View Profile"}
-                // buttonRightOnClick={newForm}
+                          buttonRightOnClick={showProfilePage}
                 // buttonLeftOnClick={returnToJobList}
                           title={"Your account has been updated"}/>
 
             {errorMsg &&
-                <FormErrorMessage errorMsg={errorMsg} />
+                <FormErrorMessage errorMsg={errorMsg}/>
             }
 
             <div className="max-w-[800px] mx-auto bg-white rounded py-8 px-10 mt-3 shadow">
-                <Heading heading={"Basic Information"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl"} />
+                <Heading heading={"Basic Information"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl"}/>
 
                 <form method={"POST"} onSubmit={(e) => {
                     e.preventDefault();

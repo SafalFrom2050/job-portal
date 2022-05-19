@@ -15,6 +15,8 @@ import {TokenContextType} from "../@types/token";
 import Router from "next/router";
 import {AlertContext} from "../contexts/alertContext";
 import {AlertContextType} from "../@types/alert";
+import ToggleWithDetails from "../components/inputs/toggleWithDetails";
+import ToggleCheckbox from "../components/inputs/toggleCheckbox";
 
 
 export default function Register() {
@@ -164,6 +166,13 @@ export default function Register() {
                             </TextInput>
 
                         </div>
+
+                        <ToggleCheckbox name={"is_org"}
+                                        label={"Organization Account"}
+                                        defaultChecked={false}
+                                        cClass={"flex-row items-center justify-between mt-6 w-full "}
+                        />
+
                         <div className="mt-6">
                             <PrimaryButton
                                 disabled={isRegisteringUser || Object.keys(formik.errors).length !== 0}
