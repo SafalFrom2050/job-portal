@@ -16,7 +16,7 @@ import PrimaryButton from "../buttons/primaryButton";
 import WhiteButton from "../buttons/whiteButton";
 import ModalPortfolioFiles from "./modalPortfolioFiles";
 
-export default function ManageMoreInfo() {
+export default function ManageStaffInfo() {
     const {user, syncUser} = useContext(AuthContext) as AuthContextType;
     const [errorMsg, setErrorMsg] = useState(false);
     const [formDisabled, setFormDisabled] = useState(true);

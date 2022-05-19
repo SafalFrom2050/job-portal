@@ -2,8 +2,7 @@ import React from 'react'
 import {upperFirst} from 'lodash'
 import {overrideTailwindClasses} from "tailwind-override"
 
-function TextInput(props: {
-    type: string,
+function TextArea(props: {
     name: string,
     placeholder?: string,
     label?: string,
@@ -12,7 +11,7 @@ function TextInput(props: {
     cClass?: string,
     lClass?: string,
     children?: React.ReactNode,
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void,
     value?: string,
     error?: boolean,
     errorMsg?: string| false | undefined,
@@ -40,16 +39,24 @@ function TextInput(props: {
                         <span className="text-red-500">{props.required ? "*" : ""}</span>
                     </label>
                 }
-                <input
-                    name={props.name}
-                    id={props.id && ""}
-                    aria-labelledby={props.label || ""}
-                    type={props.type}
-                    className={overrideTailwindClasses(`bg-gray-200 border rounded text-xs font-normal leading-none placeholder-gray-400 placeholder:text-sm text-gray-800 py-2 w-full pl-3 ${props.iClass} ${props.error? "bg-red-50 border-red-400" : ""}`)}
-                    placeholder={props.placeholder || ""}
+                {/*<input*/}
+                {/*    name={props.name}*/}
+                {/*    id={props.id && ""}*/}
+                {/*    aria-labelledby={props.label || ""}*/}
+                {/*    className={overrideTailwindClasses(`bg-gray-200 border rounded text-xs font-medium leading-none placeholder-gray-400 placeholder:text-sm text-gray-800 py-2 w-full pl-3 ${props.iClass} ${props.error? "bg-red-50 border-red-400" : ""}`)}*/}
+                {/*    placeholder={props.placeholder || ""}*/}
+                {/*    onChange={props.onChange}*/}
+                {/*    value={props.value}*/}
+                {/*/>*/}
+                <textarea
+                    className={overrideTailwindClasses(`bg-gray-200 h-[170px] border rounded text-xs font-normal leading-none placeholder-gray-400 placeholder:text-sm text-gray-800 py-2 w-full pl-3 ${props.iClass} ${props.error? "bg-red-50 border-red-400" : ""}`)}
+                    // className="resize-none w-full h-[170px] px-4 py-4 text-base outline-none text-slate-600 border border-1 rounded"
+                    placeholder={props.placeholder || " "}
+                    defaultValue={props.value}
                     onChange={props.onChange}
-                    value={props.value}
                 />
+
+
                 {props.rightLabel &&
                     <label htmlFor={props.name}
                            className={overrideTailwindClasses(`my-2 font-medium leading-none text-sm text-gray-800 ${props.lClass} ${props.error ? "text-red-600" : ""}`)}>
@@ -70,4 +77,4 @@ function TextInput(props: {
     );
 }
 
-export default TextInput;
+export default TextArea;

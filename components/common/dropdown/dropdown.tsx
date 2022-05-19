@@ -57,7 +57,7 @@ const Dropdown = (props: {
                 className={overrideTailwindClasses(`relative w-full bg-gray-200 rounded outline-none dropdown-one ${props.cClass} ${props.error ? "bg-red-50 border border-red-400" : ""}`)}>
                 <button onClick={toggle} className="relative flex items-center justify-between w-full px-5 pl-3 py-3"
                         type="button">
-                      <span className="pr-4 text-sm leading-none font-medium text-gray-800"
+                      <span className="pr-4 text-sm leading-none font-normal text-gray-800"
                             id="drop-down-content-setter">
                         {String(selectedOption)}
                       </span>

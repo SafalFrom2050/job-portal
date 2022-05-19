@@ -74,14 +74,14 @@ const Home: NextPage = () => {
                 </div>
             </div>
 
-            <main>
+            <main className={"container mx-auto max-w-[1000px]"}>
                 {searchResults.length > 0 || isSearching ?
                     <Heading heading={"Search Results"} count={searchResults.length} sort={true}/>
                     :
                     <Heading heading={"All Jobs"} count={posts ? posts.length : 0} sort={true}/>
                 }
 
-                <div>
+                <div className="mx-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                     {isLoading && <Spinner/>}
 
                     {isSearching === searchStates.searching &&

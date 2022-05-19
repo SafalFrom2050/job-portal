@@ -10,15 +10,21 @@ export interface User {
   birth_date?: string,
   phone?: string,
   email?: string,
-  is_organization?: boolean,
   can_shift_location?: boolean,
   expected_salary_low?: string,
   expected_salary_high?: string,
-  experience?: number,
+  experience?: number | string,
   subject?: string,
   is_superuser?: boolean,
   is_staff?: boolean,
-  is_available?: boolean
+  is_available?: boolean,
+
+  is_organization?: boolean,
+  org_title?: string,
+  org_description?: string,
+  org_number_of_employees?: string | number,
+  org_average_salary?: string | number,
+  org_number_of_job_post?: string | number,
 }
 
 export interface AuthContextType {
