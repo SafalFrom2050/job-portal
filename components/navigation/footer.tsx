@@ -56,7 +56,7 @@ const Footer = () => {
                     <p className="hover:text-gray-500 text-base leading-4 mt-6 text-gray-800 cursor-pointer">Privacy policy</p>
                     <p className="hover:text-gray-500 text-base leading-4 mt-6 text-gray-800 cursor-pointer">Terms of service</p>
                 </div>
-                <div className="mt-10 lg:block hidden">
+                <div className="lg:block hidden">
                     <label className="text-xl font-medium leading-5 text-gray-800">Get updates</label>
                     <div className="cursor-pointer flex items-center justify-between border border-gray-800 mt-4">
                         <input type="text" className="text-base leading-4 p-4 w-full focus:outline-none text-gray-800 placeholder-gray-800" placeholder="Enter your email" />

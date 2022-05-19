@@ -30,7 +30,7 @@ function Index() {
         return getUserById(axiosInstance, Number.parseInt(id + ""))
     }
 
-    if (!user) return <div className={"2xl:container h-[600px] flex items-center"}>
+    if (!user) return <div className={"max-w-[1000px] mx-auto h-[600px] flex items-center"}>
         <Spinner/>
     </div>
 
@@ -109,8 +109,9 @@ function Index() {
             <Heading heading={"Posted Jobs"}/>
 
             <div className={"container mx-auto max-w-[1000px]"}>
+                {postsQuery.isLoading && <Spinner/>}
                 <div className="mx-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {postsQuery.isLoading && <Spinner/>}
+
                     {posts && posts.length > 0 ?
                         posts.map((post, i) => (
                             <PostListItem key={i} post={post}/>

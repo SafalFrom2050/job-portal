@@ -81,16 +81,17 @@ const Home: NextPage = () => {
                     <Heading heading={"All Jobs"} count={posts ? posts.length : 0} sort={true}/>
                 }
 
+                {isLoading && <Spinner/>}
+
+                {isSearching === searchStates.searching &&
+                    <div className={"flex gap-x-2 items-center justify-center w-28 mx-auto"}>
+                        <Spinner/>
+
+                        <p className={"font-normal"}>Searching</p>
+                    </div>
+                }
+
                 <div className="mx-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {isLoading && <Spinner/>}
-
-                    {isSearching === searchStates.searching &&
-                        <div className={"flex gap-x-2 items-center justify-center w-28 mx-auto"}>
-                            <Spinner/>
-
-                            <p className={"font-normal"}>Searching</p>
-                        </div>
-                    }
 
                     {searchResults.length > 0 || isSearching ?
                         searchResults.map((post, i) => (
