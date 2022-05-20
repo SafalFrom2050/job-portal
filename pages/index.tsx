@@ -75,10 +75,16 @@ const Home: NextPage = () => {
             </div>
 
             <main className={"container mx-auto max-w-[1000px]"}>
-                {searchResults.length > 0 || isSearching ?
-                    <Heading heading={"Search Results"} count={searchResults.length} sort={true}/>
+                {searchResults.length > 0 || isSearching === searchStates.searching || isSearching === searchStates.end ?
+                    <Heading heading={"Search Results"}
+                             showBackButton
+                             backButtonAction={()=>Router.push('/')}
+                             count={searchResults.length}
+                             sort={true}
+                             cClass={"sticky top-0 bg-indigo-50"}/>
                     :
-                    <Heading heading={"All Jobs"} count={posts ? posts.length : 0} sort={true}/>
+                    <Heading heading={"All Jobs"} count={posts ? posts.length : 0} sort={true}
+                             cClass={"sticky top-0 bg-indigo-50"}/>
                 }
 
                 {isLoading && <Spinner/>}
@@ -93,7 +99,7 @@ const Home: NextPage = () => {
 
                 <div className="mx-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
 
-                    {searchResults.length > 0 || isSearching ?
+                    {searchResults.length > 0 || isSearching === searchStates.searching || isSearching === searchStates.end ?
                         searchResults.map((post, i) => (
                             <PostListItem key={i} post={post}/>
                         ))

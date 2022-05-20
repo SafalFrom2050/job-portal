@@ -13,19 +13,19 @@ import {getPostFields, Post, PostField, SearchPostRequest, searchPosts} from "..
 import * as yup from "yup";
 import {useFormik} from "formik";
 import Router, {useRouter} from "next/router";
+import {positionTypes} from "../../others/config";
 
 export const searchStates = {
-    notSearching :0,
+    notSearching: 0,
     searching: 1,
     end: 2
 }
 
 function Search(props: { onSearchStateChange: (state: number) => void, onSearchError: (error: string) => void, onSearchResults: (posts: Post[]) => void }) {
 
-    const { query } = useRouter();
+    const {query} = useRouter()
 
     const [showFilters, setShowFilters] = useState(false);
-    const [queryChanged, setQueryChanged] = useState(false);
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
 
@@ -47,12 +47,6 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
     const fieldTypes = getFieldTypes()
 
-    const positionTypes = [
-        {key: "1", value: "Teacher"},
-        {key: "2", value: "Driver"},
-        {key: "3", value: "Developer"},
-        {key: "4", value: "Backend"}
-    ]
 
     function toggleAdvanceOptions() {
         setShowFilters((v) => !v)
@@ -65,10 +59,13 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
     const validationSchema = yup.object({
         title: yup
-            .string(),
+            .string()
+            .required(),
         field: yup
             .string(),
         position: yup
+            .string(),
+        location: yup
             .string()
     });
 
@@ -90,14 +87,11 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
     const {isLoading: isSearching, mutate: initiateSearchQuery} = useMutation<any, Error>(
         async () => {
             if (axiosInstance == null) return false
-            setQueryChanged(true)
 
-            const searchPostRequest: SearchPostRequest = formik.values
+            const searchPostRequest: SearchPostRequest = {...formik.values, ...query}
             props.onSearchStateChange(searchStates.searching)
 
             return await searchPosts(axiosInstance, searchPostRequest).then(response => {
-
-                console.log(response)
 
                 if (response.status == 200) {
                     // Success
@@ -110,14 +104,6 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                     }
                 }
 
-                console.log(searchPostRequest)
-                Router.push({
-                        pathname: '/',
-                        query: searchPostRequest
-                    },
-                    undefined, {shallow: true}
-                )
-
                 props.onSearchStateChange(searchStates.end)
 
             })
@@ -126,34 +112,42 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
     useEffect(() => {
 
-        if (Object.keys(query).length === 0) return
+        if (Object.keys(query).length === 0) {
+            props.onSearchStateChange(searchStates.notSearching)
+            props.onSearchResults([])
+            formik.resetForm()
+            return
+        }
 
-        if (queryChanged) return
-        console.log(query)
+        initiateSearchQuery()
+
+        if (query.location != "" || query.field != "" || query.position != "") {
+            setShowFilters(true)
+        }
 
         async function setValues() {
             await formik.setFieldValue("title", query.title)
             await formik.setFieldValue("location", query.location)
             await formik.setFieldValue("field", query.field)
             await formik.setFieldValue("position", query.position)
-            return true
         }
 
-        setValues().then((value)=>{
-            // TODO: Perform Search as well
-            //formik.submitForm()
-        })
-
-        setQueryChanged(true)
+        setValues()
 
     }, [query]);
+
+    useEffect(() => {
+        document.getElementById("title")?.focus()
+    }, []);
 
 
     return (
         <>
             <form onSubmit={(e) => {
                 e.preventDefault()
-                formik.submitForm()
+                Router.push({pathname: "/", query: formik.values},
+                    undefined, {shallow: true}
+                )
             }}>
 
                 <div className="relative">
@@ -163,7 +157,9 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                 <div className="flex flex-col w-full gap-y-2">
                                     <div className="relative w-full">
                                         <input name={"title"}
+                                               id={"title"}
 
+                                               autoFocus={true}
                                                onChange={formik.handleChange}
                                                value={formik.values.title}
 
@@ -187,6 +183,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                         />
 
                                         <PrimaryButton
+                                            autoFocus={false}
                                             isSubmitType={true}
                                             name={'Search'}
                                             cClass="h-full flex items-center"
@@ -222,7 +219,8 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                     <div
                                         className="flex flex-col items-center justify-end w-full gap-4 mt-12 lg:flex-row">
                                         <WhiteButton name={"Advanced"} class="font-medium text-sm"/>
-                                        <PrimaryButton disabled={isSearching} isSubmitType={true} name={"Search"}
+                                        <PrimaryButton autoFocus={false} disabled={isSearching} isSubmitType={true}
+                                                       name={"Search"}
                                                        class="font-medium text-base"/>
                                     </div>
                                 </div>

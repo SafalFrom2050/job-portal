@@ -20,6 +20,9 @@ import Router from "next/router";
 import {AuthContext} from "../../contexts/authContext";
 import {AuthContextType} from "../../@types/user";
 import Heading from "../../components/common/heading";
+import TextArea from "../../components/inputs/TextArea";
+import {positionTypes} from "../../others/config";
+import {FormErrorMessage} from "../../components/common/formErrorMessage";
 
 function Create(props: {}) {
 
@@ -48,12 +51,6 @@ function Create(props: {}) {
 
     const fieldTypes = getFieldTypes()
 
-    const positionTypes = [
-        {key: "Teacher", value: "Teacher"},
-        {key: "Driver", value: "Driver"},
-        {key: "Developer", value: "Developer"},
-        {key: "Backend", value: "Backend"}
-    ]
 
     const validationSchema = yup.object({
         title: yup
@@ -64,6 +61,7 @@ function Create(props: {}) {
             .required('Field is required'),
         position: yup
             .string()
+            .oneOf(positionTypes.map((type) => type.key))
             .required('Position is required'),
         location: yup
             .string()
@@ -87,38 +85,37 @@ function Create(props: {}) {
 
     const formik = useFormik({
         initialValues: {
-            title:'',
-            field: '',
-            position: '',
+            title: '',
+            field: 'Select',
+            position: 'Select',
             location: '',
             time_low: '',
             time_high: '',
-            salary_low: '20000',
-            salary_high: '100000',
+            salary_low: '0',
+            salary_high: '0',
             description: '',
             lodging: false,
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
-            console.log("submitting...")
             initiateCreatePost()
         },
     })
-    const { isLoading: isCreatingPost, mutate: initiateCreatePost } = useMutation<any, Error>(
+    const {isLoading: isCreatingPost, mutate: initiateCreatePost} = useMutation<any, Error>(
         async () => {
 
             if (axiosInstance == null) return false
 
-            const post: PostRequest = {...formik.values ,time_high: 1, time_low: 2}
+            const post: PostRequest = {...formik.values, time_high: 1, time_low: 2}
 
             return await createPost(axiosInstance, post).then(response => {
 
-                if (response.status == 200){
+                if (response.status == 200) {
                     // Success
                     setShowSuccessModal(true)
-                }else if (response.status == 400) {
+                } else if (response.status == 400) {
                     formik.setErrors(response.data)
-                }else if (response.status == 401) {
+                } else if (response.status == 401) {
                     if (response.data.detail != null) {
                         setErrorMsg(response.data.detail)
                     }
@@ -126,15 +123,6 @@ function Create(props: {}) {
             })
         }
     );
-
-    // TODO: Only For Debugging
-    useEffect(() => {
-        return () => {
-            console.log(formik.errors)
-        };
-    }, [formik.errors]);
-
-
 
     function newForm() {
         formik.resetForm()
@@ -159,15 +147,22 @@ function Create(props: {}) {
                           buttonRightOnClick={newForm}
                           buttonLeftOnClick={returnToJobList}
                           title={"Job Post Created Successfully"}
-            description={"Thank you for using our platform."}/>
+                          description={"Thank you for using our platform."}/>
 
             <main>
                 <Heading heading={"Hire Staff"}/>
 
                 <div className="max-w-[700px] mx-auto bg-white rounded py-8 px-10 mt-3">
-                    <form method={"POST"} onSubmit={(e) => { e.preventDefault(); formik.submitForm()}}>
+                    {errorMsg &&
+                        <FormErrorMessage errorMsg={errorMsg}/>
+                    }
+
+                    <form method={"POST"} onSubmit={(e) => {
+                        e.preventDefault();
+                        formik.submitForm()
+                    }}>
                         <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-4">
-                            <input name={"author"} value={`${user.first_name} ${user.last_name}`}  hidden aria-hidden/>
+                            <input name={"author"} value={`${user.first_name} ${user.last_name}`} hidden aria-hidden/>
                             <div className={"col-span-2"}>
                                 <TextInput name="title"
                                            placeholder="We are looking for..."
@@ -185,7 +180,7 @@ function Create(props: {}) {
                             <Dropdown name={"field"}
                                       options={fieldTypes}
 
-                                      onSelect={(v)=> !formik.setFieldValue("field", v, true)}
+                                      onSelect={(v) => !formik.setFieldValue("field", v, true)}
                                       error={formik.touched.field && Boolean(formik.errors.field)}
                                       errorMsg={formik.touched.field && formik.errors.field}
 
@@ -197,7 +192,7 @@ function Create(props: {}) {
                                       options={positionTypes}
 
 
-                                      onSelect={(v)=> !formik.setFieldValue("position", v, true)}
+                                      onSelect={(v) => !formik.setFieldValue("position", v, true)}
                                       error={formik.touched.position && Boolean(formik.errors.position)}
                                       errorMsg={formik.touched.position && formik.errors.position}
 
@@ -217,17 +212,6 @@ function Create(props: {}) {
                                        label={"Location"}
                                        required={true}
                             />
-                            <TextInput name="description"
-                                       placeholder={"We are looking for..."}
-                                       type="text"
-
-                                       value={formik.values.description}
-                                       onChange={formik.handleChange}
-                                       error={formik.touched.description && Boolean(formik.errors.description)}
-                                       errorMsg={formik.touched.description && formik.errors.description}
-
-                                       label={"Description"}
-                                       required={true}/>
 
                             <div className={"flex items-end gap-3"}>
 
@@ -254,11 +238,27 @@ function Create(props: {}) {
                                 />
                             </div>
 
+                            <div className={"col-span-2"}>
+                                <TextArea name={"description"}
+                                          placeholder={"We are looking for..."}
+
+                                          value={formik.values.description}
+                                          onChange={(e) => {
+                                              formik.setFieldValue("description", e.target.value)
+                                          }}
+                                          error={formik.touched.description && Boolean(formik.errors.description)}
+                                          errorMsg={formik.touched.description && formik.errors.description}
+
+                                          label={"Description"}
+                                          required={true}
+                                />
+                            </div>
+
                             <div className={"flex items-end gap-3"}>
                                 <TextInput name="time_low"
                                            type="time"
 
-                                           // value={formik.values.time_low}
+                                    // value={formik.values.time_low}
                                            onChange={formik.handleChange}
                                            error={formik.touched.time_low && Boolean(formik.errors.time_low)}
                                            errorMsg={formik.touched.time_low && formik.errors.time_low}
@@ -270,7 +270,7 @@ function Create(props: {}) {
                                 <TextInput name="time_high"
                                            type="time"
 
-                                           // value={formik.values.time_high}
+                                    // value={formik.values.time_high}
                                            onChange={formik.handleChange}
                                            error={formik.touched.time_high && Boolean(formik.errors.time_high)}
                                            errorMsg={formik.touched.time_high && formik.errors.time_high}
@@ -279,12 +279,16 @@ function Create(props: {}) {
                                 />
                             </div>
 
+                            <div className={"col-span-2 flex items-center gap-x-2 mt-2"}>
+                                <label htmlFor={"lodging"} className={"mb-1 font-medium"}>Lodging</label>
+                                <ToggleCheckbox name={"lodging"} defaultChecked={true}/>
+                            </div>
 
-                            <ToggleCheckbox name={"lodging"} defaultChecked={true} label={"Lodging"} />
+
                         </div>
                         <div
                             className="flex flex-col-reverse items-center justify-end w-full mt-6 gap-4 md:flex-row">
-                            <WhiteButton name={"Cancel"} class="font-medium text-base" />
+                            <WhiteButton name={"Cancel"} onClick={()=>Router.back()} class="font-medium text-base"/>
                             <PrimaryButton name={"Add Post"}
                                            disabled={isCreatingPost}
                                            onClick={formik.submitForm}

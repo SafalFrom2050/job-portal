@@ -15,6 +15,7 @@ import {overrideTailwindClasses} from "tailwind-override";
 import PrimaryButton from "../buttons/primaryButton";
 import WhiteButton from "../buttons/whiteButton";
 import ModalPortfolioFiles from "./modalPortfolioFiles";
+import Router from "next/router";
 
 export default function ManageStaffInfo() {
     const {user, syncUser} = useContext(AuthContext) as AuthContextType;
@@ -86,6 +87,11 @@ export default function ManageStaffInfo() {
             return result
         }
     );
+
+    function showProfilePage() {
+        Router.push('/profile/me')
+    }
+
     return (
         <>
             <ModalPortfolioFiles setShow={setShowPortfolioUploadModal} show={showPortfolioUploadModal}/>
@@ -95,16 +101,16 @@ export default function ManageStaffInfo() {
                           setShow={setShowSuccessModal}
                           buttonLeftText={"Return To Job List"}
                           buttonRightText={"View Profile"}
-                // buttonRightOnClick={newForm}
+                          buttonRightOnClick={showProfilePage}
                 // buttonLeftOnClick={returnToJobList}
                           title={"Your account has been updated"}/>
 
             {errorMsg &&
-                <FormErrorMessage errorMsg={errorMsg} />
+                <FormErrorMessage errorMsg={errorMsg}/>
             }
 
             <div className="max-w-[800px] mx-auto bg-white rounded py-8 px-10 mt-3 shadow">
-                <Heading heading={"Other Information"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl"} />
+                <Heading heading={"Other Information"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl"}/>
 
                 <form method={"POST"} onSubmit={(e) => {
                     e.preventDefault();
@@ -162,7 +168,8 @@ export default function ManageStaffInfo() {
                         </div>
 
                         <div className={"flex flex-col-reverse items-center justify-center w-full md:flex-row"}>
-                            <WhiteButton name={"Upload Portfolio/CV"} class={"font-medium"} onClick={()=>setShowPortfolioUploadModal(true)} />
+                            <WhiteButton name={"Upload Portfolio/CV"} class={"font-medium"}
+                                         onClick={() => setShowPortfolioUploadModal(true)}/>
                         </div>
 
                     </div>

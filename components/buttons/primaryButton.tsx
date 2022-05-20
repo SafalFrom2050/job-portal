@@ -1,11 +1,11 @@
 import React from 'react';
 import {overrideTailwindClasses} from "tailwind-override";
 
-function PrimaryButton(props: { name: string, cClass?: string, class?: string, onClick?: (e: any) => any, disabled?: boolean, isSubmitType?: boolean}) {
+function PrimaryButton(props: { name: string, cClass?: string, class?: string, onClick?: (e: any) => any, disabled?: boolean, isSubmitType?: boolean, autoFocus?: boolean}) {
     return (
         <div className={props.cClass}>
         <button
-            autoFocus={true}
+            autoFocus={props.autoFocus === undefined ? true : props.autoFocus}
             type={props.isSubmitType ? "submit" : "button"}
             disabled={props.disabled}
             onClick={props.onClick}
