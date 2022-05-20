@@ -16,7 +16,7 @@ function ToggleWithDetails(props: {
 }) {
     return (
         <div
-            className="relative shadow sm:px-10 sm:py-6 py-4 px-4 bg-white dark:bg-gray-800 rounded-md">
+            className="relative shadow py-6 px-10 bg-white dark:bg-gray-800 rounded-md">
             {props.loading &&
                 <div className={"absolute w-6 h-6 top-6 right-6"}>
                     <Spinner/>

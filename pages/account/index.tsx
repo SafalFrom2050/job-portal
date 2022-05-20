@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import Heading from "../../components/common/heading";
 import ManageBasicInfo from "../../components/account/manageBasicInfo";
 import EditProfilePicture from "../../components/account/editProfilePicture";
@@ -22,16 +22,17 @@ function Index() {
 
 
             <ManageBasicInfo/>
+            <div className={"max-w-[800px] mx-auto grid grid-cols-1 gap-4 mt-4"}>
+                <EditIsOrganization/>
+            </div>
 
-            {user.is_organization ? <ManageOrganizationInfo />
+            {user.is_organization ? <ManageOrganizationInfo/>
                 : <ManageStaffInfo/>
             }
 
             <div className={"max-w-[800px] mx-auto grid grid-cols-2 gap-4 mt-4"}>
 
                 <EditCanShiftLocation/>
-
-                <EditIsOrganization/>
 
                 <EditIsAvailableToWork/>
 
