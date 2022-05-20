@@ -1,7 +1,7 @@
 import React from "react";
 
 export function TopReview() {
-    return <div className="xl:w-1/3 md:w-1/2 lg:ml-16 ml-8 md:mt-0 mt-6">
+    return <div className="xl:w-1/3 md:w-1/2 lg:ml-16 ml-8 md:mt-0 mt-20">
 
         <div className="w-full">
             <p className="text-3xl font-bold leading-none text-gray-600">JOB PORTAL</p>

@@ -60,7 +60,7 @@ function Index() {
                                         <div className="w-12 h-12 rounded">
                                             <img
                                                 className="w-full h-full overflow-hidden object-cover rounded object-center"
-                                                src="https://tuk-cdn.s3.amazonaws.com/assets/components/grid_cards/gc_28.png"
+                                                src={user.avatar || "https://tuk-cdn.s3.amazonaws.com/assets/components/grid_cards/gc_28.png"}
                                                 alt="logo"/>
                                         </div>
                                         <div className="ml-2">
@@ -78,17 +78,17 @@ function Index() {
                             <div className="flex flex-col lg:flex-row items-start lg:items-center">
                                 <div
                                     className="flex flex-col lg:flex-row w-full lg:w-2/3 items-start lg:items-center mb-8 lg:mb-0">
-                                    <div className="mr-24 flex lg:block flex-row-reverse items-center mb-4 lg:mb-0">
+                                    <div className="mr-24 flex lg:block gap-x-2 items-center mb-4 lg:mb-0">
                                         <h3 className="text-indigo-700 dark:text-indigo-600 leading-6 text-lg">Average
                                             Salary</h3>
                                         <h2 className="mr-2 lg:mr-0 text-gray-600 dark:text-gray-400 text-xl lg:text-2xl font-bold">Rs. {user.org_average_salary}</h2>
                                     </div>
-                                    <div className="mr-24 flex lg:block flex-row-reverse items-center mb-4 lg:mb-0">
+                                    <div className="mr-24 flex lg:block gap-x-2 items-center mb-4 lg:mb-0">
                                         <h3 className="text-indigo-700 dark:text-indigo-600 leading-6 text-lg">Job
                                             Posts</h3>
                                         <h2 className="mr-2 lg:mr-0 text-gray-600 dark:text-gray-400 text-xl lg:text-2xl font-bold">{user.org_number_of_job_post}</h2>
                                     </div>
-                                    <div className="flex lg:block flex-row-reverse items-center">
+                                    <div className="flex lg:block gap-x-2 items-center">
                                         <h3 className="text-indigo-700 dark:text-indigo-600 leading-6 text-lg">Employees</h3>
                                         <h2 className="mr-2 lg:mr-0 text-gray-600 dark:text-gray-400 text-xl lg:text-2xl font-bold">{user.org_number_of_employees}</h2>
                                     </div>

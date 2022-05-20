@@ -4,6 +4,7 @@ import moment from "moment";
 import Router from "next/router";
 import Link from "next/link"
 import WhiteButton from "../buttons/whiteButton";
+import {IMAGE_COMPANY_PLACEHOLDER} from "../../others/config";
 
 function PostListItem(props: {
     post: Post
@@ -17,7 +18,7 @@ function PostListItem(props: {
                 className="flex flex-col md:mx-auto rounded bg-white overflow-hidden">
                 <div>
                     <img
-                        src={post.author?.avatar || "https://slcsolicitors.com/wp-content/uploads/2017/02/vendor-placeholder-logo.png"}
+                        src={post.author?.avatar || IMAGE_COMPANY_PLACEHOLDER}
                         className="w-full h-44 object-cover"/>
                 </div>
                 <div className="w-full">
@@ -51,7 +52,8 @@ function PostListItem(props: {
                         <h3 className="text-indigo-600 text-sm font-normal truncate ">
                             {/*<span className="text-xs text-indigo-800"></span>*/}
                             Rs. {post.salary_low} - Rs. {post.salary_high}</h3>
-                        <Link href={"post/1"}>
+                        {/*TODO: No id from API */}
+                        <Link href={"/post/20"}>
                             <a>
                                 <WhiteButton name={"View"} class={"bg-indigo-50 text-sm font-medium"}/>
                             </a>

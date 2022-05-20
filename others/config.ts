@@ -11,3 +11,5 @@ export const positionTypes = [
     {key: "Intern", value: "Intern"},
     {key: "Training", value: "Training"},
 ]
+
+export const IMAGE_COMPANY_PLACEHOLDER = "https://slcsolicitors.com/wp-content/uploads/2017/02/vendor-placeholder-logo.png"

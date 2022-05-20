@@ -40,6 +40,8 @@ export default function Register() {
             .string()
             .min(8, 'Password should be of minimum 8 characters length')
             .required('Password is required'),
+        is_organization: yup
+            .boolean()
     });
 
 
@@ -49,6 +51,7 @@ export default function Register() {
             last_name: '',
             email: '',
             password: '',
+            is_organization: false
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
@@ -78,7 +81,7 @@ export default function Register() {
     );
 
     function pushToVerification() {
-        Router.push('/verify')
+        Router.push('/account')
     }
 
     return (
@@ -93,7 +96,7 @@ export default function Register() {
                     </div>
 
                     <div
-                        className="bg-white shadow-lg rounded xl:w-1/3 lg:w-5/12 md:w-1/2 w-full lg:px-10 sm:px-6 sm:py-10 px-2 py-6">
+                        className="bg-white shadow rounded xl:w-1/3 lg:w-5/12 md:w-1/2 w-full lg:px-10 px-10 py-10 ">
                         <p className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
                             Create a new account
                         </p>
@@ -167,9 +170,13 @@ export default function Register() {
 
                         </div>
 
-                        <ToggleCheckbox name={"is_org"}
+                        <ToggleCheckbox name={"is_organization"}
                                         label={"Organization Account"}
-                                        defaultChecked={false}
+
+                                        defaultChecked={formik.values.is_organization}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.is_organization && Boolean(formik.errors.is_organization)}
+                                        errorMsg={formik.touched.is_organization && formik.errors.is_organization}
                                         cClass={"flex-row items-center justify-between mt-6 w-full "}
                         />
 

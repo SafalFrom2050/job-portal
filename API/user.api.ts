@@ -7,7 +7,8 @@ export type RegistrationCredential = {
     first_name: string,
     last_name: string,
     email: string,
-    password: string
+    password: string,
+    is_organization?: boolean
 }
 
 
@@ -16,11 +17,12 @@ export type LoginCredential = {
     password: string
 }
 
-export type RegisterUserResponse = {
+export type RegisterUserRequest = {
     first_name: string,
     last_name: string,
     email: string,
-    password: string
+    password: string,
+    is_organization?: boolean
 }
 
 export type UpdateUserProfilePictureRequest = {
@@ -30,8 +32,9 @@ export type UpdateUserProfilePictureRequest = {
 
 export const registerUser = async (credential: RegistrationCredential) => {
 
+    console.log(credential)
     try {
-        const {data, status} = await http.post<RegisterUserResponse>(
+        const {data, status} = await http.post<RegisterUserRequest>(
             'user/auth/register/',
             credential
         );
@@ -52,7 +55,7 @@ export const registerUser = async (credential: RegistrationCredential) => {
 export const loginUser = async (credentials: LoginCredential) => {
 
     try {
-        const {data, status} = await http.post<RegisterUserResponse>(
+        const {data, status} = await http.post<RegisterUserRequest>(
             'user/auth/login/',
             credentials
         );

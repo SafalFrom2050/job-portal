@@ -70,6 +70,25 @@ export const getPosts = async (http: AxiosInstance | null) => {
     }
 }
 
+export const getPostById = async (http: AxiosInstance | null, id?: string) => {
+
+    if (http == null || !id) return {data: [], status: null};
+
+    try {
+        const {data, status} = await http.get<PostListResponse>(
+            `post/${id}/`
+        );
+        return {data, status} as Response;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const e = error as AxiosError
+            return {data:e.response?.data, status: e.response?.status};
+        } else {
+            return {data: [], status: null} as Response;
+        }
+    }
+}
+
 export const searchPosts = async (http: AxiosInstance | null, searchPostRequest: SearchPostRequest) => {
 
     if (http == null) return {data: [], status: null};

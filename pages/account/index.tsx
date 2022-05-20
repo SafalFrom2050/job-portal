@@ -13,7 +13,7 @@ import {AuthContextType} from "../../@types/user";
 function Index() {
 
     const {user} = useContext(AuthContext) as AuthContextType;
-
+    console.log(user)
     return (
         <div className={"p-4"}>
             <Heading heading={"Manage Account"}/>
