@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import moment from "moment";
 import PrimaryButton from "../../components/buttons/primaryButton";
 import Spinner from "../../components/common/spinner";
@@ -9,9 +9,11 @@ import {useQuery} from "react-query";
 import {getPostById, Post} from "../../API/post.api";
 import {IMAGE_COMPANY_PLACEHOLDER} from '../../others/config';
 import Link from "next/link";
+import ApplicationFormModal from "../../components/post/applicationFormModal";
 
 function Index() {
 
+    const [showApplicationForm, setShowApplicationForm] = useState(false);
 
     const {id} = useRouter().query
 
@@ -24,6 +26,9 @@ function Index() {
 
     const post = data?.data as Post
 
+    function toggleApplicationForm() {
+        setShowApplicationForm((state) => !state)
+    }
 
     if (!post) return <div className={"max-w-[1000px] mx-auto h-[600px] flex items-center"}>
         <Spinner/>
@@ -31,6 +36,11 @@ function Index() {
 
     return (
         <div className="container max-w-[1000px] mx-auto w-full pt-8">
+
+            {showApplicationForm &&
+                <ApplicationFormModal show={showApplicationForm} setShow={setShowApplicationForm}/>
+            }
+
 
             <div className="container mx-auto flex items-start justify-center">
                 <div className="w-full p-2">
@@ -91,6 +101,7 @@ function Index() {
                             </div>
                             <div className={"ml-auto"}>
                                 <PrimaryButton
+                                    onClick={toggleApplicationForm}
                                     class={"text-base font-medium"}
                                     name={"Apply"}/>
                             </div>
