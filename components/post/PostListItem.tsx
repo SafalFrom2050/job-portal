@@ -4,7 +4,7 @@ import moment from "moment";
 import Router from "next/router";
 import Link from "next/link"
 import WhiteButton from "../buttons/whiteButton";
-import {IMAGE_COMPANY_PLACEHOLDER} from "../../others/config";
+import {BASE_URL, IMAGE_COMPANY_PLACEHOLDER} from "../../others/config";
 
 function PostListItem(props: {
     post: Post
@@ -18,7 +18,7 @@ function PostListItem(props: {
                 className="flex flex-col md:mx-auto rounded bg-white overflow-hidden">
                 <div>
                     <img
-                        src={post.author?.avatar || IMAGE_COMPANY_PLACEHOLDER}
+                        src={post.author?.avatar ? BASE_URL + post.author?.avatar.substring(1) : IMAGE_COMPANY_PLACEHOLDER}
                         className="w-full h-44 object-cover"/>
                 </div>
                 <div className="w-full">

@@ -7,7 +7,7 @@ import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
 import {useQuery} from "react-query";
 import {getPostById, Post} from "../../API/post.api";
-import {IMAGE_COMPANY_PLACEHOLDER} from '../../others/config';
+import {BASE_URL, IMAGE_COMPANY_PLACEHOLDER} from '../../others/config';
 import Link from "next/link";
 import ApplicationFormModal from "../../components/post/applicationFormModal";
 
@@ -63,7 +63,7 @@ function Index() {
                                     <div className="w-12 h-12 rounded">
                                         <img
                                             className="w-full h-full overflow-hidden object-cover rounded object-center"
-                                            src={post.author?.avatar || IMAGE_COMPANY_PLACEHOLDER}
+                                            src={post.author?.avatar ? BASE_URL + post.author?.avatar.substring(1) : IMAGE_COMPANY_PLACEHOLDER}
                                             alt="logo"/>
                                     </div>
                                     <Link href={"/org/" + post.author?.id}>

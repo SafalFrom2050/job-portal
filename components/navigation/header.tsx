@@ -5,7 +5,7 @@ import {AuthContextType} from "../../@types/user";
 import {TokenContext} from "../../contexts/tokenContext";
 import {TokenContextType} from "../../@types/token";
 import Router from "next/router";
-import {APP_NAME} from "../../others/config";
+import {APP_NAME, BASE_URL} from "../../others/config";
 
 export default function Header(props: { guest?: boolean }) {
 
@@ -116,7 +116,7 @@ export default function Header(props: { guest?: boolean }) {
                                 <div
                                     className="h-8 w-8 mb-4 lg:mb-0 mr-4 rounded-full overflow-hidden shadow hover:outline hover:outline-indigo-700 hover:outline-2">
                                     <img
-                                        src="https://images.pexels.com/photos/3760260/pexels-photo-3760260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                        src={user && user.avatar ? BASE_URL + user.avatar?.substring(1) : "/images/default-profile.png"}
                                         className="h-full w-full"/>
                                 </div>
                             </button>

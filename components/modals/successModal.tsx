@@ -42,7 +42,7 @@ const SuccessModal = (props: {
                                          class={"text-sm font-medium"}
                                          onClick={props.buttonLeftOnClick}/>
 
-                            <PrimaryButton isSubmitType={true}
+                            <PrimaryButton isSubmitType={false}
                                 name={props.buttonRightText || ""}
                                            class={"text-sm font-medium"}
                                            onClick={props.buttonRightOnClick}/>
