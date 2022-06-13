@@ -11,6 +11,9 @@ import SuccessModal from "../modals/successModal";
 import {FormErrorMessage} from "../common/formErrorMessage";
 import Heading from "../common/heading";
 import ImageInput from "../inputs/ImageInput";
+import {BASE_URL} from "../../others/config";
+import Router from "next/router";
+
 
 function EditProfilePicture() {
 
@@ -20,7 +23,6 @@ function EditProfilePicture() {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
-
 
     const validationSchema = yup.object({
         avatar: yup
@@ -40,17 +42,11 @@ function EditProfilePicture() {
     })
 
     useEffect(() => {
-        formik.setFieldValue("avatar", user.avatar || "")
+        formik.setFieldValue("avatar", user.avatar ? BASE_URL + user.avatar.substring(1) : "")
 
         setFormDisabled(false)
 
     }, [user]);
-
-    useEffect(() => {
-        console.log(formik.values)
-        console.log(formik.errors)
-
-    }, [formik.errors, formik.values]);
 
 
     const {isLoading: isUpdatingAccount, mutate: initiateUpdateAccount} = useMutation<any, Error>(
@@ -60,7 +56,6 @@ function EditProfilePicture() {
             const userRequest: UpdateUserProfilePictureRequest = {...formik.values, id: user.id}
 
             const result = await updateUser(axiosInstance, userRequest).then(response => {
-
                 if (response.status == 200) {
                     // Success
                     setShowSuccessModal(true)
@@ -82,40 +77,40 @@ function EditProfilePicture() {
     );
 
 
-
     return (
         <div>
             <SuccessModal show={showSuccessModal}
                           setShow={setShowSuccessModal}
                           buttonLeftText={"Return To Job List"}
                           buttonRightText={"View Profile"}
-                // buttonRightOnClick={newForm}
-                // buttonLeftOnClick={returnToJobList}
+                          buttonRightOnClick={() => {
+                              setShowSuccessModal(false);
+                              Router.push('/account')
+                          }}
+                          buttonLeftOnClick={() => Router.push('/')}
                           title={"Your account has been updated"}/>
 
             {errorMsg &&
-                <FormErrorMessage errorMsg={errorMsg} />
+                <FormErrorMessage errorMsg={errorMsg}/>
             }
 
             <div className="max-w-[800px] mx-auto py-4 px-10 mt-3">
-                <form method={"POST"}  encType="multipart/form-data" onSubmit={(e) => {
-                    e.preventDefault();
-                    formik.submitForm()
-                }}>
+                <form method={"POST"} encType="multipart/form-data">
 
                     <ImageInput
-                        value={user.avatar}
+                        value={formik.values.avatar}
                         name={"avatar"}
                         handleChange={(target) => {
-                            if (target.files){
-                                formik.setFieldValue("avatar", target.files[0]);
-                                formik.submitForm()
+                            if (target.files) {
+                                formik.setFieldValue("avatar", target.files.item(0)).then(() => {
+                                    formik.submitForm()
+                                });
                             }
                         }}
                     />
                 </form>
 
-                <Heading heading={"Profile Picture"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl mx-auto"} />
+                <Heading heading={"Profile Picture"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl mx-auto"}/>
             </div>
         </div>
     );

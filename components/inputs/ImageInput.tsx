@@ -1,6 +1,8 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {PencilAltIcon} from "@heroicons/react/solid";
 import {overrideTailwindClasses} from "tailwind-override";
+import {Simulate} from "react-dom/test-utils";
+import input = Simulate.input;
 
 function ImageInput(props: {
     label?: string,
@@ -32,6 +34,11 @@ function ImageInput(props: {
         }
     };
 
+    useEffect(() => {
+        setPictureSrc(props.value || "")
+    }, [props.value]);
+
+
     return (
         <div className={overrideTailwindClasses(`w-full h-36 h-${size} bg-red flex flex-col items-center relative ${pClassName}`)}>
 
@@ -39,7 +46,7 @@ function ImageInput(props: {
                 <span aria-hidden="true">
                     <div
                         className="w-full h-full rounded-full bg-cover bg-center bg-no-repeat absolute shadow flex items-center justify-center">
-                        <img src={pictureSrc && pictureSrc !== '' ? pictureSrc : '/images/default-profile.jpeg'}
+                        <img src={pictureSrc !== '' ? pictureSrc : '/images/default-profile.png'}
                              alt={"Profile Picture"}
                              className="absolute z-0 h-full w-full object-cover rounded-full shadow top-0 left-0 bottom-0 right-0"/>
                         <div className="absolute bg-black opacity-30 top-0 right-0 bottom-0 left-0 rounded-full z-0"/>

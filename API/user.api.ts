@@ -27,7 +27,7 @@ export type RegisterUserRequest = {
 
 export type UpdateUserProfilePictureRequest = {
     id?: number
-    avatar?: string
+    avatar?: File | string
 }
 
 export const registerUser = async (credential: RegistrationCredential) => {
@@ -78,13 +78,16 @@ export const updateUser = async (axiosInstance: AxiosInstance, user: User | Upda
     try {
         const response = await axiosInstance.patch(
             `user/${user.id}/`,
-            user
+            user,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
         );
 
-        console.log(response)
+        console.log(user)
         const {data, status} = response
-
-        console.log(JSON.stringify(data));
 
         return {data, status} as Response;
     } catch (error) {
@@ -92,6 +95,7 @@ export const updateUser = async (axiosInstance: AxiosInstance, user: User | Upda
             const e = error as AxiosError
             return {data:e.response?.data, status: e.response?.status};
         } else {
+            console.log(error)
             return {data: 'An unexpected error occurred', status: null} as Response;
         }
     }
