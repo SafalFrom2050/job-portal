@@ -73,7 +73,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
     const formik = useFormik({
         initialValues: {
             title: '',
-            field: '',
+            field: '0',
             position: '',
             location: ''
         },
@@ -206,7 +206,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
                                         <Dropdown name={"field"} options={fieldTypes}
 
-                                                  selected={postFields[parseInt(formik.values.field)]?.name}
+                                                  selected={postFields ? postFields[parseInt(formik.values.field)]?.name : 'Subject'}
                                                   onSelect={(v) => !formik.setFieldValue("field", v, true)}
 
                                                   label="Subject" cClass={"bg-white border border-gray-200"}/>
