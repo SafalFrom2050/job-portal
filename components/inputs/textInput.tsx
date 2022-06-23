@@ -18,7 +18,8 @@ function TextInput(props: {
     errorMsg?: string| false | undefined,
     required?: boolean,
     leftLabel?: string,
-    rightLabel? :string
+    rightLabel? :string,
+    autocomplete?: string,
 }) {
 
     return (
@@ -49,6 +50,7 @@ function TextInput(props: {
                     placeholder={props.placeholder || ""}
                     onChange={props.onChange}
                     value={props.value}
+                    autoComplete={props.autocomplete}
                 />
                 {props.rightLabel &&
                     <label htmlFor={props.name}
