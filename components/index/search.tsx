@@ -144,7 +144,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
         <>
             <form onSubmit={(e) => {
                 e.preventDefault()
-                if (formik.isValid){
+                if (formik.isValid) {
                     Router.push({pathname: "/", query: formik.values},
                         undefined, {shallow: true}
                     )
@@ -152,49 +152,51 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
             }}>
 
                 <div className="relative">
-                    <div className="py-4 px-7">
-                        <div className="mt-7 pt-0  rounded-[4px]  bg-white max-w-[400px] w-full mx-auto ">
-                            <div className={`px-8 py-6 mt-12 transition-all`} id="interaction">
-                                <div className="flex flex-col w-full gap-y-2">
-                                    <div className="relative w-full">
-                                        <input name={"title"}
-                                               id={"title"}
-                                               autoComplete={"search-jobs"}
+                    <div className="py-4">
+                        <div className={`mt-7 pt-0  rounded-[4px]  bg-white max-w-[400px] w-full mx-auto ${showFilters && 'shadow-2xl'}`}>
+                            <div className={`py-6 mt-12 transition-all`} id="interaction">
+                                <div className={'px-8'}>
+                                    <div className=" flex flex-col w-full gap-y-2">
+                                        <div className="relative w-full">
+                                            <input name={"title"}
+                                                   id={"title"}
+                                                   autoComplete={"search-jobs"}
 
-                                               autoFocus={true}
-                                               onChange={formik.handleChange}
-                                               value={formik.values.title}
+                                                   autoFocus={true}
+                                                   onChange={formik.handleChange}
+                                                   value={formik.values.title}
 
-                                               placeholder="Search Job"
-                                               className="p-4 py-2 outline-none focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"
-                                        />
+                                                   placeholder="Search Job"
+                                                   className="p-4 py-2 outline-none focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"
+                                            />
 
-                                        <SearchIcon
-                                            className="w-6 h-6 absolute pointer-events-none top-2 right-5 text-gray-600"/>
+                                            <SearchIcon
+                                                className="w-6 h-6 absolute pointer-events-none top-2 right-5 text-gray-600"/>
 
-                                    </div>
-                                    <div className="flex justify-between w-full h-10 mt-3 gap-x-2 flex-wrap">
+                                        </div>
+                                        <div className="flex justify-between w-full h-10 mt-3 gap-x-2 flex-wrap">
 
-                                        <TextButton
-                                            name={"Filters"}
-                                            onClick={toggleAdvanceOptions}
-                                            class={"text-sm"}
-                                            cClass={"h-full flex items-center"}
-                                            iconRight={<ArrowDown
-                                                className={`w-4 h-4 transform duration-150 ${showFilters ? "rotate-180" : ""}`}/>}
-                                        />
+                                            <TextButton
+                                                name={"Filters"}
+                                                onClick={toggleAdvanceOptions}
+                                                class={"text-sm"}
+                                                cClass={"h-full flex items-center"}
+                                                iconRight={<ArrowDown
+                                                    className={`w-4 h-4 transform duration-150 ${showFilters ? "rotate-180" : ""}`}/>}
+                                            />
 
-                                        <PrimaryButton
-                                            autoFocus={false}
-                                            isSubmitType={true}
-                                            name={'Search'}
-                                            cClass="h-full flex items-center"
-                                            class={`${showFilters ? "hidden" : ""} font-medium text-base mx-0`}/>
+                                            <PrimaryButton
+                                                autoFocus={false}
+                                                isSubmitType={true}
+                                                name={'Search'}
+                                                cClass="h-full flex items-center"
+                                                class={`${showFilters ? "hidden" : ""} font-medium text-base mx-0`}/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div
-                                    className={` transition-all duration-150 ${showFilters ? "h-auto min-h-0 max-h-screen" : "max-h-0 overflow-hidden"} `}>
-                                    <hr className="bg-[#F1F5F9] my-6"/>
+                                    className={` bg-white absolute z-50 px-8 max-w-[400px] w-full rounded-[4px] mt-4 transition-all duration-150 ${showFilters ? "h-auto min-h-0 max-h-screen shadow-2xl" : "max-h-0 overflow-hidden"} `}>
+                                    <hr className="bg-[#F1F5F9] mb-6"/>
 
                                     <div className={"flex flex-col gap-3"}>
                                         {/* Interaction */}
@@ -213,15 +215,17 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
                                                   label="Subject" cClass={"bg-white border border-gray-200"}/>
 
-                                        <TextInput name="location" placeholder="Location" type="text" autocomplete={"home city"}
+                                        <TextInput name="location" placeholder="Location" type="text"
+                                                   autocomplete={"home city"}
                                                    onChange={formik.handleChange} value={formik.values.location}
                                                    iClass="bg-white mt-0 text-sm px-5 font-medium text-gray-600 placeholder-gray-400"/>
 
                                     </div>
                                     <div
-                                        className="flex flex-col items-center justify-end w-full gap-4 mt-4 lg:flex-row">
+                                        className="flex flex-col items-center justify-end w-full gap-4 my-4 lg:flex-row">
                                         {/*<WhiteButton name={"Advanced"} class="font-medium text-sm"/>*/}
-                                        <PrimaryButton autoFocus={false} disabled={isSearching || !formik.isValid} isSubmitType={true}
+                                        <PrimaryButton autoFocus={false} disabled={isSearching || !formik.isValid}
+                                                       isSubmitType={true}
                                                        name={"Search"}
                                                        class="font-medium text-base mx-0"/>
                                     </div>
