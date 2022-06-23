@@ -59,8 +59,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
     const validationSchema = yup.object({
         title: yup
-            .string()
-            .required(),
+            .string(),
         field: yup
             .string(),
         position: yup
@@ -73,7 +72,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
     const formik = useFormik({
         initialValues: {
             title: '',
-            field: '0',
+            field: '',
             position: '',
             location: ''
         },
@@ -145,9 +144,11 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
         <>
             <form onSubmit={(e) => {
                 e.preventDefault()
-                Router.push({pathname: "/", query: formik.values},
-                    undefined, {shallow: true}
-                )
+                if (formik.isValid){
+                    Router.push({pathname: "/", query: formik.values},
+                        undefined, {shallow: true}
+                    )
+                }
             }}>
 
                 <div className="relative">
@@ -158,6 +159,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                     <div className="relative w-full">
                                         <input name={"title"}
                                                id={"title"}
+                                               autoComplete={"search-jobs"}
 
                                                autoFocus={true}
                                                onChange={formik.handleChange}
@@ -206,22 +208,22 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
                                         <Dropdown name={"field"} options={fieldTypes}
 
-                                                  selected={postFields ? postFields[parseInt(formik.values.field)]?.name : 'Subject'}
+                                                  selected={(postFields && formik.values.field) ? postFields.find((field) => field.id == formik.values.field)?.name : 'Subject'}
                                                   onSelect={(v) => !formik.setFieldValue("field", v, true)}
 
                                                   label="Subject" cClass={"bg-white border border-gray-200"}/>
 
-                                        <TextInput name="location" placeholder="Location" type="text"
+                                        <TextInput name="location" placeholder="Location" type="text" autocomplete={"home city"}
                                                    onChange={formik.handleChange} value={formik.values.location}
                                                    iClass="bg-white mt-0 text-sm px-5 font-medium text-gray-600 placeholder-gray-400"/>
 
                                     </div>
                                     <div
-                                        className="flex flex-col items-center justify-end w-full gap-4 mt-12 lg:flex-row">
-                                        <WhiteButton name={"Advanced"} class="font-medium text-sm"/>
-                                        <PrimaryButton autoFocus={false} disabled={isSearching} isSubmitType={true}
+                                        className="flex flex-col items-center justify-end w-full gap-4 mt-4 lg:flex-row">
+                                        {/*<WhiteButton name={"Advanced"} class="font-medium text-sm"/>*/}
+                                        <PrimaryButton autoFocus={false} disabled={isSearching || !formik.isValid} isSubmitType={true}
                                                        name={"Search"}
-                                                       class="font-medium text-base"/>
+                                                       class="font-medium text-base mx-0"/>
                                     </div>
                                 </div>
                             </div>
