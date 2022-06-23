@@ -22,9 +22,9 @@ function ApplicationFormModal(props: {
                         <h3 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Your Details</h3>
                         <div className="flex justify-center w-full gap-x-2">
 
-                            <FileInputWithDragDrop cClass={""} message={"Drop your CV here"}/>
+                            <FileInputWithDragDrop name={"cv"} message={"Drop your CV here"} onFileChanged={(file)=>console.log(file)}/>
 
-                            <FileInputWithDragDrop cClass={""} message={"Drop your Cover Letter here"}/>
+                            <FileInputWithDragDrop name={"cover_letter"} message={"Drop your Cover Letter here"} onFileChanged={(file)=>console.log(file)}/>
 
                         </div>
 

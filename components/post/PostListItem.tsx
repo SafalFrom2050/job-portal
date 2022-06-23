@@ -1,7 +1,6 @@
 import React from 'react';
 import {Post} from "../../API/post.api";
 import moment from "moment";
-import Router from "next/router";
 import Link from "next/link"
 import WhiteButton from "../buttons/whiteButton";
 import {BASE_URL, IMAGE_COMPANY_PLACEHOLDER} from "../../others/config";

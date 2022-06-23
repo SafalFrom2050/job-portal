@@ -110,7 +110,7 @@ function EditProfilePicture() {
                     />
                 </form>
 
-                <Heading heading={"Profile Picture"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl mx-auto"}/>
+                <Heading heading={"Picture"} cClass={"pt-0 pb-6 px-0"} hClass={"text-lg mx-auto font-medium"}/>
             </div>
         </div>
     );

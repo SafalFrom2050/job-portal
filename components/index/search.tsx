@@ -197,19 +197,19 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                     <div className={"flex flex-col gap-3"}>
                                         {/* Interaction */}
 
-                                        <Dropdown name={"field"} options={fieldTypes}
-
-                                                  selected={formik.values.field}
-                                                  onSelect={(v) => !formik.setFieldValue("field", v, true)}
-
-                                                  label="Field" cClass={"bg-white border border-gray-200"}/>
-
                                         <Dropdown name={"position"} options={positionTypes}
 
                                                   selected={formik.values.position}
                                                   onSelect={(v) => !formik.setFieldValue("position", v, true)}
 
-                                                  label="Position" cClass={"bg-white border border-gray-200"}/>
+                                                  label="Level" cClass={"bg-white border border-gray-200"}/>
+
+                                        <Dropdown name={"field"} options={fieldTypes}
+
+                                                  selected={postFields[parseInt(formik.values.field)]?.name}
+                                                  onSelect={(v) => !formik.setFieldValue("field", v, true)}
+
+                                                  label="Subject" cClass={"bg-white border border-gray-200"}/>
 
                                         <TextInput name="location" placeholder="Location" type="text"
                                                    onChange={formik.handleChange} value={formik.values.location}

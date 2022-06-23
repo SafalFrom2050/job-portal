@@ -1,16 +1,27 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {overrideTailwindClasses} from "tailwind-override";
 
-function FileInputWithDragDrop(props: { message?: String, cClass?: String }) {
+function FileInputWithDragDrop(props: { name: string, id?: string, message?: String, cClass?: String, onFileChanged?: (file?: File) => void }) {
 
     const [isDropping, setIsDropping] = useState(false);
+
+    const [selectedFile, setSelectedFile] = useState(undefined as undefined | String);
+
+
+    function onFileChange(file?: File) {
+        console.log(file)
+        props.onFileChanged?.(file)
+
+        setSelectedFile(file?.name)
+    }
 
     return (
         <div
             onDrop={(ev) => {
                 ev.preventDefault();
                 setIsDropping(false)
-                console.log(ev.dataTransfer.files)
+
+                onFileChange(ev.dataTransfer.files[0]);
             }}
 
             onDragOver={(ev) => {
@@ -37,14 +48,18 @@ function FileInputWithDragDrop(props: { message?: String, cClass?: String }) {
                     <line x1={12} y1={12} x2={12} y2={21}/>
                 </svg>
             </div>
-            <p className="text-base font-normal tracking-normal text-gray-800 dark:text-gray-100 text-center">{props.message || "Drag and drop here"}</p>
+            <p className="text-base font-normal tracking-normal text-gray-800 dark:text-gray-100 text-center">
+                {selectedFile ? `Selected: ${selectedFile}` : (props.message || "Drag and drop here")}
+            </p>
             <p className="text-base font-normal tracking-normal text-gray-800 dark:text-gray-100 text-center my-1">or</p>
             <label htmlFor="fileUp"
                    className="cursor-pointer text-base font-normal tracking-normal text-indigo-700 dark:text-indigo-600 text-center">
                 {" "}
                 browse{" "}
             </label>
-            <input type="file" className="hidden" name="fileUpload" id="fileUp"/>
+            <input type="file" className="hidden" name={props.name} id={props.id || props.name} onChange={(e) => {
+                return onFileChange(e.target.files ? e.target.files[0] : undefined);
+            }}/>
         </div>
     );
 }
