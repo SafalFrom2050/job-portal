@@ -13,6 +13,7 @@ const queryClient = new QueryClient()
 
 
 function MyApp({Component, pageProps}: AppProps) {
+
     return (
         <AlertProvider>
             <TokenProvider>
@@ -25,8 +26,9 @@ function MyApp({Component, pageProps}: AppProps) {
 
                                 {/* Only in Mobile */}
                                 <BottomNav/>
-                                <Component {...pageProps} />
-
+                                <div className={"min-h-screen"}>
+                                    <Component {...pageProps} />
+                                </div>
                                 <Footer/>
                             </>
                         </QueryClientProvider>
