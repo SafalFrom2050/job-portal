@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Post} from "../../API/post.api";
 import moment from "moment";
 import Link from "next/link"
+import Image from "next/image";
 import WhiteButton from "../buttons/whiteButton";
 import {BASE_URL, IMAGE_COMPANY_PLACEHOLDER} from "../../others/config";
 
@@ -10,15 +11,32 @@ function PostListItem(props: {
 }) {
 
     const {post} = props
+    const [imageUrl, setImageUrl] = useState(post.author?.avatar ? BASE_URL + post.author?.avatar.substring(1) : IMAGE_COMPANY_PLACEHOLDER);
 
     return (
         <div>
             <div
                 className="flex flex-col md:mx-auto rounded bg-white overflow-hidden">
-                <div>
-                    <img
-                        src={post.author?.avatar ? BASE_URL + post.author?.avatar.substring(1) : IMAGE_COMPANY_PLACEHOLDER}
-                        className="w-full h-44 object-cover"/>
+                <div className={'relative h-56 w-full rounded-t bg-gray-200'}>
+                    <Image
+                        onError={(e)=>{
+                            console.log("error:")
+                            console.log(e)
+                        }}
+                        layout={'fill'}
+                        className={"z-0"}
+                        objectFit={'cover'}
+                        placeholder={'blur'}
+                        blurDataURL={IMAGE_COMPANY_PLACEHOLDER}
+                        loading={'lazy'}
+                        onLoadingComplete={(r)=>{
+                            console.log('loaded: '+r)
+                        }}
+
+                        // src={IMAGE_COMPANY_PLACEHOLDER}
+                        src={imageUrl}
+
+                    />
                 </div>
                 <div className="w-full">
 
