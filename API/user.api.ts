@@ -73,6 +73,48 @@ export const loginUser = async (credentials: LoginCredential) => {
     }
 }
 
+// TODO: Implementation
+export const sendVerificationEmail = async () => {
+
+    try {
+        const {data, status} = await http.post<RegisterUserRequest>(
+            'user/auth/login/'
+        );
+
+        console.log(JSON.stringify(data));
+
+        return {data, status} as Response;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const e = error as AxiosError
+            return {data:e.response?.data, status: e.response?.status};
+        } else {
+            return {data: 'An unexpected error occurred', status: null} as Response;
+        }
+    }
+}
+
+export const sendEmailForPasswordReset = async (email: String) => {
+
+    try {
+        const {data, status} = await http.post<RegisterUserRequest>(
+            'user/auth/reset_password/',
+            {email: email}
+        );
+
+        console.log(JSON.stringify(data));
+
+        return {data, status} as Response;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const e = error as AxiosError
+            return {data:e.response?.data, status: e.response?.status};
+        } else {
+            return {data: 'An unexpected error occurred', status: null} as Response;
+        }
+    }
+}
+
 export const updateUser = async (axiosInstance: AxiosInstance, user: User | UpdateUserProfilePictureRequest) => {
 
     try {

@@ -108,7 +108,7 @@ export default function Login() {
                                        errorMsg={formik.touched.email && formik.errors.email}
                             />
                         </div>
-                        <div className="mt-6 w-full">
+                        <div className="mt-4 w-full">
 
                             <TextInput type={showpass ? 'text' : 'password'}
                                        name={'password'}
@@ -125,8 +125,19 @@ export default function Login() {
                                 </div>
                             </TextInput>
 
+                            <div className={'text-right'}>
+                                <Link href="/auth/forgotPassword">
+                                    <a
+                                        className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer">
+                                        {" "}
+                                        Forgot password?
+                                    </a>
+                                </Link>
+
+                            </div>
+
                         </div>
-                        <div className="mt-6">
+                        <div className="mt-2">
                             <PrimaryButton
                                 disabled={(isLoggingIn)}
                                 onClick={formik.submitForm}

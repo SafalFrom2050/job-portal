@@ -126,7 +126,7 @@ export default function Register() {
                                 />
                             </div>
 
-                            <div className={"mt-6"}>
+                            <div className={"mt-4"}>
                                 <TextInput type={'text'}
                                            name={'last_name'}
                                            label={'last name'}
@@ -138,7 +138,7 @@ export default function Register() {
                             </div>
 
                         </div>
-                        <div className={"mt-6"}>
+                        <div className={"mt-4"}>
                             <TextInput type={'email'}
                                        name={'email'}
                                        label={'email'}
@@ -151,7 +151,7 @@ export default function Register() {
                         </div>
 
 
-                        <div className="mt-6 w-full">
+                        <div className="mt-4 w-full">
 
                             <TextInput type={showpass ? 'text' : 'password'}
                                        name={'password'}
@@ -180,7 +180,7 @@ export default function Register() {
                                         cClass={"flex-row items-center justify-between mt-6 w-full "}
                         />
 
-                        <div className="mt-6">
+                        <div className="mt-4">
                             <PrimaryButton
                                 disabled={isRegisteringUser || Object.keys(formik.errors).length !== 0}
                                 onClick={formik.submitForm}
