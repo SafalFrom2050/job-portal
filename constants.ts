@@ -17,3 +17,18 @@ export const GENERIC_ALERT = {
     duration: DEFAULT_ALERT_DURATION_MS
 }
 
+export const authOnlyRoutes = [
+    'account',
+    'post/create',
+    'post/',
+
+]
+
+export const organizationOnlyRoutes = [
+    'post/create',
+
+]
+
+export const individualOnlyRoutes = [
+
+]

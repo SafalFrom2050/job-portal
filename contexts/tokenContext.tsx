@@ -33,8 +33,16 @@ export const TokenProvider: React.FC<Props> = ({children}) => {
         const accessToken = localStorage.getItem("accessToken")
 
         if (accessToken == null || accessToken == '') {
-            Router.push('/login')
-            setAlert({type: ALERT_TYPE_WARNING, title: "Please login to continue"})
+            setAlert({
+                type: ALERT_TYPE_WARNING,
+                title: "You are not logged in!",
+                message: "Please login to access more features",
+                action: () => {
+                    Router.replace('/login')
+                },
+                actionButtonText: 'Login',
+                duration: 8000
+            })
         }
         setToken({access: accessToken, refresh: null})
         console.log(accessToken)

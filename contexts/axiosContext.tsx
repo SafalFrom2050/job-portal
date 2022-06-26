@@ -27,6 +27,7 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
     const [toggle, setToggle] = useState(false)
 
     let axiosInstance = useRef(null as AxiosInstanceRef)
+    const axiosInstanceGuest = useRef(null as AxiosInstanceRef)
 
     function reRender() {
         console.log("Axios instance changed! Re-rendering...")
@@ -50,16 +51,40 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
             (response) => response,
             async (error) => {
                 if (error.response.status == 401) {
-                    setAlert({type: ALERT_TYPE_WARNING, title: "Authentication required!"})
+                    setAlert({
+                        type: ALERT_TYPE_WARNING,
+                        title: "You are not logged in!",
+                        message: "Please login to access more features",
+                        action: () => {
+                            Router.replace('/login')
+                        },
+                        actionButtonText: 'Login',
+                    })
 
-                    await Router.replace('/login')
-                }else if (error.response.status == 500) {
-                    setAlert({type: 2, title: "The server has encountered an issue and could not process your request.", duration: 5000})
+                } else if (error.response.status == 500) {
+                    setAlert({
+                        type: 2,
+                        title: "The server has encountered an issue and could not process your request.",
+                        duration: 5000
+                    })
                 }
             }
         )
         reRender()
     }, [token.access]);
 
-    return <AxiosContext.Provider value={{axiosInstance: axiosInstance.current}}>{children}</AxiosContext.Provider>
+    useEffect(() => {
+        axiosInstanceGuest.current = axios.create({
+            baseURL: BASE_URL,
+            headers: {
+                Accept: 'application/json',
+            }
+        })
+    }, []);
+
+
+    return <AxiosContext.Provider value={{
+        axiosInstance: axiosInstance.current,
+        axiosInstanceGuest: axiosInstanceGuest.current
+    }}>{children}</AxiosContext.Provider>
 }

@@ -1,11 +1,13 @@
 import * as React from "react"
 import {useContext, useEffect, useState} from "react"
-import {TokenContextType} from "../@types/token"
 import {AuthContextType, User} from "../@types/user";
-import {TokenContext} from "./tokenContext";
 import {AxiosContext} from "./axiosContext";
 import {AxiosContextType} from "../@types/axiosContextType";
 import {getCurrentUser} from "../API/auth.api";
+import Router, {useRouter} from "next/router";
+import {ALERT_TYPE_WARNING, authOnlyRoutes, organizationOnlyRoutes} from "../constants";
+import {AlertContext} from "./alertContext";
+import {AlertContextType} from "../@types/alert";
 
 
 export const AuthContext = React.createContext<AuthContextType | null>(null)
@@ -15,31 +17,75 @@ type Props = {
 };
 
 export const AuthProvider: React.FC<Props> = ({children}) => {
+    const {pathname} = useRouter()
+
     const [user, setUser] = React.useState<User>({});
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const {token} = useContext(TokenContext) as TokenContextType;
+    const {setAlert} = useContext(AlertContext) as AlertContextType;
+
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType;
 
-    function saveUser(user: User) {
-        setUser(user)
-        setIsLoggedIn(true)
-    }
-
     useEffect(() => {
         // Checks authentication status and saves user but redirects if unsuccessful
-        if (axiosInstance){
-            getCurrentUser(axiosInstance).then((v)=>{
+        if (axiosInstance) {
+            getCurrentUser(axiosInstance).then((v) => {
                 saveUser(v?.data)
             })
         }
 
     }, [axiosInstance]);
 
+    useEffect(() => {
+        if (!isLoggedIn){
+            authOnlyRoutes.map((route) => {
+                if (pathname.startsWith('/' + route)) {
+                    Router.back()
+                    setAlert({
+                        type: ALERT_TYPE_WARNING,
+                        title: "You are not logged in!",
+                        message: "Please login to access more features",
+                        action: () => {
+                            Router.replace('/login')
+                        },
+                        actionButtonText: 'Login',
+                        duration: 8000
+                    })
+                }
+            })
+        }
+
+
+        if (!user.is_organization) {
+            organizationOnlyRoutes.map((route) => {
+                if (pathname.startsWith('/' + route)) {
+                    Router.back()
+                    setAlert({
+                        type: ALERT_TYPE_WARNING,
+                        title: "Only organization can access this page!",
+                        message: "Please change your account type to 'Organization' for access",
+                        action: () => {
+                            Router.replace('/account')
+                        },
+                        actionButtonText: 'Account Settings',
+                        duration: 8000
+                    })
+                }
+            })
+        }
+
+    }, [pathname]);
+
+
+    function saveUser(user: User) {
+        setUser(user)
+        setIsLoggedIn(true)
+    }
+
     function syncUser() {
-        if (axiosInstance){
-            getCurrentUser(axiosInstance).then((v)=>{
+        if (axiosInstance) {
+            getCurrentUser(axiosInstance).then((v) => {
                 saveUser(v?.data)
             })
         }

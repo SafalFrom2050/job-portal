@@ -27,21 +27,22 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
     const [showFilters, setShowFilters] = useState(false);
 
-    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
+    const {axiosInstanceGuest} = useContext(AxiosContext) as AxiosContextType
 
     const {data, isLoading} = useQuery("postFields", fetchPostFields, {
-        enabled: axiosInstance != null,
+        enabled: axiosInstanceGuest != null,
         retryOnMount: true
     })
 
     const postFields = data?.data as PostField[]
 
     function fetchPostFields() {
-        return getPostFields(axiosInstance)
+        return null
+        return getPostFields(axiosInstanceGuest)
     }
 
     const getFieldTypes = () => {
-        if (!postFields) return []
+        if (!postFields || !Array.isArray(postFields)) return []
         return postFields.map((field) => ({key: field.id || "", value: field.name || ""}))
     }
 
@@ -85,12 +86,12 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
     const {isLoading: isSearching, mutate: initiateSearchQuery} = useMutation<any, Error>(
         async () => {
-            if (axiosInstance == null) return false
+            if (axiosInstanceGuest == null) return false
 
             const searchPostRequest: SearchPostRequest = {...formik.values, ...query}
             props.onSearchStateChange(searchStates.searching)
 
-            return await searchPosts(axiosInstance, searchPostRequest).then(response => {
+            return await searchPosts(axiosInstanceGuest, searchPostRequest).then(response => {
 
                 if (response.status == 200) {
                     // Success
