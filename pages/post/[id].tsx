@@ -7,9 +7,10 @@ import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
 import {useQuery} from "react-query";
 import {getPostById, Post} from "../../API/post.api";
-import {BASE_URL, IMAGE_COMPANY_PLACEHOLDER} from '../../others/config';
+import {APP_DESCRIPTION, APP_NAME, APP_URL, BASE_URL, IMAGE_COMPANY_PLACEHOLDER} from '../../others/config';
 import Link from "next/link";
 import ApplicationFormModal from "../../components/post/applicationFormModal";
+import {FacebookIcon, FacebookMessengerIcon, FacebookMessengerShareButton, FacebookShareButton} from "react-share";
 
 function Index() {
 
@@ -106,9 +107,22 @@ function Index() {
                                     name={"Apply"}/>
                             </div>
                         </div>
+
+
                     </div>
                     {/* Card code block end */}
 
+                    <div className="px-10 pt-4">
+                        <h6 className={"mb-2 font-medium"}>Share on</h6>
+                        <FacebookShareButton
+                            url={APP_URL}
+                            quote={APP_DESCRIPTION}
+                            hashtag={"#" + APP_NAME}
+                        >
+                            <FacebookIcon size={28}/>
+                        </FacebookShareButton>
+
+                    </div>
                 </div>
 
             </div>
