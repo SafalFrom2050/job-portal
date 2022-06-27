@@ -30,7 +30,7 @@ function Create(props: {}) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
-    const {user} = useContext(AuthContext) as AuthContextType;
+    const {user, isLoggedIn} = useContext(AuthContext) as AuthContextType;
 
     const {data} = useQuery("postFields", fetchPostFields, {
         enabled: axiosInstance != null,
@@ -132,6 +132,8 @@ function Create(props: {}) {
     function returnToJobList() {
         Router.push("/")
     }
+
+    if (!isLoggedIn) return <></>
 
     return (
         <div>

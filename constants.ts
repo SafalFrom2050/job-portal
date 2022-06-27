@@ -19,7 +19,6 @@ export const GENERIC_ALERT = {
 
 export const authOnlyRoutes = [
     'account',
-    'post/create',
     'post/',
 
 ]

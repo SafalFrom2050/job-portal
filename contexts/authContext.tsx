@@ -56,8 +56,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
             })
         }
 
-
-        if (!user.is_organization) {
+        if (isLoggedIn && user && !user.is_organization) {
             organizationOnlyRoutes.map((route) => {
                 if (pathname.startsWith('/' + route)) {
                     Router.back()
@@ -80,7 +79,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
 
     function saveUser(user: User) {
         setUser(user)
-        setIsLoggedIn(true)
+        if (user) setIsLoggedIn(true)
     }
 
     function syncUser() {
@@ -91,6 +90,21 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
         }
     }
 
+    if (!isLoggedIn){
+        authOnlyRoutes.map((route) => {
+            if (pathname.startsWith('/' + route)) {
+                return <></>
+            }
+        })
+    }
+
+    if (isLoggedIn && user && !user.is_organization) {
+        organizationOnlyRoutes.map((route) => {
+            if (pathname.startsWith('/' + route)) {
+                return <></>
+            }
+        })
+    }
 
     return <AuthContext.Provider value={{user, isLoggedIn, syncUser}}>{children}</AuthContext.Provider>
 }
