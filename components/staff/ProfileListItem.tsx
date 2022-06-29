@@ -11,6 +11,7 @@ import WhiteButton from "../../components/buttons/whiteButton";
 import TextButton from "../../components/buttons/textButton";
 import {MenuAlt3Icon, XIcon} from "@heroicons/react/outline";
 import {overrideTailwindClasses} from "tailwind-override";
+import Router from "next/router";
 
 function ProfileListItem() {
 
@@ -22,6 +23,11 @@ function ProfileListItem() {
 
     function closeQuickActions() {
         setIsQuickActionsOpen(false)
+    }
+
+    function openProfilePage(profileId: string) {
+        setIsQuickActionsOpen(false)
+        Router.push('/profile/me')
     }
 
     return (
@@ -52,7 +58,7 @@ function ProfileListItem() {
             </div>
 
             {/* Additional Details (Highlights) */}
-            <div className={"flex gap-x-6 justify-between mt-9 mx-3"}>
+            <div className={"flex gap-x-4 justify-between mt-9 mx-3"}>
                 <p className={"flex gap-x-1 text-gray-600 text-xs font-normal inline"}><CurrencyRupeeIcon
                     className={"w-4 h-4"}/> 20,000 - 30,000</p>
                 <p className={"flex gap-x-1 text-gray-700 text-xs font-medium inline"}><BriefcaseIcon
@@ -62,6 +68,7 @@ function ProfileListItem() {
 
             <div className={"mt-4 w-full"}>
                 <WhiteButton name={"View Profile"}
+                             onClick={()=> openProfilePage('1')}
                              class={"w-full mx-0 text-gray-800 font-medium border border-gray-600"}/>
             </div>
 
