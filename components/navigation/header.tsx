@@ -1,11 +1,15 @@
 import Link from "next/link";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../contexts/authContext";
 import {AuthContextType} from "../../@types/user";
 import {TokenContext} from "../../contexts/tokenContext";
 import {TokenContextType} from "../../@types/token";
 import Router from "next/router";
-import {APP_NAME, BASE_URL} from "../../others/config";
+import Image from "next/image";
+import {APP_NAME, APP_URL, BASE_URL} from "../../others/config";
+import {AlertContext} from "../../contexts/alertContext";
+import {AlertContextType} from "../../@types/alert";
+import {ALERT_TYPE_WARNING} from "../../constants";
 
 export default function Header(props: { guest?: boolean }) {
 
@@ -17,6 +21,7 @@ export default function Header(props: { guest?: boolean }) {
 
     const {user, isLoggedIn} = useContext(AuthContext) as AuthContextType;
     const {saveToken} = useContext(TokenContext) as TokenContextType;
+
 
     const selected = (props: any) => {
         let newArr = [...arr];
@@ -57,15 +62,14 @@ export default function Header(props: { guest?: boolean }) {
             name: 'Student Services',
             path: '/studentServices'
         },
-        {
-            name: 'Training',
-            path: '/training'
-        },
-        {
-            name: 'Intern',
-            path: '/intern'
-        },
-
+        // {
+        //     name: 'Training',
+        //     path: '/training'
+        // },
+        // {
+        //     name: 'Intern',
+        //     path: '/intern'
+        // },
     ]
 
     function logout() {
@@ -73,6 +77,7 @@ export default function Header(props: { guest?: boolean }) {
         saveToken({access: "", refresh: ""})
         Router.replace('/login')
     }
+
 
     return (
         <div className="relative 2xl:container 2xl:mx-auto w-full">
@@ -114,10 +119,13 @@ export default function Header(props: { guest?: boolean }) {
                         <div className=" flex space-x-5 justify-center items-center pl-2">
                             <button onClick={() => setShowAccountMenu(true)}>
                                 <div
-                                    className="h-8 w-8 mb-4 lg:mb-0 mr-4 rounded-full overflow-hidden shadow hover:outline hover:outline-indigo-700 hover:outline-2">
-                                    <img
+                                    className="relative h-8 w-8 mb-4 lg:mb-0 mr-4 rounded-full overflow-hidden shadow hover:outline hover:outline-indigo-700 hover:outline-2">
+
+                                    <Image
+                                        layout={'fill'}
                                         src={user && user.avatar ? BASE_URL + user.avatar?.substring(1) : "/images/default-profile.png"}
-                                        className="h-full w-full"/>
+                                        alt={'profile picture'}
+                                    />
                                 </div>
                             </button>
                         </div>

@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: ['job-post-test.herokuapp.com', 'slcsolicitors.com'],
+        domains: ['job-post-test.herokuapp.com', 'slcsolicitors.com', 'images.pexels.com'],
     },
 }
 

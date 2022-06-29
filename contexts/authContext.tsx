@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
                         action: () => {
                             Router.replace('/account')
                         },
-                        actionButtonText: 'Account Settings',
+                        actionButtonText: 'Account',
                         duration: 8000
                     })
                 }
