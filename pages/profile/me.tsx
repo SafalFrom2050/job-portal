@@ -3,8 +3,9 @@ import {AuthContext} from "../../contexts/authContext";
 import {AuthContextType} from "../../@types/user";
 import {BASE_URL} from "../../others/config";
 import Image from "next/image";
+import {ClockIcon} from "@heroicons/react/outline";
 
-function Index() {
+function Me() {
 
     const {user, isLoggedIn} = useContext(AuthContext) as AuthContextType;
 
@@ -85,9 +86,14 @@ function Index() {
                                     Development. To know more about me, please check out my CV.</p>
                             </div>
                             <div className=" w-full py-5 flex items-start justify-center">
-                                <div className="">
-                                    <h2 className="text-gray-600 dark:text-gray-400 font-bold text-xl xl:text-2xl leading-6 mb-2 text-center">82</h2>
-                                    <p className="text-gray-800 dark:text-gray-100 text-sm xl:text-xl leading-5">Reviews</p>
+
+                                <div className="flex justify-center items-center py-6">
+                                    <ClockIcon className={"w-24 h-24"} />
+                                    <div className="text-gray-800 w-1/2 pl-8 ">
+                                        <h1 className="font-bold text-2xl lg:text-5xl tracking-1px">{user.experience}</h1>
+                                        <h2 className="text-base lg:text-lg mt-4 leading-8 tracking-wide">Years of
+                                            Experience</h2>
+                                    </div>
                                 </div>
 
                             </div>
@@ -111,4 +117,4 @@ function Index() {
     );
 }
 
-export default Index;
+export default Me;
