@@ -19,14 +19,13 @@ export const GENERIC_ALERT = {
 
 export const authOnlyRoutes = [
     'account',
-    'post/',
-    'profile/me'
-
+    'post',
+    'profile/me',
 ]
 
 export const organizationOnlyRoutes = [
     'post/create',
-
+    'staff',
 ]
 
 export const individualOnlyRoutes = [
