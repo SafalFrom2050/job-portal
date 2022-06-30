@@ -12,8 +12,11 @@ import TextButton from "../../components/buttons/textButton";
 import {MenuAlt3Icon, XIcon} from "@heroicons/react/outline";
 import {overrideTailwindClasses} from "tailwind-override";
 import Router from "next/router";
+import {User} from "../../@types/user";
+import {formatCurrency} from "../../others/helpers";
+import { BASE_URL } from '../../others/config';
 
-function ProfileListItem() {
+function ProfileListItem(props: {user: User}) {
 
     const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(false);
 
@@ -25,9 +28,9 @@ function ProfileListItem() {
         setIsQuickActionsOpen(false)
     }
 
-    function openProfilePage(profileId: string) {
+    function openProfilePage() {
         setIsQuickActionsOpen(false)
-        Router.push('/profile/me')
+        Router.push(`/profile/${props.user.id}`)
     }
 
     return (
@@ -48,27 +51,27 @@ function ProfileListItem() {
                 <Image
                     alt={"profile image"}
                     layout={"fill"}
-                    src={"https://images.pexels.com/photos/34534/people-peoples-homeless-male.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}/>
+                    src={props.user.avatar ? BASE_URL + props.user.avatar?.substring(1) : '/images/default-profile.png'}/>
             </div>
 
             {/* Title and Position block */}
             <div className={"text-center mt-3"}>
-                <h3 className={"text-gray-900 text-base font-medium"}>Safal Sharma</h3>
-                <p className={"text-gray-400 text-sm"}>Software Engineer</p>
+                <h3 className={"text-gray-900 text-base font-medium"}>{props.user.first_name} {props.user.last_name}</h3>
+                <p className={"text-gray-400 text-sm"}>{props.user.position || 'Position Unspecified'}</p>
             </div>
 
             {/* Additional Details (Highlights) */}
             <div className={"flex gap-x-4 justify-between mt-9 mx-3"}>
                 <p className={"flex gap-x-1 text-gray-600 text-xs font-normal inline"}><CurrencyRupeeIcon
-                    className={"w-4 h-4"}/> 20,000 - 30,000</p>
+                    className={"w-4 h-4"}/>{formatCurrency(props.user.expected_salary_low)} - {formatCurrency(props.user.expected_salary_high)}</p>
                 <p className={"flex gap-x-1 text-gray-700 text-xs font-medium inline"}><BriefcaseIcon
-                    className={"w-4 h-4"}/> 3 years</p>
+                    className={"w-4 h-4"}/>{props.user.experience || 'unspecified'} years</p>
 
             </div>
 
             <div className={"mt-4 w-full"}>
                 <WhiteButton name={"View Profile"}
-                             onClick={()=> openProfilePage('1')}
+                             onClick={()=> openProfilePage()}
                              class={"w-full mx-0 text-gray-800 font-medium border border-gray-600"}/>
             </div>
 
@@ -87,18 +90,18 @@ function ProfileListItem() {
 
                 <div className={"h-full w-full flex flex-col gap-y-4 items-center justify-center"}>
 
-                    <button className={"cursor-pointer"} onClick={closeQuickActions}>
+                    <a href={`mailto:${props.user.email}`} className={"cursor-pointer"} onClick={closeQuickActions}>
                         <MailIcon className={"w-10 h-10 text-white transition-transform hover:scale-150"}/>
-                    </button>
+                    </a>
 
-                    <button className={"cursor-pointer"} onClick={closeQuickActions}>
+                    <a href={`tel:${props.user.phone}`} className={"cursor-pointer"} onClick={closeQuickActions}>
                         <PhoneIcon className={"w-10 h-10 text-white transition-transform hover:scale-150"}/>
-                    </button>
+                    </a>
 
-                    <button className={"relative cursor-pointer transition-transform hover:scale-150"} onClick={closeQuickActions}>
+                    <a href={props.user.cv} className={"relative cursor-pointer transition-transform hover:scale-150"} onClick={closeQuickActions}>
                         <DocumentDownloadIcon className={"w-10 h-10 text-white "}/>
                         <p className={"absolute top-1 left-3 text-indigo-400 font-bold text-[8px]"}>CV</p>
-                    </button>
+                    </a>
                 </div>
             </div>
 
