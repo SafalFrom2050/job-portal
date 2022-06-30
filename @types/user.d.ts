@@ -18,6 +18,8 @@ export interface User {
   is_superuser?: boolean,
   is_staff?: boolean,
   is_available?: boolean,
+  cv?: string,
+  position?: string,
 
   is_organization?: boolean,
   org_title?: string,
