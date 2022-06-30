@@ -53,9 +53,10 @@ function ManageBasicInfo() {
         last_name: yup
             .string()
             .required(),
+        position: yup
+            .string(),
         gender: yup
-            .string()
-            .required(),
+            .string(),
         birth_date: yup
             .date(),
         phone: yup
@@ -74,6 +75,7 @@ function ManageBasicInfo() {
         initialValues: {
             first_name: user.first_name || '',
             last_name: user.last_name || '',
+            position: user.position || '',
             gender: user.gender || '',
             birth_date: user.birth_date || undefined,
             phone: user.phone || '',
@@ -90,6 +92,7 @@ function ManageBasicInfo() {
     useEffect(() => {
         formik.setFieldValue("first_name", user.first_name || "")
         formik.setFieldValue("last_name", user.last_name || "")
+        formik.setFieldValue("position", user.position || "")
         formik.setFieldValue("gender", user.gender || "")
         formik.setFieldValue("birth_date", user.birth_date || undefined)
         formik.setFieldValue("phone", user.phone || "")
@@ -180,6 +183,18 @@ function ManageBasicInfo() {
                                    errorMsg={formik.touched.last_name && formik.errors.last_name}
 
                                    label={"Last Name"}
+                                   required={true}/>
+
+                        <TextInput name="position"
+                                   placeholder={"Science Teacher"}
+                                   type="text"
+
+                                   value={formik.values.position}
+                                   onChange={formik.handleChange}
+                                   error={formik.touched.position && Boolean(formik.errors.position)}
+                                   errorMsg={formik.touched.position && formik.errors.position}
+
+                                   label={"Position"}
                                    required={true}/>
 
                         <TextInput name="phone"
