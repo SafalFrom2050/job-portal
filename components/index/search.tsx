@@ -37,7 +37,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
     const postFields = data?.data as PostField[]
 
     function fetchPostFields() {
-        return null
+        // return null
         return getPostFields(axiosInstanceGuest)
     }
 
