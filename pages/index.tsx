@@ -51,13 +51,14 @@ const Home: NextPage = () => {
                 <meta name="description" content={APP_DESCRIPTION}/>
             </Head>
 
-            <div className="w-full px-6 md:mb-16">
+            <div className="w-full md:mb-16">
                 <div
-                    className="mt-8 relative rounded-lg bg-indigo-700 container mx-auto flex flex-col items-center pt-12 sm:pt-24 pb-24 sm:pb-32 md:pb-48 lg:pb-56 xl:pb-64">
-                    <img className="mr-2 lg:mr-12 mt-2 lg:mt-12 absolute right-0 top-0"
+                    className="relative bg-indigo-700 mx-auto flex flex-col items-center pt-8 sm:pt-16 pb-16 sm:pb-24 md:pb-52 xl:pb-56">
+
+                    <img className="mr-6 lg:mr-16 mt-6 lg:mt-16 absolute right-0 top-0"
                          src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg2.svg"
                          alt="bg"/>
-                    <img className="ml-2 lg:ml-12 mb-2 lg:mb-12 absolute bottom-0 left-0"
+                    <img className="ml-6 lg:ml-16 mb-6 lg:mb-16 absolute bottom-0 left-0"
                          src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg3.svg"
                          alt="bg"/>
                     <div className="w-11/12 sm:w-2/3 mb-5 sm:mb-10">
@@ -78,7 +79,7 @@ const Home: NextPage = () => {
                 {searchResults.length > 0 || isSearching === searchStates.searching || isSearching === searchStates.end ?
                     <Heading heading={"Search Results"}
                              showBackButton
-                             backButtonAction={()=>Router.push('/')}
+                             backButtonAction={() => Router.push('/')}
                              count={searchResults.length}
                              sort={true}
                              cClass={"sticky top-0 bg-indigo-50"}/>
