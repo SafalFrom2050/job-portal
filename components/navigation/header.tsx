@@ -10,6 +10,9 @@ import {APP_NAME, APP_URL, BASE_URL} from "../../others/config";
 import {AlertContext} from "../../contexts/alertContext";
 import {AlertContextType} from "../../@types/alert";
 import {ALERT_TYPE_WARNING} from "../../constants";
+import {LockClosed} from "heroicons-react";
+import {LockClosedIcon} from "@heroicons/react/solid";
+import WhiteButton from "../buttons/whiteButton";
 
 export default function Header(props: { guest?: boolean }) {
 
@@ -100,7 +103,7 @@ export default function Header(props: { guest?: boolean }) {
                                     <Link key={i} href={navItem.path}>
                                         <li
                                             onClick={() => selected(i)}
-                                            className={`${style[i] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'}  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>
+                                            className={`${style[i] ? 'text-white bg-indigo-600 truncate' : 'text-gray-600 border border-white bg-gray-50'}  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800  cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded truncate`}>
                                             {navItem.name}
                                         </li>
                                     </Link>
@@ -109,29 +112,33 @@ export default function Header(props: { guest?: boolean }) {
                         }
                         <Link href={"/about"}>
                             <li onClick={() => selected(8)}
-                                className={`${style[8] ? 'text-white bg-indigo-600' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded`}>
+                                className={`${style[8] ? 'text-white bg-indigo-600 truncate' : 'text-gray-600 border border-white bg-gray-50'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 cursor-pointer px-3 py-2.5 font-normal text-xs leading-3 rounded truncate`}>
                                 About Us
                             </li>
                         </Link>
 
                     </ul>
-                    {isLoggedIn && <>
-                        <div className=" flex space-x-5 justify-center items-center pl-2">
-                            <button onClick={() => setShowAccountMenu(true)}>
-                                <div
-                                    className="relative h-8 w-8 mb-4 lg:mb-0 mr-4 rounded-full overflow-hidden shadow hover:outline hover:outline-indigo-700 hover:outline-2">
+                    {isLoggedIn ? <>
+                            <div className=" flex space-x-5 justify-center items-center pl-2">
+                                <button onClick={() => setShowAccountMenu(true)}>
+                                    <div
+                                        className="relative h-8 w-8 mb-4 lg:mb-0 mr-4 rounded-full overflow-hidden shadow hover:outline hover:outline-indigo-700 hover:outline-2">
 
-                                    <Image
-                                        layout={'fill'}
-                                        src={user && user.avatar ? BASE_URL + user.avatar?.substring(1) : "/images/default-profile.png"}
-                                        alt={'profile picture'}
-                                    />
-                                </div>
-                            </button>
-                        </div>
-
-
-                    </>
+                                        <Image
+                                            layout={'fill'}
+                                            src={user && user.avatar ? BASE_URL + user.avatar?.substring(1) : "/images/default-profile.png"}
+                                            alt={'profile picture'}
+                                        />
+                                    </div>
+                                </button>
+                            </div>
+                        </>
+                        : <Link href={'/login'}>
+                            <a className={'text-indigo-700 flex items-center gap-x-1'}>
+                                <LockClosedIcon className={'w-5 h-5'}/>
+                                <p className={"text-sm font-medium text-indigo-800"}>Login</p>
+                            </a>
+                        </Link>
                     }
                 </nav>
 

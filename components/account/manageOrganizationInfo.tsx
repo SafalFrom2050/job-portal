@@ -115,7 +115,7 @@ function ManageOrganizationInfo() {
                     e.preventDefault();
                     formik.submitForm()
                 }}>
-                    <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-4">
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-x-8 gap-y-4">
 
                         <TextInput name="org_title"
                                    placeholder="John"
@@ -144,28 +144,31 @@ function ManageOrganizationInfo() {
                                       iClass={"px-2"}/>
                         </div>
 
-                        <TextInput name="org_number_of_employees"
-                                   type="number"
+                        <div className={'col-span-2 md:col-span-1'}>
+                            <TextInput name="org_number_of_employees"
+                                       type="number"
 
-                                   value={String(formik.values.org_number_of_employees)}
-                                   onChange={formik.handleChange}
-                                   error={formik.touched.org_number_of_employees && Boolean(formik.errors.org_number_of_employees)}
-                                   errorMsg={formik.touched.org_number_of_employees && formik.errors.org_number_of_employees}
+                                       value={String(formik.values.org_number_of_employees)}
+                                       onChange={formik.handleChange}
+                                       error={formik.touched.org_number_of_employees && Boolean(formik.errors.org_number_of_employees)}
+                                       errorMsg={formik.touched.org_number_of_employees && formik.errors.org_number_of_employees}
 
-                                   label={"Number of Employees"}
-                        />
+                                       label={"Number of Employees"}
+                            />
+                        </div>
 
-                        <TextInput name="org_average_salary"
-                                   type="number"
+                        <div className={'col-span-2 md:col-span-1'}>
+                            <TextInput name="org_average_salary"
+                                       type="number"
 
-                                   value={String(formik.values.org_average_salary)}
-                                   onChange={formik.handleChange}
-                                   error={formik.touched.org_average_salary && Boolean(formik.errors.org_average_salary)}
-                                   errorMsg={formik.touched.org_average_salary && formik.errors.org_average_salary}
+                                       value={String(formik.values.org_average_salary)}
+                                       onChange={formik.handleChange}
+                                       error={formik.touched.org_average_salary && Boolean(formik.errors.org_average_salary)}
+                                       errorMsg={formik.touched.org_average_salary && formik.errors.org_average_salary}
 
-                                   label={"Average Salary"}
-                        />
-
+                                       label={"Average Salary"}
+                            />
+                        </div>
 
                     </div>
 
