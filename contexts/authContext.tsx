@@ -29,11 +29,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
 
     useEffect(() => {
         // Checks authentication status and saves user but redirects if unsuccessful
-        if (axiosInstance) {
-            getCurrentUser(axiosInstance).then((v) => {
-                saveUser(v?.data)
-            })
-        }
+        syncUser()
 
     }, [axiosInstance]);
 
@@ -85,7 +81,10 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
     function syncUser() {
         if (axiosInstance) {
             getCurrentUser(axiosInstance).then((v) => {
-                saveUser(v?.data)
+
+                if (v.status === 200){
+                    saveUser(v?.data)
+                }
             })
         }
     }
