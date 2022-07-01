@@ -27,7 +27,7 @@ function Index() {
     const posts = postsQuery.data?.data.results as Post[]
 
     function getUser() {
-        return getUserById(axiosInstance, Number.parseInt(id + ""))
+        return getUserById(axiosInstance, id + "")
     }
 
     if (!user) return <div className={"max-w-[1000px] mx-auto h-[600px] flex items-center"}>
