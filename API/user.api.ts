@@ -178,10 +178,7 @@ export const getUsers = async (axiosInstance: AxiosInstance | null) => {
             `user/`
         );
 
-        console.log(response)
         const {data, status} = response
-
-        console.log(JSON.stringify(data));
 
         return {data, status} as Response;
     } catch (error) {

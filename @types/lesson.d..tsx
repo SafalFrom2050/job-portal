@@ -1,7 +1,8 @@
 import "reflect-metadata";
 
 export interface Lesson {
-    name?: String;
-    description?: String;
-    video_url?: String;
+    id?: string;
+    name?: string;
+    description?: string;
+    video_url?: string;
 }
