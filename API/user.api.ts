@@ -26,7 +26,7 @@ export type RegisterUserRequest = {
 }
 
 export type UpdateUserProfilePictureRequest = {
-    id?: number
+    id?: string
     avatar?: File | string
 }
 
