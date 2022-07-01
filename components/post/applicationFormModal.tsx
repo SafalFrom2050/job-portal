@@ -1,14 +1,89 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import FileInputWithDragDrop from "../inputs/fileInputWithDragDrop";
 import {XIcon} from "@heroicons/react/solid";
 import PrimaryButton from "../buttons/primaryButton";
+import {AxiosContext} from "../../contexts/axiosContext";
+import {AxiosContextType} from "../../@types/axiosContextType";
+import {AuthContext} from "../../contexts/authContext";
+import {AuthContextType, User} from "../../@types/user";
+import * as yup from "yup";
+import {useFormik} from "formik";
+import {useMutation} from "react-query";
+import {updateUser} from "../../API/user.api";
+import {createApplication} from "../../API/application.api";
+import {Application} from "../../@types/application";
+import {AlertContextType} from "../../@types/alert";
+import {AlertContext} from "../../contexts/alertContext";
+import {ALERT_TYPE_SUCCESS} from "../../constants";
 
 function ApplicationFormModal(props: {
     show: boolean,
     setShow: (v: boolean) => void,
+    postId: string,
 }) {
 
     const {show, setShow} = props
+    const [errorMsg, setErrorMsg] = useState(false);
+
+
+    const {setAlert} = useContext(AlertContext) as AlertContextType;
+    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
+    const {user} = useContext(AuthContext) as AuthContextType;
+
+
+    const validationSchema = yup.object({
+        cv: yup
+            .mixed()
+            .required(),
+        cover_letter: yup
+            .mixed()
+            .required(),
+        post: yup
+            .string()
+            .required()
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            cv: undefined,
+            cover_letter: undefined,
+            post: props.postId
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values: any) => {
+            initiateCreateApplication()
+        },
+    })
+
+    const {isLoading: isCreatingApplication, mutate: initiateCreateApplication} = useMutation<any, Error>(
+        async () => {
+            if (axiosInstance == null) return false
+
+            const application: Application = {...user, ...formik.values}
+
+            const result = await createApplication(axiosInstance, application).then(response => {
+
+                console.log(response)
+                if (response.status == 201) {
+                    // Success
+                    setAlert({
+                        type: ALERT_TYPE_SUCCESS,
+                        title: "Your application has been submitted for review.",
+                        duration: 20000
+                    })
+                    setShow(false)
+                } else if (response.status == 400) {
+                    formik.setErrors(response.data)
+                } else if (response.status == 401) {
+                    if (response.data.detail != null) {
+                        setErrorMsg(response.data.detail)
+                    }
+                }
+            })
+            return result
+        }
+    );
+
 
     return (
         <form>
@@ -19,19 +94,22 @@ function ApplicationFormModal(props: {
                     <div
                         className="relative py-4 px-8 md:px-8 bg-white shadow-md rounded">
 
-                        <h3 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Your Details</h3>
+                        <h3 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Your
+                            Details</h3>
                         <div className="flex justify-center w-full gap-x-2">
 
-                            <FileInputWithDragDrop name={"cv"} message={"Drop your CV here"} onFileChanged={(file)=>console.log(file)}/>
+                            <FileInputWithDragDrop name={"cv"} message={"Drop your CV here"}
+                                                   onFileChanged={(file) => formik.setFieldValue('cv', file)}/>
 
-                            <FileInputWithDragDrop name={"cover_letter"} message={"Drop your Cover Letter here"} onFileChanged={(file)=>console.log(file)}/>
+                            <FileInputWithDragDrop name={"cover_letter"} message={"Drop your Cover Letter here"}
+                                                   onFileChanged={(file) => formik.setFieldValue('cover_letter', file)}/>
 
                         </div>
 
                         <div className={'flex gap-x-2 items-center'}>
                             <p className="text-xs text-gray-500 dark:text-gray-400 font-normal">Your
                                 profile information will be used to apply to this job.</p>
-                            <PrimaryButton cClass={'ml-auto'} class="font-medium text-sm" name={"Submit"} />
+                            <PrimaryButton onClick={formik.submitForm} cClass={'ml-auto'} class="font-medium text-sm" name={"Submit"}/>
                         </div>
 
                         {/*Cross Icon*/}

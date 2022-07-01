@@ -52,7 +52,7 @@ function FileInputWithDragDrop(props: { name: string, id?: string, message?: Str
                 {selectedFile ? `Selected: ${selectedFile}` : (props.message || "Drag and drop here")}
             </p>
             <p className="text-base font-normal tracking-normal text-gray-800 dark:text-gray-100 text-center my-1">or</p>
-            <label htmlFor="fileUp"
+            <label htmlFor={props.id || props.name}
                    className="cursor-pointer text-base font-normal tracking-normal text-indigo-700 dark:text-indigo-600 text-center">
                 {" "}
                 browse{" "}
