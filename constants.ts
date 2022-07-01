@@ -21,6 +21,8 @@ export const authOnlyRoutes = [
     'account',
     'post',
     'profile/me',
+    'staff',
+    'education'
 ]
 
 export const organizationOnlyRoutes = [
