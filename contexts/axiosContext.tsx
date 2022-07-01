@@ -36,7 +36,10 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
 
     useEffect(() => {
 
-        if (token.access == null || token.access == "") return
+        if (token.access == null || token.access == "") {
+            axiosInstance.current = null
+            return
+        }
 
         axiosInstance.current = axios.create({
             baseURL: BASE_URL,

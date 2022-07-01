@@ -84,8 +84,14 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
 
                 if (v.status === 200){
                     saveUser(v?.data)
+                }else {
+                    setIsLoggedIn(false)
+                    setUser({})
                 }
             })
+        }else {
+            setIsLoggedIn(false)
+            setUser({})
         }
     }
 

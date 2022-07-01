@@ -22,7 +22,7 @@ export default function Header(props: { guest?: boolean }) {
     const [text, setText] = useState("Home");
     const [showAccountMenu, setShowAccountMenu] = useState(false);
 
-    const {user, isLoggedIn} = useContext(AuthContext) as AuthContextType;
+    const {user, isLoggedIn, syncUser} = useContext(AuthContext) as AuthContextType;
     const {saveToken} = useContext(TokenContext) as TokenContextType;
 
 
@@ -78,6 +78,7 @@ export default function Header(props: { guest?: boolean }) {
     function logout() {
         // Local storage cannot have null values
         saveToken({access: "", refresh: ""})
+        syncUser()
         Router.replace('/login')
     }
 

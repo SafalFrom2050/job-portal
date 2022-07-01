@@ -32,5 +32,5 @@ export interface User {
 export interface AuthContextType {
   user: User,
   isLoggedIn: boolean,
-  syncUser?: () => void
+  syncUser: () => void
 }
