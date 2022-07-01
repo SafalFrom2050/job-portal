@@ -20,7 +20,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
     const {pathname} = useRouter()
 
     const [user, setUser] = React.useState<User>({});
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(undefined as undefined | boolean);
 
     const {setAlert} = useContext(AlertContext) as AlertContextType;
 
@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
     }, [axiosInstance]);
 
     useEffect(() => {
-        if (!isLoggedIn){
+        if (isLoggedIn !== undefined && !isLoggedIn){
             authOnlyRoutes.map((route) => {
                 if (pathname.startsWith('/' + route)) {
                     Router.back()
@@ -70,7 +70,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
             })
         }
 
-    }, [pathname]);
+    }, [isLoggedIn, pathname]);
 
 
     function saveUser(user: User) {
@@ -111,5 +111,6 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
         })
     }
 
+    if (isLoggedIn === undefined) return <></>
     return <AuthContext.Provider value={{user, isLoggedIn, syncUser}}>{children}</AuthContext.Provider>
 }

@@ -14,10 +14,7 @@ type Props = {
 };
 
 export const TokenProvider: React.FC<Props> = ({children}) => {
-    const [token, setToken] = React.useState<Token>({
-        access: null,
-        refresh: null
-    });
+    const [token, setToken] = React.useState(undefined as undefined | Token);
 
     const {setAlert} = useContext(AlertContext) as AlertContextType;
 
@@ -32,23 +29,12 @@ export const TokenProvider: React.FC<Props> = ({children}) => {
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken")
 
-        if (accessToken == null || accessToken == '') {
-            setAlert({
-                type: ALERT_TYPE_WARNING,
-                title: "You are not logged in!",
-                message: "Please login to access more features",
-                action: () => {
-                    Router.replace('/login')
-                },
-                actionButtonText: 'Login',
-                duration: 8000
-            })
-        }
         setToken({access: accessToken, refresh: null})
         console.log(accessToken)
 
     }, []);
 
+    if (token === undefined) return <></>
 
     return <TokenContext.Provider value={{token, saveToken}}>{children}</TokenContext.Provider>
 }

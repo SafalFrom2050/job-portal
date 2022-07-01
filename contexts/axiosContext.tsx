@@ -24,22 +24,20 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
     const {token} = useContext(TokenContext) as TokenContextType;
     const {setAlert} = useContext(AlertContext) as AlertContextType;
 
-    const [toggle, setToggle] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     let axiosInstance = useRef(null as AxiosInstanceRef)
     const axiosInstanceGuest = useRef(null as AxiosInstanceRef)
 
+
     function reRender() {
         console.log("Axios instance changed! Re-rendering...")
-        setToggle((v) => !v)
+        setIsLoaded(true)
     }
 
     useEffect(() => {
 
-        if (token.access == null || token.access == "") {
-            axiosInstance.current = null
-            return
-        }
+        if (token === undefined) return
 
         axiosInstance.current = axios.create({
             baseURL: BASE_URL,
@@ -93,6 +91,9 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
         })
     }, []);
 
+
+
+    if (!isLoaded) return <></>
 
     return <AxiosContext.Provider value={{
         axiosInstance: axiosInstance.current,
