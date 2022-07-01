@@ -55,13 +55,13 @@ function Lessons() {
                                     <button onClick={() => toggleSelectedLessonIndex(i)}
                                             className="w-full transform transition-shadow shadow hover:shadow-lg focus:outline-none border focus:border-gray-800 border-transparent bg-gray-50 flex justify-start items-center text-center pr-4 gap-x-8">
                                         <h3 className={"text-3xl font-light text-indigo-600 bg-indigo-200 p-8"}>{i + 1}</h3>
-                                        <p className="text-xl whitespace-nowrap font-medium text-gray-800">{lesson.name}</p>
+                                        <p className="text-xl font-medium text-gray-800 truncate">{lesson.name}</p>
                                     </button>
 
                                     {
                                         selectedLessonIndex !== undefined && selectedLessonIndex === i &&
                                         <div className={'p-4'}>
-                                            <p className="text-xl whitespace-nowrap text-gray-800 mb-2">{selectedLesson.description}</p>
+                                            <p className="text-xl text-gray-800 mb-2 truncate">{selectedLesson.description}</p>
 
                                             <iframe
                                                 className={'w-full aspect-video'}

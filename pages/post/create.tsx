@@ -89,8 +89,8 @@ function Create(props: {}) {
             field: 'Select',
             position: 'Select',
             location: '',
-            time_low: '',
-            time_high: '',
+            time_low: '10:00',
+            time_high: '17:00',
             salary_low: '0',
             salary_high: '0',
             description: '',
@@ -186,7 +186,7 @@ function Create(props: {}) {
                                       error={formik.touched.field && Boolean(formik.errors.field)}
                                       errorMsg={formik.touched.field && formik.errors.field}
 
-                                      label="Field"
+                                      label="Subject"
                                       separateLabel={true}
                                       required={true}/>
 
@@ -198,24 +198,26 @@ function Create(props: {}) {
                                       error={formik.touched.position && Boolean(formik.errors.position)}
                                       errorMsg={formik.touched.position && formik.errors.position}
 
-                                      label="Position"
+                                      label="Level"
                                       separateLabel={true}
                                       required={true}/>
 
-                            <TextInput name="location"
-                                       placeholder="Kathmandu"
-                                       type="text"
+                            <div className={'col-span-2 md:col-span-1'}>
+                                <TextInput name="location"
+                                           placeholder="Kathmandu"
+                                           type="text"
 
-                                       value={formik.values.location}
-                                       onChange={formik.handleChange}
-                                       error={formik.touched.location && Boolean(formik.errors.location)}
-                                       errorMsg={formik.touched.location && formik.errors.location}
+                                           value={formik.values.location}
+                                           onChange={formik.handleChange}
+                                           error={formik.touched.location && Boolean(formik.errors.location)}
+                                           errorMsg={formik.touched.location && formik.errors.location}
 
-                                       label={"Location"}
-                                       required={true}
-                            />
+                                           label={"Location"}
+                                           required={true}
+                                />
+                            </div>
 
-                            <div className={"flex items-end gap-3"}>
+                            <div className={"flex items-end gap-3 col-span-2 md:col-span-1"}>
 
                                 <TextInput name="salary_low"
                                            type="number"
@@ -256,11 +258,11 @@ function Create(props: {}) {
                                 />
                             </div>
 
-                            <div className={"flex items-end gap-3"}>
+                            <div className={"flex items-end gap-3 col-span-2 md:col-span-1"}>
                                 <TextInput name="time_low"
                                            type="time"
 
-                                    // value={formik.values.time_low}
+                                           value={formik.values.time_low}
                                            onChange={formik.handleChange}
                                            error={formik.touched.time_low && Boolean(formik.errors.time_low)}
                                            errorMsg={formik.touched.time_low && formik.errors.time_low}
@@ -272,7 +274,7 @@ function Create(props: {}) {
                                 <TextInput name="time_high"
                                            type="time"
 
-                                    // value={formik.values.time_high}
+                                           value={formik.values.time_high}
                                            onChange={formik.handleChange}
                                            error={formik.touched.time_high && Boolean(formik.errors.time_high)}
                                            errorMsg={formik.touched.time_high && formik.errors.time_high}
@@ -290,7 +292,7 @@ function Create(props: {}) {
                         </div>
                         <div
                             className="flex flex-col-reverse items-center justify-end w-full mt-6 gap-4 md:flex-row">
-                            <WhiteButton name={"Cancel"} onClick={()=>Router.back()} class="font-medium text-base"/>
+                            <WhiteButton name={"Cancel"} onClick={() => Router.back()} class="font-medium text-base"/>
                             <PrimaryButton name={"Add Post"}
                                            disabled={isCreatingPost}
                                            onClick={formik.submitForm}

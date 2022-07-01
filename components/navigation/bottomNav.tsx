@@ -15,11 +15,11 @@ function BottomNav() {
             path: '/post/create',
             icon: <PlusCircleOutline className={"h-6 w-6"} />
         },
-        {
-            name: 'Admission',
-            path: '/admission',
-            icon: <AcademicCapOutline className={"h-6 w-6"} />
-        },
+        // {
+        //     name: 'Admission',
+        //     path: '/admission',
+        //     icon: <AcademicCapOutline className={"h-6 w-6"} />
+        // },
         {
             name: 'Top Staff',
             path: '/staff/top',
@@ -44,9 +44,9 @@ function BottomNav() {
                     <ul className="w-full flex items-center justify-between bg-gray-800">
                         {navItems.map((navItem, i) => (
                             <Link key={i} href={navItem.path}>
-                                <li className="cursor-pointer text-white pt-5 pb-3 flex flex-col items-center gap-y-1 justify-center w-2/12">
+                                <li className="cursor-pointer text-white py-1 flex flex-col items-center justify-center w-2/12">
                                     {navItem.icon}
-                                    <span className="text-[11px] ">{navItem.name}</span>
+                                    <span className="text-[11px] text-center ">{navItem.name}</span>
                                 </li>
                             </Link>
                         ))}

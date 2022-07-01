@@ -51,8 +51,8 @@ function NavigationGrid() {
 
     return (
         <div
-            className={overrideTailwindClasses(`mx-auto pb-4 pt-4 px-4 2xl:mx-auto flex justify-center items-center max-w-[800px]`)}>
-            <div className="w-full grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            className={overrideTailwindClasses(`mx-auto py-1 px-4 2xl:mx-auto flex justify-center items-center max-w-[800px]`)}>
+            <div className="w-full grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
 
                 {navItems.map((navItem, i) => (
                     <Link key={i} href={navItem.path}>

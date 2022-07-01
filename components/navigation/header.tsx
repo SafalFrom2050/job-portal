@@ -50,10 +50,10 @@ export default function Header(props: { guest?: boolean }) {
             name: 'Hire Staff',
             path: '/post/create'
         },
-        {
-            name: 'Admission',
-            path: '/admission'
-        },
+        // {
+        //     name: 'Admission',
+        //     path: '/admission'
+        // },
         {
             name: 'Top Staff',
             path: '/staff/top'
@@ -168,35 +168,35 @@ export default function Header(props: { guest?: boolean }) {
                 }
 
                 {/* for smaller devices */}
-                <div className="block md:hidden w-full mt-5 ">
-                    <div onClick={() => setDropDown(!dropDown)}
-                         className="cursor-pointer px-4 py-3 text-white bg-indigo-600 rounded flex justify-between items-center w-full">
-                        <div className="flex space-x-2">
-                            <span id="s1"
-                                  className={`${text.length != 0 ? '' : 'hidden'} font-semibold text-sm leading-3`}>{text}</span>
-                        </div>
-                        <svg id="ArrowSVG" className={`${dropDown ? '' : 'rotate-180'} transform duration-100`}
-                             width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 9L12 15L18 9" stroke="white" strokeWidth="1.5" strokeLinecap="round"
-                                  strokeLinejoin="round"/>
-                        </svg>
-                    </div>
-                    <div className=" relative  z-50">
-                        <ul id="list"
-                            className={`${dropDown ? 'hidden' : 'block'} font-normal text-base leading-4 absolute top-2  w-full rounded shadow-md bg-white`}>
+                {/*<div className="block md:hidden w-full mt-5 ">*/}
+                {/*    <div onClick={() => setDropDown(!dropDown)}*/}
+                {/*         className="cursor-pointer px-4 py-3 text-white bg-indigo-600 rounded flex justify-between items-center w-full">*/}
+                {/*        <div className="flex space-x-2">*/}
+                {/*            <span id="s1"*/}
+                {/*                  className={`${text.length != 0 ? '' : 'hidden'} font-semibold text-sm leading-3`}>{text}</span>*/}
+                {/*        </div>*/}
+                {/*        <svg id="ArrowSVG" className={`${dropDown ? '' : 'rotate-180'} transform duration-100`}*/}
+                {/*             width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
+                {/*            <path d="M6 9L12 15L18 9" stroke="white" strokeWidth="1.5" strokeLinecap="round"*/}
+                {/*                  strokeLinejoin="round"/>*/}
+                {/*        </svg>*/}
+                {/*    </div>*/}
+                {/*    <div className=" relative  z-50">*/}
+                {/*        <ul id="list"*/}
+                {/*            className={`${dropDown ? 'hidden' : 'block'} font-normal text-base leading-4 absolute top-2  w-full rounded shadow-md bg-white`}>*/}
 
-                            {navItems.map((navItem, i) => (
-                                <Link key={i} href={navItem.path}>
-                                    <li onClick={() => setSelectedText(navItem.name)}
-                                        className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">
-                                        {navItem.name}
-                                    </li>
-                                </Link>
-                            ))}
+                {/*            {navItems.map((navItem, i) => (*/}
+                {/*                <Link key={i} href={navItem.path}>*/}
+                {/*                    <li onClick={() => setSelectedText(navItem.name)}*/}
+                {/*                        className="px-4 py-3 text-gray-600 bg-gray-50 border border-gray-50 focus:outline-none focus:bg-gray-100 hover:bg-gray-100 duration-100 cursor-pointer text-xs leading-3 font-normal">*/}
+                {/*                        {navItem.name}*/}
+                {/*                    </li>*/}
+                {/*                </Link>*/}
+                {/*            ))}*/}
 
-                        </ul>
-                    </div>
-                </div>
+                {/*        </ul>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
         </div>
 

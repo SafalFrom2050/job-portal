@@ -168,7 +168,7 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                                    value={formik.values.title}
 
                                                    placeholder="Search Job"
-                                                   className="p-4 py-2 outline-none focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"
+                                                   className="p-4 py-2 outline-none md:focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"
                                             />
 
                                             <SearchIcon

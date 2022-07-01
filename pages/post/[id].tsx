@@ -42,7 +42,7 @@ function Index() {
         <div className="container max-w-[1000px] mx-auto w-full pt-8">
 
             {showApplicationForm &&
-                <ApplicationFormModal show={showApplicationForm} setShow={setShowApplicationForm}/>
+                <ApplicationFormModal postId={String(id)} show={showApplicationForm} setShow={setShowApplicationForm}/>
             }
 
 
@@ -51,8 +51,17 @@ function Index() {
                     {/* Card is full width. Use in 12 col grid for best view. */}
                     {/* Card code block start */}
                     <div className="mx-auto w-full p-5 lg:p-10 bg-white dark:bg-gray-800 rounded">
-                        <div className="flex flex-col lg:flex-row items-start lg:items-center">
-                            <h1 className="mr-12 text-xl lg:text-2xl text-gray-800 dark:text-gray-100 font-bold lg:w-1/2">{post.title}</h1>
+                        <div className="flex flex-col lg:flex-row items-start lg:items-center mb-8">
+                            <div className={'mr-24 w-full'}>
+                                <h1 className="text-xl lg:text-2xl text-gray-800 dark:text-gray-100 font-bold lg:w-1/2">{post.title}</h1>
+
+                                <div className=" flex items-center gap-x-2 text-indigo-700 text-sm">
+                                    <CurrencyRupeeIcon className={"w-4 h-4"} />
+                                    <h3 className="font-normal truncate">
+                                        {formatCurrency(post.salary_low)} - {formatCurrency(post.salary_high)}
+                                    </h3>
+                                </div>
+                            </div>
                             <div
                                 className="flex flex-col md:flex-row items-start md:items-center md:w-full justify-end gap-x-4">
                                 <div
@@ -61,12 +70,6 @@ function Index() {
                                     Posted Date: {moment(post.created_date).format("d MMM yyyy")}
                                 </div>
                             </div>
-                        </div>
-                        <div className="mr-24 flex items-center mb-8 gap-x-2 text-indigo-700 text-sm">
-                            <CurrencyRupeeIcon className={"w-4 h-4"} />
-                            <h3 className="font-normal truncate">
-                                {formatCurrency(post.salary_low)} - {formatCurrency(post.salary_high)}
-                            </h3>
                         </div>
 
                         <div className="flex flex-col lg:flex-row items-start lg:items-center">
