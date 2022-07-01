@@ -8,7 +8,7 @@ import {BASE_URL} from "../others/config";
 import Router from "next/router";
 import {AlertContext} from "./alertContext";
 import {AlertContextType} from "../@types/alert";
-import {ALERT_TYPE_WARNING} from "../constants";
+import {ALERT_TYPE_DANGER, ALERT_TYPE_WARNING} from "../constants";
 
 
 export const AxiosContext = React.createContext<AxiosContextType | null>(null)
@@ -63,11 +63,19 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
 
                 } else if (error.response.status == 500) {
                     setAlert({
-                        type: 2,
+                        type: ALERT_TYPE_DANGER,
                         title: "The server has encountered an issue and could not process your request.",
                         duration: 5000
                     })
+                } else if (error.response.status == 403) {
+                    setAlert({
+                        type: ALERT_TYPE_WARNING,
+                        title: "Verify your account to continue.",
+                        message: "Please click on the verification link that has been sent to your email address to verify your account.",
+                        duration: 20000,
+                    })
                 }
+                throw error
             }
         )
         reRender()
