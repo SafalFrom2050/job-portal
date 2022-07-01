@@ -45,7 +45,7 @@ function PostListItem(props: {
 
                     <div className="p-4 pb-2">
                         <div className="flex items-center">
-                            <h2 className="text-lg font-semibold truncate">{post.title}</h2>
+                            <h2 className="text-lg font-semibold truncate w-4/5">{post.title}</h2>
                             {moment(post.created_date).isValid() &&
                                 <p className="text-xs text-gray-600 pl-5 ml-auto text-right">
                                     <ClockIcon className={'w-4 h-4 ml-auto'} />

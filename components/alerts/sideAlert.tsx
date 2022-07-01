@@ -59,7 +59,7 @@ const SideAlert = (props: { alert: Alert }) => {
                                 </div>
                             </div>
                             <div className={"flex flex-col"}>
-                            <p className=" text-base font-bold text-gray-800 dark:text-gray-100 leading-9">{props.alert.title}</p>
+                            <p className=" text-base font-bold text-gray-800 dark:text-gray-100">{props.alert.title}</p>
 
                             {props.alert.message &&
                                 <>
