@@ -109,7 +109,13 @@ function ApplicationFormModal(props: {
                         <div className={'flex gap-x-2 items-center'}>
                             <p className="text-xs text-gray-500 dark:text-gray-400 font-normal">Your
                                 profile information will be used to apply to this job.</p>
-                            <PrimaryButton onClick={formik.submitForm} cClass={'ml-auto'} class="font-medium text-sm" name={"Submit"}/>
+                            <PrimaryButton
+                                onClick={formik.submitForm}
+                                           cClass={'ml-auto'}
+                                           class="font-medium text-sm"
+                                           name={"Submit"}
+                                disabled={isCreatingApplication || !formik.isValid}
+                            />
                         </div>
 
                         {/*Cross Icon*/}
