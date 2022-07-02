@@ -49,7 +49,7 @@ function TextArea(props: {
                 {/*    value={props.value}*/}
                 {/*/>*/}
                 <textarea
-                    className={overrideTailwindClasses(`bg-gray-200 h-[170px] border rounded text-xs font-normal leading-none placeholder-gray-400 placeholder:text-sm text-gray-800 py-2 w-full pl-3 ${props.iClass} ${props.error? "bg-red-50 border-red-400" : ""}`)}
+                    className={overrideTailwindClasses(`bg-gray-200 h-[170px] border rounded text-sm font-normal placeholder-gray-400 placeholder:text-sm text-gray-800 py-2 w-full pl-3 ${props.iClass} ${props.error? "bg-red-50 border-red-400" : ""}`)}
                     // className="resize-none w-full h-[170px] px-4 py-4 text-base outline-none text-slate-600 border border-1 rounded"
                     placeholder={props.placeholder || " "}
                     defaultValue={props.value}
