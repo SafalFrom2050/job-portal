@@ -4,7 +4,7 @@ import {AuthContext} from "../../contexts/authContext";
 import {AuthContextType} from "../../@types/user";
 import {TokenContext} from "../../contexts/tokenContext";
 import {TokenContextType} from "../../@types/token";
-import Router from "next/router";
+import Router, {useRouter} from "next/router";
 import Image from "next/image";
 import {APP_NAME, APP_URL, BASE_URL} from "../../others/config";
 import {AlertContext} from "../../contexts/alertContext";
@@ -16,10 +16,9 @@ import WhiteButton from "../buttons/whiteButton";
 
 export default function Header(props: { guest?: boolean }) {
 
+    const {pathname} = useRouter()
     let arr = [false]
     const [style, setStyle] = useState(arr);
-    const [dropDown, setDropDown] = useState(true);
-    const [text, setText] = useState("Home");
     const [showAccountMenu, setShowAccountMenu] = useState(false);
 
     const {user, isLoggedIn, syncUser} = useContext(AuthContext) as AuthContextType;
@@ -35,10 +34,6 @@ export default function Header(props: { guest?: boolean }) {
         setStyle(newArr);
     }
 
-    const setSelectedText = (txt: string) => {
-        setText(txt);
-        setDropDown(true);
-    }
 
     const navItems = [
         {
@@ -81,6 +76,18 @@ export default function Header(props: { guest?: boolean }) {
         syncUser()
         Router.replace('/login')
     }
+
+    useEffect(() => {
+        navItems.map((navItem, i)=>{
+            if (navItem.path === pathname) {
+                selected(i)
+            }
+        })
+
+        if (pathname === '/about') {
+            selected(8)
+        }
+    }, [pathname]);
 
 
     return (
