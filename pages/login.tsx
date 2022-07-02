@@ -141,6 +141,7 @@ export default function Login() {
                             <PrimaryButton
                                 disabled={(isLoggingIn)}
                                 onClick={formik.submitForm}
+                                isSubmitType={true}
                                 name={"LOGIN"} cClass="w-full"
                                            class={"w-full h-full mx-0 disabled:bg-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none py-4"}/>
                         </div>

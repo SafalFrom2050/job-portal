@@ -17,6 +17,7 @@ import {AlertContext} from "../contexts/alertContext";
 import {AlertContextType} from "../@types/alert";
 import ToggleWithDetails from "../components/inputs/toggleWithDetails";
 import ToggleCheckbox from "../components/inputs/toggleCheckbox";
+import {ALERT_TYPE_SUCCESS} from "../constants";
 
 
 export default function Register() {
@@ -64,14 +65,11 @@ export default function Register() {
             return await registerUser(formik.values).then(response => {
                 if (response.status == 201) {
                     saveToken({access: response.data.access_token, refresh: null})
-                    Router.replace('/')
+                    Router.replace('/verify')
                     setAlert({
-                        type: 0,
+                        type: ALERT_TYPE_SUCCESS,
                         title: "Your account has been created",
-                        message: "Please verify your email and phone to access all the features.",
-                        duration: 120000,
-                        action: pushToVerification,
-                        actionButtonText: "Verify"
+                        duration: 120000
                     })
                 } else if (response.status == 400) {
                     formik.setErrors(response.data)
@@ -86,7 +84,7 @@ export default function Register() {
 
     return (
         <>
-            <div>
+            <form method={"POST"} onSubmit={(e) => { e.preventDefault(); formik.submitForm()}}>
                 <div
                     className="xl:px-20 md:px-10 sm:px-6 px-4 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center">
                     <div className=" md:hidden sm:mb-8 mb-6">
@@ -115,7 +113,7 @@ export default function Register() {
                         {/*    <hr className="w-full bg-gray-400"/>*/}
                         {/*</div>*/}
                         <div className="flex items-center justify-between gap-x-4">
-                            <div className="mt-6">
+                            <div className="mt-4">
                                 <TextInput type={'text'}
                                            name={'first_name'}
                                            label={'first name'}
@@ -184,6 +182,7 @@ export default function Register() {
                             <PrimaryButton
                                 disabled={isRegisteringUser || Object.keys(formik.errors).length !== 0}
                                 onClick={formik.submitForm}
+                                isSubmitType={true}
                                 name={"SIGN UP"} cClass="w-full"
                                 class={"w-full h-full mx-0  focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 disabled:bg-gray-500 text-sm font-semibold leading-none text-white focus:outline-none py-4"}/>
                         </div>
@@ -204,7 +203,7 @@ export default function Register() {
 
                     <TopReview/>
                 </div>
-            </div>
+            </form>
         </>
     );
 }

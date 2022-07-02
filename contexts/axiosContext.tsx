@@ -69,12 +69,13 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
                         duration: 5000
                     })
                 } else if (error.response.status == 403) {
-                    setAlert({
-                        type: ALERT_TYPE_WARNING,
-                        title: "Verify your account to continue.",
-                        message: "Please click on the verification link that has been sent to your email address to verify your account.",
-                        duration: 20000,
-                    })
+                    if (Router.pathname !== '/verify')
+                        setAlert({
+                            type: ALERT_TYPE_WARNING,
+                            title: "Verify your account to continue.",
+                            message: "Please click on the verification link that has been sent to your email address to verify your account.",
+                            duration: 20000,
+                        })
                 }
                 throw error
             }
@@ -90,7 +91,6 @@ export const AxiosProvider: React.FC<Props> = ({children}) => {
             }
         })
     }, []);
-
 
 
     if (!isLoaded) return <></>
