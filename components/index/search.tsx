@@ -136,10 +136,6 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
     }, [query]);
 
-    useEffect(() => {
-        document.getElementById("title")?.focus()
-    }, []);
-
 
     return (
         <>
