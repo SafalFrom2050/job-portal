@@ -11,37 +11,54 @@ import Spinner from "../components/common/spinner";
 import Heading from "../components/common/heading";
 import {APP_DESCRIPTION, APP_NAME} from "../others/config";
 import Router from "next/router";
+import Pagination from "../components/navigation/pagination";
 
 
 const Home: NextPage = () => {
 
+    const [postDataUrl, setPostDataUrl] = useState('post/');
+    const [postsCount, setPostsCount] = useState(6)
+    const [currentPageNumber, setCurrentPageNumber] = useState(1);
+
     const [searchResults, setSearchResults] = useState([] as Post[]);
     const [isSearching, setIsSearching] = useState(searchStates.notSearching);
 
-    const titleTypes = [
-        {key: "1", value: "School/College"},
-        {key: "2", value: "Security"},
-        {key: "3", value: "IT"},
-        {key: "4", value: "Banking"},
-        {key: "5", value: "Receptionist"},
-    ]
-
-    const positionTypes = [
-        {key: "1", value: "Teacher"},
-        {key: "2", value: "Driver"},
-        {key: "3", value: "Developer"},
-        {key: "4", value: "Backend"}
-    ]
-
     const {axiosInstanceGuest} = useContext(AxiosContext) as AxiosContextType
 
-    const {data, isLoading} = useQuery("posts", fetchPosts, {enabled: axiosInstanceGuest != null, retryOnMount: true})
+    const {data, isLoading} = useQuery(postDataUrl, fetchPosts, {
+        enabled: axiosInstanceGuest != null,
+        retryOnMount: true
+    })
 
-    const posts = data?.data.results as Post[]
+    const posts = (data?.data ? data?.data.results : []) as Post[]
+
+    const count = data?.data ? data?.data.count : 0
+    const nextPostData: string = data?.data ? data?.data.next : undefined
+    const previousPostData: string = data?.data ? data?.data.previous : undefined
 
 
     function fetchPosts() {
-        return getPosts(axiosInstanceGuest)
+        return getPosts(axiosInstanceGuest, {url: postDataUrl, limit: postsCount})
+    }
+
+    function setNextPosts() {
+        if (nextPostData != undefined) {
+            setPostDataUrl(nextPostData)
+            setCurrentPageNumber((i) => ++i)
+        }
+
+    }
+
+    function setPreviousPosts() {
+        if (previousPostData != undefined) {
+            setPostDataUrl(previousPostData)
+            setCurrentPageNumber((i) => --i)
+        }
+    }
+
+    function setPageNumber(pageNumber: number) {
+        setPostDataUrl(`post/?limit=${postsCount}&offset=${(pageNumber - 1) * postsCount}`)
+        setCurrentPageNumber(pageNumber)
     }
 
     return (
@@ -84,7 +101,7 @@ const Home: NextPage = () => {
                              sort={true}
                              cClass={"sticky top-0 bg-indigo-50"}/>
                     :
-                    <Heading heading={"All Jobs"} count={posts ? posts.length : 0} sort={true}
+                    <Heading heading={"All Jobs"} count={count || 0} sort={true}
                              cClass={"sticky top-0 bg-indigo-50"}/>
                 }
 
@@ -113,6 +130,16 @@ const Home: NextPage = () => {
                 </div>
             </main>
 
+            <Pagination
+                onNextClick={setNextPosts}
+                onPreviousClick={setPreviousPosts}
+                count={Math.ceil(count / postsCount)}
+                currentPageNumber={currentPageNumber}
+                onPageNumberClick={setPageNumber}
+                disableNextButton={!nextPostData || isLoading}
+                disablePreviousButton={!previousPostData || isLoading}
+
+            />
         </div>
     )
 }

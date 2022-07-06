@@ -1,5 +1,7 @@
 import axios, {AxiosError, AxiosInstance} from "axios";
 import {Response} from "./http-common";
+import {POST_LIST_LIMIT_PER_PAGE} from "../constants";
+import {BASE_URL} from "../others/config";
 export type Post = {
     id?: number;
     title?: string;
@@ -49,16 +51,30 @@ export type PostFieldListResponse = {
     postFields: PostField[]
 }
 
+export type PostRequestOptions = Post & {
+    limit?: number,
+    offset?: string,
+    url?: string
+}
 
 
-export const getPosts = async (http: AxiosInstance | null) => {
+export const getPosts = async (http: AxiosInstance | null, options?: PostRequestOptions) => {
 
     if (http == null) return {data: [], status: null};
 
     try {
+        let url = 'post/'
+        if(options && options.url !== undefined && options.url) {
+            url = options.url.replace(BASE_URL, '')
+            options.url = undefined
+        }
+
         const {data, status} = await http.get<PostListResponse>(
-            'post/'
+            url,
+            {params: {limit: POST_LIST_LIMIT_PER_PAGE, ...options}}
         );
+
+
         return {data, status} as Response;
     } catch (error) {
         if (axios.isAxiosError(error)) {

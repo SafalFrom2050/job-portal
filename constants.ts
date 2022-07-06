@@ -33,3 +33,6 @@ export const organizationOnlyRoutes = [
 export const individualOnlyRoutes = [
 
 ]
+
+
+export const POST_LIST_LIMIT_PER_PAGE = 3
