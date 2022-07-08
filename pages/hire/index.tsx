@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import TabView from "../../components/navigation/tabView";
 import Create from "../post/create";
 import PostManagerList from "../../components/post/PostManagerList";
+import {AuthContext} from "../../contexts/authContext";
+import {AuthContextType} from "../../@types/user";
 
 function Index() {
     const tabs = [
@@ -9,9 +11,11 @@ function Index() {
         {key: 1, value: 'Manage Posts'},
     ]
 
+    const {isLoggedIn} = useContext(AuthContext) as AuthContextType;
+
     const [tabKey, setTabKey] = useState(0)
 
-
+    if (!isLoggedIn) return <></>
     return <>
         <div
             className="relative bg-indigo-700 mx-auto flex flex-col items-center pt-8 sm:pt-16 pb-16 sm:pb-16 md:pb-24 xl:pb-32">
