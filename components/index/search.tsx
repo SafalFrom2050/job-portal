@@ -101,21 +101,30 @@ function Search(props: {
                             <div className={`py-6 mt-12 transition-all`} id="interaction">
                                 <div className={'px-8'}>
                                     <div className=" flex flex-col w-full gap-y-2">
-                                        <div className="relative w-full">
-                                            <input name={"title"}
-                                                   id={"title"}
-                                                   autoComplete={"search-jobs"}
+                                        <div className="w-full flex gap-x-2 items-center">
+                                            <div className={'relative w-full'}>
+                                                <input name={"title"}
+                                                       id={"title"}
+                                                       autoComplete={"search-jobs"}
 
-                                                   autoFocus={true}
-                                                   onChange={formik.handleChange}
-                                                   value={formik.values.title}
+                                                       autoFocus={true}
+                                                       onChange={formik.handleChange}
+                                                       value={formik.values.title}
 
-                                                   placeholder="Search Job"
-                                                   className="p-4 py-2 outline-none md:focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"
-                                            />
+                                                       placeholder="Search Job"
+                                                       className="p-4 py-2 outline-none md:focus pr-10  bg-gray-50 border rounded border-gray-100 text-slate-600 w-full leading-4"
+                                                />
+                                                <SearchIcon
+                                                    className="w-6 h-6 absolute pointer-events-none top-2 right-5 text-gray-600"/>
+                                            </div>
 
-                                            <SearchIcon
-                                                className="w-6 h-6 absolute pointer-events-none top-2 right-5 text-gray-600"/>
+
+                                            {props.isFullSize && <PrimaryButton
+                                                autoFocus={false}
+                                                isSubmitType={true}
+                                                name={'Search'}
+                                                cClass="h-full flex items-center"
+                                                class={`${showFilters ? "hidden" : ""} font-medium text-base mx-0`}/>}
 
                                         </div>
                                         <div className="flex justify-between w-full h-10 mt-3 gap-x-1 flex-wrap">
@@ -124,17 +133,17 @@ function Search(props: {
                                                 name={"Filters"}
                                                 onClick={toggleAdvanceOptions}
                                                 class={"text-sm"}
-                                                cClass={"h-full flex items-center"}
+                                                cClass={`h-full flex items-center`}
                                                 iconLeft={<Adjustments
                                                     className={`w-5 h-5 transform duration-150 ${showFilters ? "rotate-180" : ""}`}/>}
                                             />
 
-                                            <PrimaryButton
+                                            {!props.isFullSize && <PrimaryButton
                                                 autoFocus={false}
                                                 isSubmitType={true}
                                                 name={'Search'}
                                                 cClass="h-full flex items-center"
-                                                class={`${showFilters ? "hidden" : ""} font-medium text-base mx-0`}/>
+                                                class={`${showFilters ? "hidden" : ""} font-medium text-base mx-0`}/>}
                                         </div>
                                     </div>
                                 </div>

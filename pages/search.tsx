@@ -23,7 +23,7 @@ function SearchPage() {
 
     const [postDataUrl, setPostDataUrl] = useState('post/');
 
-    const [postsCount, setPostsCount] = useState(6)
+    const [postsCount, setPostsCount] = useState(20)
 
     const [postDataOptions, setPostDataOptions] = useState({url: postDataUrl, limit: postsCount, ...query} as PostRequestOptions)
 
@@ -78,10 +78,6 @@ function SearchPage() {
         setPostDataOptions({...postDataOptions, ...options})
         smoothScrollTop()
     }
-
-    // useEffect(() => {
-    //     setPostDataOptions({...postDataOptions, ...query})
-    // }, [query])
 
     return (
         <div>
