@@ -12,6 +12,7 @@ const Heading = (props: { heading: string, count?: number, sort?: boolean, cClas
     }
     return (
         <div
+            id="heading"
             className={overrideTailwindClasses(`mx-auto px-4 py-2 flex justify-center items-center max-w-[1000px] z-10 ${props.cClass}`)}>
             <div className="flex justify-between items-center w-full">
                 <div className="flex flex-col justify-start items-start w-full">

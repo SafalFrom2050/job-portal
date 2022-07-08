@@ -41,8 +41,8 @@ export default function Header(props: { guest?: boolean }) {
             path: '/help'
         },
         {
-            name: 'Jobs',
-            path: '/jobs'
+            name: 'Search Jobs',
+            path: '/search'
         },
         {
             name: 'Hire Staff',

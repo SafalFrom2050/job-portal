@@ -53,7 +53,7 @@ export type PostFieldListResponse = {
 
 export type PostRequestOptions = Post & {
     limit?: number,
-    offset?: string,
+    offset?: number,
     url?: string
 }
 

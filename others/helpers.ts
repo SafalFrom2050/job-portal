@@ -6,3 +6,7 @@ export function ucfirst(str: string) {
 export function formatCurrency($amount?: string) {
     return Intl.NumberFormat('en-IN').format(Number.parseInt($amount || '0'));
 }
+
+export function smoothScrollTop() {
+    window.scrollTo({top: 0, behavior: "smooth"})
+}

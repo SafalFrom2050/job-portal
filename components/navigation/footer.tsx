@@ -90,7 +90,7 @@ const Footer = () => {
                         </a>
                     </Link>
 
-                    <Link href={'/'}>
+                    <Link href={'/search'}>
                         <a>
                             <p className="hover:text-gray-500 text-base leading-4 mt-6 text-gray-800 cursor-pointer">
                                 Find Jobs
@@ -98,7 +98,7 @@ const Footer = () => {
                         </a>
                     </Link>
 
-                    <Link href={'/?field=5'}>
+                    <Link href={'/search?field=1'}>
                         <a>
                             <p className="hover:text-gray-500 text-base leading-4 mt-6 text-gray-800 cursor-pointer">
                                 Be a Science Teacher
@@ -106,7 +106,7 @@ const Footer = () => {
                         </a>
                     </Link>
 
-                    <Link href={'/?position=Higher+Secondary'}>
+                    <Link href={'/search?position=Higher+Secondary'}>
                         <a>
                             <p className="hover:text-gray-500 text-base mt-6 text-gray-800 cursor-pointer">
                                 Teach in Higher Secondary

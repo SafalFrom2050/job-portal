@@ -1,6 +1,5 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {SearchIcon} from "@heroicons/react/solid";
-import {ArrowDown} from "heroicons-react";
 import PrimaryButton from "../buttons/primaryButton";
 import TextButton from "../buttons/textButton";
 import Dropdown from "../common/dropdown/dropdown";
@@ -9,21 +8,24 @@ import WhiteButton from "../buttons/whiteButton";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
 import {useMutation, useQuery} from "react-query";
-import {getPostFields, Post, PostField, SearchPostRequest, searchPosts} from "../../API/post.api";
+import {getPostFields, Post, PostField, PostRequestOptions, SearchPostRequest, searchPosts} from "../../API/post.api";
 import * as yup from "yup";
 import {useFormik} from "formik";
 import Router, {useRouter} from "next/router";
 import {positionTypes} from "../../others/config";
+import {Adjustments} from "heroicons-react";
 
-export const searchStates = {
-    notSearching: 0,
-    searching: 1,
-    end: 2
-}
-
-function Search(props: { onSearchStateChange: (state: number) => void, onSearchError: (error: string) => void, onSearchResults: (posts: Post[]) => void }) {
-
-    const {query} = useRouter()
+function Search(props: {
+    onSubmit?: (options: PostRequestOptions) => void,
+    disable?: boolean,
+    searchPostRequestOptions?: {
+        title?: string,
+        field?: string,
+        position?: string,
+        location?: string
+    },
+    isFullSize?: boolean
+}) {
 
     const [showFilters, setShowFilters] = useState(false);
 
@@ -54,8 +56,6 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
     }
 
     const [errorMsg, setErrorMsg] = useState(false);
-    const [formDisabled, setFormDisabled] = useState(true);
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
 
     const validationSchema = yup.object({
@@ -72,85 +72,32 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
 
     const formik = useFormik({
         initialValues: {
-            title: '',
-            field: '',
-            position: '',
-            location: ''
+            title: props.searchPostRequestOptions?.title || '',
+            field: props.searchPostRequestOptions?.field || '',
+            position: props.searchPostRequestOptions?.position || '',
+            location: props.searchPostRequestOptions?.location || ''
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
-            initiateSearchQuery()
+            props.onSubmit?.(values ? values : {})
         },
     })
-
-
-    const {isLoading: isSearching, mutate: initiateSearchQuery} = useMutation<any, Error>(
-        async () => {
-            if (axiosInstanceGuest == null) return false
-
-            const searchPostRequest: SearchPostRequest = {...formik.values, ...query}
-            props.onSearchStateChange(searchStates.searching)
-
-            return await searchPosts(axiosInstanceGuest, searchPostRequest).then(response => {
-
-                if (response.status == 200) {
-                    // Success
-                    props.onSearchResults(response.data.results)
-                } else if (response.status == 400) {
-                    formik.setErrors(response.data)
-                } else if (response.status == 401) {
-                    if (response.data.detail != null) {
-                        setErrorMsg(response.data.detail)
-                    }
-                }
-
-                props.onSearchStateChange(searchStates.end)
-
-            })
-        }
-    );
-
-    useEffect(() => {
-
-        if (Object.keys(query).length === 0) {
-            props.onSearchStateChange(searchStates.notSearching)
-            props.onSearchResults([])
-            formik.resetForm()
-            return
-        }
-
-        initiateSearchQuery()
-
-        if (query.location != "" || query.field != "" || query.position != "") {
-            setShowFilters(true)
-        }
-
-        async function setValues() {
-            await formik.setFieldValue("title", query.title)
-            await formik.setFieldValue("location", query.location)
-            await formik.setFieldValue("field", query.field)
-            await formik.setFieldValue("position", query.position)
-        }
-
-        setValues()
-
-    }, [query]);
-
 
     return (
         <>
             <form onSubmit={(e) => {
                 e.preventDefault()
-                if (formik.isValid) {
-                    Router.push({pathname: "/", query: formik.values},
-                        undefined, {shallow: true}
-                    )
-                }
+                formik.submitForm()
             }}>
+                <div className={`${showFilters ? 'fixed bottom-0 top-0 left-0 right-0 z-0' : ''} `}
+                     onClick={toggleAdvanceOptions}/>
 
-                <div className="relative">
+
+                <div className={`relative ${showFilters ? 'z-50' : ''}`}>
+
                     <div className="py-4">
-                        <div className={`mt-7 pt-0  rounded-[4px]  bg-white max-w-[400px] w-full mx-auto ${showFilters && 'shadow-2xl'}`}>
+                        <div
+                            className={`mt-7 pt-0  rounded-[4px]  bg-white ${props.isFullSize ? 'min-w-[80vw] xl:min-w-[900px]' : 'max-w-[400px]'} w-full mx-auto ${showFilters && 'shadow-2xl'}`}>
                             <div className={`py-6 mt-12 transition-all`} id="interaction">
                                 <div className={'px-8'}>
                                     <div className=" flex flex-col w-full gap-y-2">
@@ -171,15 +118,15 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                                 className="w-6 h-6 absolute pointer-events-none top-2 right-5 text-gray-600"/>
 
                                         </div>
-                                        <div className="flex justify-between w-full h-10 mt-3 gap-x-2 flex-wrap">
+                                        <div className="flex justify-between w-full h-10 mt-3 gap-x-1 flex-wrap">
 
                                             <TextButton
                                                 name={"Filters"}
                                                 onClick={toggleAdvanceOptions}
                                                 class={"text-sm"}
                                                 cClass={"h-full flex items-center"}
-                                                iconRight={<ArrowDown
-                                                    className={`w-4 h-4 transform duration-150 ${showFilters ? "rotate-180" : ""}`}/>}
+                                                iconLeft={<Adjustments
+                                                    className={`w-5 h-5 transform duration-150 ${showFilters ? "rotate-180" : ""}`}/>}
                                             />
 
                                             <PrimaryButton
@@ -191,21 +138,24 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                         </div>
                                     </div>
                                 </div>
+
                                 <div
-                                    className={` bg-white absolute z-50 px-8 max-w-[400px] w-full rounded-[4px] mt-4 transition-all duration-150 ${showFilters ? "h-auto min-h-0 max-h-screen shadow-2xl" : "max-h-0 overflow-hidden"} `}>
+                                    className={` bg-white absolute z-50 px-8 ${props.isFullSize ? 'min-w-[80vw] xl:min-w-[900px]' : 'max-w-[400px]'} w-full rounded-[4px] mt-4 transition-all duration-150 ${showFilters ? "h-auto min-h-0 max-h-screen shadow-2xl" : "max-h-0 overflow-hidden"} `}>
+
                                     <hr className="bg-[#F1F5F9] mb-6"/>
 
                                     <div className={"flex flex-col gap-3"}>
                                         {/* Interaction */}
 
-                                        <Dropdown name={"position"} options={positionTypes}
+                                        <Dropdown name={"position"}
+                                                  options={[{key: '', value: 'None'}, ...positionTypes]}
 
                                                   selected={formik.values.position}
                                                   onSelect={(v) => !formik.setFieldValue("position", v, true)}
 
                                                   label="Level" cClass={"bg-white border border-gray-200"}/>
 
-                                        <Dropdown name={"field"} options={fieldTypes}
+                                        <Dropdown name={"field"} options={[{key: '', value: 'None'}, ...fieldTypes]}
 
                                                   selected={(postFields && formik.values.field) ? postFields.find((field) => field.id == formik.values.field)?.name : 'Subject'}
                                                   onSelect={(v) => !formik.setFieldValue("field", v, true)}
@@ -221,7 +171,8 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                                     <div
                                         className="flex flex-col items-center justify-end w-full gap-4 my-4 lg:flex-row">
                                         {/*<WhiteButton name={"Advanced"} class="font-medium text-sm"/>*/}
-                                        <PrimaryButton autoFocus={false} disabled={isSearching || !formik.isValid}
+                                        <PrimaryButton autoFocus={false}
+                                                       disabled={(props.disable === true) || !formik.isValid}
                                                        isSubmitType={true}
                                                        name={"Search"}
                                                        class="font-medium text-base mx-0"/>
@@ -233,7 +184,8 @@ function Search(props: { onSearchStateChange: (state: number) => void, onSearchE
                 </div>
             </form>
         </>
-    );
+    )
+        ;
 }
 
 export default Search;
