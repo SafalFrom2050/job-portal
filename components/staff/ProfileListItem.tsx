@@ -35,7 +35,7 @@ function ProfileListItem(props: {user: User}) {
 
     return (
         <div
-            className={"mx-auto relative flex flex-col items-center rounded bg-white shadow p-4 w-full max-w-[250px] overflow-hidden"}>
+            className={"mx-auto relative flex flex-col items-center rounded bg-white shadow p-4 w-full sm:max-w-[250px] overflow-hidden"}>
 
             <div className={"absolute top-4 left-4"}>
                 <BadgeCheckIcon className={"w-6 h-6 text-green-600"}/>
