@@ -22,12 +22,14 @@ export const authOnlyRoutes = [
     'post',
     'profile/me',
     'staff',
-    'education'
+    'education',
+    'hire'
 ]
 
 export const organizationOnlyRoutes = [
     'post/create',
     'staff',
+    'hire',
 ]
 
 export const individualOnlyRoutes = [
