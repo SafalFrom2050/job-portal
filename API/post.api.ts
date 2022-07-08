@@ -164,3 +164,23 @@ export const createPost = async (http: AxiosInstance, post: PostRequest) => {
         }
     }
 }
+
+export const deletePost = async (http: AxiosInstance, postId: number) => {
+
+    try {
+        const {data, status} = await http.delete<PostListResponse>(
+            `post/${postId}/`,
+        );
+
+        console.log(JSON.stringify(data));
+
+        return {data, status} as Response;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const e = error as AxiosError
+            return {data:e.response?.data, status: e.response?.status};
+        } else {
+            return {data: 'An unexpected error occurred', status: null} as Response;
+        }
+    }
+}

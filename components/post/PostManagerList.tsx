@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import {getPosts, Post, PostRequestOptions} from "../../API/post.api";
+import {deletePost, getPosts, Post, PostRequestOptions} from "../../API/post.api";
 import {formatCurrency, smoothScrollTop} from "../../others/helpers";
 import {ClockIcon, CurrencyRupeeIcon, TrashIcon} from "@heroicons/react/outline";
 import {AxiosContext} from "../../contexts/axiosContext";
@@ -10,6 +10,10 @@ import {AuthContext} from "../../contexts/authContext";
 import {AuthContextType} from "../../@types/user";
 import moment from "moment";
 import {PencilAltIcon} from "@heroicons/react/solid";
+import {AlertContext} from "../../contexts/alertContext";
+import {AlertContextType} from "../../@types/alert";
+import {ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS} from "../../constants";
+import DialogModal from "../modals/dialogModal";
 
 
 function PostManagerList() {
@@ -32,11 +36,11 @@ function PostManagerList() {
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
     const pageIndex = currentPageNumber - 1
 
-    const {axiosInstanceGuest} = useContext(AxiosContext) as AxiosContextType
+    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
+    const {setAlert} = useContext(AlertContext) as AlertContextType
 
-
-    const {data, isLoading} = useQuery(postDataUrl + Object.values(postDataOptions), fetchPosts, {
-        enabled: axiosInstanceGuest != null,
+    const {data, isLoading, refetch} = useQuery(postDataUrl + Object.values(postDataOptions), fetchPosts, {
+        enabled: axiosInstance != null,
         retryOnMount: true
     })
 
@@ -48,7 +52,7 @@ function PostManagerList() {
 
 
     function fetchPosts() {
-        return getPosts(axiosInstanceGuest, postDataOptions)
+        return getPosts(axiosInstance, postDataOptions)
     }
 
     function setNextPosts() {
@@ -81,6 +85,18 @@ function PostManagerList() {
         smoothScrollTop()
     }
 
+    function onDelete(postId: number) {
+        if (axiosInstance != null) {
+            deletePost(axiosInstance, postId).then((response) => {
+                if (response.status == 204) {
+                    setAlert({title: "Successfully deleted!", type: ALERT_TYPE_SUCCESS, duration: 5000})
+                } else {
+                    setAlert({title: "Couldn't delete post!", type: ALERT_TYPE_DANGER, duration: 8000})
+                }
+                refetch()
+            })
+        }
+    }
 
     return (
         <>
@@ -96,7 +112,7 @@ function PostManagerList() {
                         <table className="w-full whitespace-nowrap">
                             <tbody>
                             {posts.map((post) => {
-                                return <PostRowItem key={post.id} post={post}/>
+                                return <PostRowItem key={post.id} post={post} onDelete={onDelete}/>
                             })}
 
                             </tbody>
@@ -109,51 +125,70 @@ function PostManagerList() {
 }
 
 function PostRowItem(props: { post: Post, onDelete?: (postId: number) => void, onEdit?: (postId: number) => void }) {
-    return <tr>
-        <td>
-            <div className="flex my-6">
-                <div className="bg-gray-100 rounded-sm h-12 flex items-center justify-center aspect-square">
-                    <p className={"font-medium text-sm"}>{props.post.field?.name?.substring(0, 3)}</p>
-                </div>
-                <div className="pl-3">
-                    <div className="flex items-center text-sm leading-none">
-                        <p className="font-semibold text-gray-800">{props.post.title}</p>
-                        <p className="text-blue-500 ml-3">({props.post.position})</p>
+
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+
+    return <>
+
+        <tr>
+
+            <td>
+                <DialogModal show={showDeleteConfirm}
+                             setShow={setShowDeleteConfirm}
+                             title={"Confirm Delete?"}
+                             description={"This action cannot be reverted."}
+                             buttonLeftText={"Cancel"}
+                             buttonRightText={"Delete"}
+                             buttonLeftOnClick={() => setShowDeleteConfirm(false)}
+                             buttonRightOnClick={() => props.onDelete?.(props.post.id || -1)}
+                             buttonRightClass={'bg-red-500 hover:bg-red-600'}
+                             icon={<TrashIcon className={"w-10 h-10 text-red-500"} />}
+                />
+
+                <div className="flex my-6">
+                    <div className="bg-gray-100 rounded-sm h-12 flex items-center justify-center aspect-square">
+                        <p className={"font-medium text-sm"}>{props.post.field?.name?.substring(0, 3)}</p>
                     </div>
-                    <p className="text-xs md:text-sm leading-none text-gray-600 mt-2 w-[200px] break-words truncate">{props.post.description}</p>
+                    <div className="pl-3">
+                        <div className="flex items-center text-sm leading-none">
+                            <p className="font-semibold text-gray-800">{props.post.title}</p>
+                            <p className="text-blue-500 ml-3">({props.post.position})</p>
+                        </div>
+                        <p className="text-xs md:text-sm leading-none text-gray-600 mt-2 w-[200px] break-words truncate">{props.post.description}</p>
 
-                    <div className={"text-gray-800 mt-4 flex items-center gap-x-2"}>
-                        <button>
-                            <TrashIcon className={"w-5 h-5 text-red-500"}/>
-                        </button>
+                        <div className={"text-gray-800 mt-4 flex items-center gap-x-2"}>
+                            <button onClick={() => setShowDeleteConfirm(true)}>
+                                <TrashIcon className={"w-5 h-5 text-red-500"}/>
+                            </button>
 
-                        <button>
-                            <PencilAltIcon className={"w-5 h-5"}/>
-                        </button>
+                            <button>
+                                <PencilAltIcon className={"w-5 h-5"}/>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </td>
-        <td className="pl-20">
-            <div className={'flex flex-col gap-y-2'}>
-                <div className="flex items-center gap-x-1 justify-center px-2 py-1 mt-2 bg-green-100 rounded-full">
-                    <ClockIcon className="w-5 h-5"/>
-                    <p className="text-xs leading-3 text-green-700">
-                        {moment(props.post.created_date).fromNow()}
-                    </p>
+            </td>
+            <td className="pl-20">
+                <div className={'flex flex-col gap-y-2'}>
+                    <div className="flex items-center gap-x-1 justify-center px-2 py-1 mt-2 bg-green-100 rounded-full">
+                        <ClockIcon className="w-5 h-5"/>
+                        <p className="text-xs leading-3 text-green-700">
+                            {moment(props.post.created_date).fromNow()}
+                        </p>
+                    </div>
+
+                    <div className={"flex items-center gap-x-1"}>
+                        <CurrencyRupeeIcon className="w-4 h-4"/>
+                        <p className="text-xs font-semibold leading-none text-right text-gray-800">
+                            {formatCurrency(props.post.salary_low)} - {formatCurrency(props.post.salary_low)}
+                        </p>
+                    </div>
+
                 </div>
-
-                <div className={"flex items-center gap-x-1"}>
-                    <CurrencyRupeeIcon className="w-4 h-4"/>
-                    <p className="text-xs font-semibold leading-none text-right text-gray-800">
-                        {formatCurrency(props.post.salary_low)} - {formatCurrency(props.post.salary_low)}
-                    </p>
-                </div>
-
-            </div>
-        </td>
-    </tr>;
+            </td>
+        </tr>
+    </>;
 }
 
 export default PostManagerList;
