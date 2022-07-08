@@ -6,13 +6,8 @@ import {TokenContext} from "../../contexts/tokenContext";
 import {TokenContextType} from "../../@types/token";
 import Router, {useRouter} from "next/router";
 import Image from "next/image";
-import {APP_NAME, APP_URL, BASE_URL} from "../../others/config";
-import {AlertContext} from "../../contexts/alertContext";
-import {AlertContextType} from "../../@types/alert";
-import {ALERT_TYPE_WARNING} from "../../constants";
-import {LockClosed} from "heroicons-react";
+import {APP_NAME, BASE_URL} from "../../others/config";
 import {LockClosedIcon} from "@heroicons/react/solid";
-import WhiteButton from "../buttons/whiteButton";
 
 export default function Header(props: { guest?: boolean }) {
 

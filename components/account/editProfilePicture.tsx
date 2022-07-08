@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {AuthContext} from "../../contexts/authContext";
-import {AuthContextType, User} from "../../@types/user";
+import {AuthContextType} from "../../@types/user";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
 import * as yup from "yup";

@@ -9,7 +9,6 @@ import {Grade} from "../../@types/grade";
 import {useRouter} from "next/router";
 import Heading from "../../components/common/heading";
 import {Lesson} from "../../@types/lesson.d.";
-import Link from 'next/link';
 
 function Lessons() {
 

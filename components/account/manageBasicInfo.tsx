@@ -12,8 +12,6 @@ import {FormErrorMessage} from "../common/formErrorMessage";
 import Heading from "../common/heading";
 import TextInput from "../inputs/textInput";
 import Dropdown from "../common/dropdown/dropdown";
-import {overrideTailwindClasses} from "tailwind-override";
-import WhiteButton from "../buttons/whiteButton";
 import PrimaryButton from "../buttons/primaryButton";
 import Router from "next/router";
 

@@ -1,4 +1,4 @@
-import React, {Dispatch, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ALERT_TYPE_DANGER, ALERT_TYPE_SUCCESS, ALERT_TYPE_WARNING, ALERT_TYPES} from "../../constants";
 import {Alert} from "../../@types/alert";
 import {CheckCircleOutline, EmojiSadOutline, InformationCircleOutline} from "heroicons-react";

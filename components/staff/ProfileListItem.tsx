@@ -3,18 +3,18 @@ import Image from "next/image";
 import {
     BadgeCheckIcon,
     BriefcaseIcon,
-    CurrencyRupeeIcon, DocumentDownloadIcon,
-    LightningBoltIcon, MailIcon, PhoneIcon
+    CurrencyRupeeIcon,
+    DocumentDownloadIcon,
+    MailIcon,
+    PhoneIcon
 } from "@heroicons/react/solid";
-import PrimaryButton from "../../components/buttons/primaryButton";
 import WhiteButton from "../../components/buttons/whiteButton";
-import TextButton from "../../components/buttons/textButton";
 import {MenuAlt3Icon, XIcon} from "@heroicons/react/outline";
 import {overrideTailwindClasses} from "tailwind-override";
 import Router from "next/router";
 import {User} from "../../@types/user";
 import {formatCurrency} from "../../others/helpers";
-import { BASE_URL } from '../../others/config';
+import {BASE_URL} from '../../others/config';
 
 function ProfileListItem(props: {user: User}) {
 

@@ -5,8 +5,8 @@ import Link from "next/link"
 import Image from "next/image";
 import WhiteButton from "../buttons/whiteButton";
 import {BASE_URL, IMAGE_COMPANY_PLACEHOLDER} from "../../others/config";
-import {CurrencyRupeeIcon, EyeIcon, LocationMarkerIcon} from "@heroicons/react/solid";
-import { formatCurrency } from '../../others/helpers';
+import {CurrencyRupeeIcon, LocationMarkerIcon} from "@heroicons/react/solid";
+import {formatCurrency} from '../../others/helpers';
 import {ClockIcon} from "@heroicons/react/outline";
 
 function PostListItem(props: {

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {getPosts, Post, PostRequestOptions} from "../API/post.api";
 import {AxiosContext} from "../contexts/axiosContext";
 import {AxiosContextType} from "../@types/axiosContextType";
@@ -10,8 +10,6 @@ import Router, {useRouter} from "next/router";
 import Spinner from "../components/common/spinner";
 import PostListItem from "../components/post/PostListItem";
 import Pagination from "../components/navigation/pagination";
-import * as yup from "yup";
-import {useFormik} from "formik";
 import {smoothScrollTop} from "../others/helpers";
 import Search from "../components/index/search";
 

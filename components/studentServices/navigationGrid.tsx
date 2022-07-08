@@ -1,15 +1,14 @@
 import React from 'react';
 import {overrideTailwindClasses} from "tailwind-override";
-import {AcademicCapOutline, PresentationChartLineOutline} from "heroicons-react";
+import {AcademicCapOutline} from "heroicons-react";
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
-    faChalkboardTeacher,
-    faPersonMilitaryPointing,
     faBurst,
-    faSchoolCircleCheck,
+    faChalkboardTeacher,
     faPersonChalkboard,
-    faGraduationCap
+    faPersonMilitaryPointing,
+    faSchoolCircleCheck
 } from '@fortawesome/free-solid-svg-icons'
 
 import Link from "next/link";

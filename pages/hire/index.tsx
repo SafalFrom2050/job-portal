@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import TabView from "../../components/navigation/tabView";
 import Create from "../post/create";
+import PostManagerList from "../../components/post/PostManagerList";
 
 function Index() {
     const tabs = [
@@ -34,7 +35,7 @@ function Index() {
         <div className={"h-4"} />
 
         {tabKey === 0 && <Create />}
-        {tabKey === 1 && '1'}
+        {tabKey === 1 && <PostManagerList />}
 
     </>
 }

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import Heading from "../../components/common/heading";
 import {AuthContext} from "../../contexts/authContext";
-import {AuthContextType, User} from "../../@types/user";
+import {AuthContextType} from "../../@types/user";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
 import {useQuery} from "react-query";

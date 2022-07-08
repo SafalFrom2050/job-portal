@@ -1,17 +1,15 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {SearchIcon} from "@heroicons/react/solid";
 import PrimaryButton from "../buttons/primaryButton";
 import TextButton from "../buttons/textButton";
 import Dropdown from "../common/dropdown/dropdown";
 import TextInput from "../inputs/textInput";
-import WhiteButton from "../buttons/whiteButton";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
-import {useMutation, useQuery} from "react-query";
-import {getPostFields, Post, PostField, PostRequestOptions, SearchPostRequest, searchPosts} from "../../API/post.api";
+import {useQuery} from "react-query";
+import {getPostFields, PostField, PostRequestOptions} from "../../API/post.api";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import Router, {useRouter} from "next/router";
 import {positionTypes} from "../../others/config";
 import {Adjustments} from "heroicons-react";
 

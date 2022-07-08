@@ -1,11 +1,10 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 
 import ProfileListItem from "../../components/staff/ProfileListItem";
 import Heading from "../../components/common/heading";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
 import {useQuery} from "react-query";
-import {getPosts, Post} from "../../API/post.api";
 import {getUsers} from "../../API/user.api";
 import {User} from "../../@types/user";
 

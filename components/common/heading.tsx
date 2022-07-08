@@ -1,7 +1,7 @@
 import React from "react";
 import {overrideTailwindClasses} from "tailwind-override";
 import {ArrowLeft} from "heroicons-react";
-import Router, {useRouter} from "next/router";
+import {useRouter} from "next/router";
 
 const Heading = (props: { heading: string, count?: number, sort?: boolean, cClass?: string, hClass?: string, showBackButton?: boolean, backButtonAction?: () => void }) => {
 

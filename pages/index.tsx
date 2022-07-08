@@ -2,15 +2,15 @@ import type {NextPage} from 'next'
 import Head from 'next/head'
 import Search from "../components/index/search";
 import PostListItem from "../components/post/PostListItem";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {AxiosContext} from "../contexts/axiosContext";
 import {AxiosContextType} from "../@types/axiosContextType";
-import {getPosts, Post, PostRequestOptions, SearchPostRequest} from "../API/post.api";
+import {getPosts, Post, PostRequestOptions} from "../API/post.api";
 import {useQuery} from "react-query";
 import Spinner from "../components/common/spinner";
 import Heading from "../components/common/heading";
 import {APP_DESCRIPTION, APP_NAME} from "../others/config";
-import Router, {useRouter} from "next/router";
+import {useRouter} from "next/router";
 import Pagination from "../components/navigation/pagination";
 import {smoothScrollTop} from "../others/helpers";
 

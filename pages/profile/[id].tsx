@@ -5,12 +5,10 @@ import {BASE_URL} from "../../others/config";
 import Image from "next/image";
 import {useQuery} from "react-query";
 import {useRouter} from "next/router";
-import {getPostById} from "../../API/post.api";
-import {getUserById, getUsers} from "../../API/user.api";
+import {getUserById} from "../../API/user.api";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
-import {ClockIcon, CurrencyRupeeIcon} from "@heroicons/react/outline";
-import {formatCurrency} from "../../others/helpers";
+import {ClockIcon} from "@heroicons/react/outline";
 import {BadgeCheckIcon, DocumentDownloadIcon, MailIcon, PhoneIcon, XCircleIcon} from "@heroicons/react/solid";
 
 function Index() {

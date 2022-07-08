@@ -1,13 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import TextInput from "../components/inputs/textInput";
 import PrimaryButton from "../components/buttons/primaryButton";
 import {TopReview} from "../components/login/topReview";
-import {IconGoogle} from "../components/icons/iconGoogle";
 import {IconShowHidePassword} from "../components/icons/iconShowHidePassword";
 import * as yup from 'yup';
 import {useFormik} from 'formik';
-import Header from "../components/navigation/header";
-import {useMutation, useQuery} from "react-query";
+import {useMutation} from "react-query";
 import Link from "next/link";
 import {registerUser} from "../API/user.api";
 import {TokenContext} from "../contexts/tokenContext";
@@ -15,7 +13,6 @@ import {TokenContextType} from "../@types/token";
 import Router from "next/router";
 import {AlertContext} from "../contexts/alertContext";
 import {AlertContextType} from "../@types/alert";
-import ToggleWithDetails from "../components/inputs/toggleWithDetails";
 import ToggleCheckbox from "../components/inputs/toggleCheckbox";
 import {ALERT_TYPE_SUCCESS} from "../constants";
 

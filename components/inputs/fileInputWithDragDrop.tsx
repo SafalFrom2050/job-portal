@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {overrideTailwindClasses} from "tailwind-override";
 
 function FileInputWithDragDrop(props: { name: string, id?: string, message?: String, cClass?: String, onFileChanged?: (file?: File) => void }) {

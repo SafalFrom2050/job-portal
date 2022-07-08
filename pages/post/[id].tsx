@@ -10,7 +10,7 @@ import {getPostById, Post} from "../../API/post.api";
 import {APP_DESCRIPTION, APP_NAME, APP_URL, BASE_URL, IMAGE_COMPANY_PLACEHOLDER} from '../../others/config';
 import Link from "next/link";
 import ApplicationFormModal from "../../components/post/applicationFormModal";
-import {FacebookIcon, FacebookMessengerIcon, FacebookMessengerShareButton, FacebookShareButton} from "react-share";
+import {FacebookIcon, FacebookShareButton} from "react-share";
 import {CurrencyRupeeIcon, LocationMarkerIcon} from "@heroicons/react/solid";
 import {formatCurrency} from "../../others/helpers";
 import {ClockIcon} from "@heroicons/react/outline";

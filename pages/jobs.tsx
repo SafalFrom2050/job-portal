@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import Heading from "../components/common/heading";
 import Spinner from "../components/common/spinner";
-import {searchStates} from "../components/index/search";
 import PostListItem from "../components/post/PostListItem";
 import {AxiosContext} from "../contexts/axiosContext";
 import {AxiosContextType} from "../@types/axiosContextType";

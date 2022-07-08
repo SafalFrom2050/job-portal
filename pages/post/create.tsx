@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import TextInput from "../../components/inputs/textInput";
 import Dropdown from "../../components/common/dropdown/dropdown";
@@ -8,12 +8,9 @@ import PrimaryButton from "../../components/buttons/primaryButton";
 import * as yup from "yup";
 import {useFormik} from "formik";
 import {useMutation, useQuery} from "react-query";
-import {loginUser} from "../../API/user.api";
-import {createPost, getPostFields, Post, PostField, PostRequest} from "../../API/post.api";
+import {createPost, getPostFields, PostField, PostRequest} from "../../API/post.api";
 import {AxiosContext} from "../../contexts/axiosContext";
 import {AxiosContextType} from "../../@types/axiosContextType";
-import {now} from "lodash";
-import moment from "moment";
 import SuccessModal from "../../components/modals/successModal";
 import Router from "next/router";
 import {AuthContext} from "../../contexts/authContext";

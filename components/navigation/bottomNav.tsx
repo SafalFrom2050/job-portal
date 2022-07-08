@@ -1,6 +1,6 @@
 import Link from "next/link";
-import React, {useState} from "react";
-import {AcademicCapOutline, ChartBarOutline, PlusCircleOutline, SparklesOutline, SupportOutline} from "heroicons-react";
+import React from "react";
+import {ChartBarOutline, PlusCircleOutline, SparklesOutline, SupportOutline} from "heroicons-react";
 
 function BottomNav() {
 

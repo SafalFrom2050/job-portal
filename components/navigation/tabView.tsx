@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {overrideTailwindClasses} from "tailwind-override";
 
 
 export type TabList = { key: number, value: string }
