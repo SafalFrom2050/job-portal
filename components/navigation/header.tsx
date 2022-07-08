@@ -46,7 +46,7 @@ export default function Header(props: { guest?: boolean }) {
         },
         {
             name: 'Hire Staff',
-            path: '/post/create'
+            path: '/hire'
         },
         // {
         //     name: 'Admission',

@@ -146,7 +146,7 @@ function Create(props: {}) {
                           description={"Thank you for using our platform."}/>
 
             <main>
-                <Heading heading={"Hire Staff"}/>
+                <Heading heading={"Create Post"}/>
 
                 <div className="max-w-[700px] mx-auto bg-white rounded py-8 px-10 mt-3">
                     {errorMsg &&
