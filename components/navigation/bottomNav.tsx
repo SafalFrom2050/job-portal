@@ -7,12 +7,12 @@ function BottomNav() {
     const navItems = [
         {
             name: 'Jobs',
-            path: '/jobs',
+            path: '/search',
             icon: <ChartBarOutline className={"h-6 w-6"} />
         },
         {
             name: 'Hire Staff',
-            path: '/post/create',
+            path: '/hire',
             icon: <PlusCircleOutline className={"h-6 w-6"} />
         },
         // {
