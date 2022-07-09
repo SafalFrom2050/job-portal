@@ -12,6 +12,7 @@ import * as yup from "yup";
 import {useFormik} from "formik";
 import {positionTypes} from "../../others/config";
 import {Adjustments} from "heroicons-react";
+import {isMobileDisplay} from "../../others/helpers";
 
 function Search(props: {
     onSubmit?: (options: PostRequestOptions) => void,
@@ -105,7 +106,7 @@ function Search(props: {
                                                        id={"title"}
                                                        autoComplete={"search-jobs"}
 
-                                                       autoFocus={true}
+                                                       autoFocus={!isMobileDisplay()}
                                                        onChange={formik.handleChange}
                                                        value={formik.values.title}
 
