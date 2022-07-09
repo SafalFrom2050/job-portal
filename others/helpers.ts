@@ -10,3 +10,8 @@ export function formatCurrency($amount?: string) {
 export function smoothScrollTop() {
     window.scrollTo({top: 0, behavior: "smooth"})
 }
+
+export function isMobileDisplay(){
+    const x = window.matchMedia("(max-width: 700px)")
+    return x.matches
+}
