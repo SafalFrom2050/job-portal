@@ -35,7 +35,6 @@ function Create(props: {}) {
 
     const postFields = data?.data as PostField[]
 
-
     function fetchPostFields() {
         return getPostFields(axiosInstance)
     }

@@ -13,14 +13,12 @@ const queryClient = new QueryClient()
 
 
 function MyApp({Component, pageProps}: AppProps) {
-
     return (
         <AlertProvider>
             <TokenProvider>
                 <AxiosProvider>
                     <AuthProvider>
-                        <QueryClientProvider client={queryClient}>
-
+                        <QueryClientProvider client={queryClient}> 
                             <>
                                 <Header/>
 
