@@ -6,8 +6,8 @@ function BottomNav() {
 
     const navItems = [
         {
-            name: 'Jobs',
-            path: '/search',
+            name: 'Home',
+            path: '/',
             icon: <ChartBarOutline className={"h-6 w-6"} />
         },
         {
@@ -37,7 +37,7 @@ function BottomNav() {
     return (
         <div>
             <div
-                className={"w-full fixed bottom-0 z-30 bg-gray-800 shadow flex-col justify-between md:hidden transition duration-150 ease-in-out transform -translate-x-0"}
+                className={"w-full fixed bottom-0 z-10 bg-gray-800 shadow flex-col justify-between md:hidden transition duration-150 ease-in-out transform -translate-x-0"}
                 id="mobile-nav">
 
                 <div className="px-8 border-t border-gray-700">
