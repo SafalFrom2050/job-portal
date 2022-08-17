@@ -26,7 +26,7 @@ function Training() {
 
                 {posts?.map((post, i) => (
                     <PostListItem key={i} post={post}/>
-                ))
+                    ))
                 }
 
             </div>
