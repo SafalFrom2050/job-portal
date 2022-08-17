@@ -22,10 +22,10 @@ import {FormErrorMessage} from "../../components/common/formErrorMessage";
 
 function Create(props: {}) {
 
-    const [errorMsg, setErrorMsg] = useState(false);
+    const [errorMsg, setErrorMsg] = useState(false as boolean | string);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-    const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
+    const {axiosInstance, axiosInstanceGuest} = useContext(AxiosContext) as AxiosContextType
     const {user, isLoggedIn} = useContext(AuthContext) as AuthContextType;
 
     const {data} = useQuery("postFields", fetchPostFields, {
@@ -37,7 +37,7 @@ function Create(props: {}) {
 
 
     function fetchPostFields() {
-        return getPostFields(axiosInstance)
+        return getPostFields(axiosInstanceGuest)
     }
 
     const getFieldTypes = () => {
@@ -113,7 +113,8 @@ function Create(props: {}) {
                     formik.setErrors(response.data)
                 } else if (response.status == 401) {
                     if (response.data.detail != null) {
-                        setErrorMsg(response.data.detail)
+                        console.log(response.data.detail)
+                        setErrorMsg("Please create an account to continue. <a target='_blank' href='/register'>Register here</a>")
                     }
                 }
             })
@@ -129,7 +130,7 @@ function Create(props: {}) {
         Router.push("/")
     }
 
-    if (!isLoggedIn) return <></>
+    // if (!isLoggedIn) return <></>
 
     return (
         <div>

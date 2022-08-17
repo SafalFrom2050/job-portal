@@ -23,7 +23,7 @@ export const authOnlyRoutes = [
     'profile/me',
     'staff',
     'education',
-    'hire'
+    // 'hire'
 ]
 
 export const organizationOnlyRoutes = [

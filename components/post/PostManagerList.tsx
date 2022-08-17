@@ -38,6 +38,7 @@ function PostManagerList() {
 
     const {axiosInstance} = useContext(AxiosContext) as AxiosContextType
     const {setAlert} = useContext(AlertContext) as AlertContextType
+    const {isLoggedIn} = useContext(AuthContext) as AuthContextType
 
     const {data, isLoading, refetch} = useQuery(postDataUrl + Object.values(postDataOptions), fetchPosts, {
         enabled: axiosInstance != null,
@@ -97,6 +98,19 @@ function PostManagerList() {
             })
         }
     }
+
+    if (!isLoggedIn) return <>
+        <div className="w-full max-w-[1000px] mx-auto">
+            <div className="border rounded-lg pb-6 border-gray-200 bg-white">
+                <div className="flex items-center justify-center px-6 py-3">
+                    <p className="py-2.5 text-sm lg:text-xl font-semibold leading-tight text-gray-800">
+                        You are not logged in. Please login or create an account to access this area.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </>
 
     return (
         <>
