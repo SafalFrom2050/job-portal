@@ -48,10 +48,10 @@ const TabView = (props: {
             </div>
             <div className="justify-between flex-wrap hidden sm:block">
                 <div className="xl:w-full xl:mx-0 h-12">
-                    <ul className="flex">
+                    <ul className="flex justify-center">
                         {props.tabs.map((tab) => {
                             return <li key={tab.key} onClick={() => setActiveStatus(tab.key)}
-                                       className={activeStatus === tab.key ? "text-sm text-indigo-700 flex flex-col justify-between border-indigo-700 pt-3 rounded-t mr-10 font-normal" : "text-sm text-gray-600 py-3 mr-10 font-normal cursor-pointer hover:text-gray-800"}>
+                                       className={activeStatus === tab.key ? "text-indigo-700 flex flex-col justify-between border-indigo-700 pt-3 rounded-t mr-10 font-normal" : "text-gray-600 py-3 mr-10 font-normal cursor-pointer hover:text-gray-800"}>
                                 <span className="mb-3 cursor-pointer">{tab.value}</span>
                                 {activeStatus == tab.key && <div className="w-full h-1 bg-indigo-700 rounded-t-md"/>}
                             </li>

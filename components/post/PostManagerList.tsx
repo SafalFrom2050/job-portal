@@ -100,8 +100,8 @@ function PostManagerList() {
 
     return (
         <>
-            <div className="w-full max-w-2xl px-4 mx-auto">
-                <div className="border rounded-lg border pb-6 border-gray-200 bg-white">
+            <div className="w-full max-w-[1000px] mx-auto">
+                <div className="border rounded-lg pb-6 border-gray-200 bg-white">
                     <div className="flex items-center border-b border-gray-200 justify-between px-6 py-3">
                         <p className="py-2.5 text-sm lg:text-xl font-semibold leading-tight text-gray-800">
                             All Job Posts
@@ -170,7 +170,7 @@ function PostRowItem(props: { post: Post, onDelete?: (postId: number) => void, o
 
             </td>
             <td className="pl-20">
-                <div className={'flex flex-col gap-y-2'}>
+                <div className={'flex flex-col gap-y-2 items-end'}>
                     <div className="flex items-center gap-x-1 justify-center px-2 py-1 mt-2 bg-green-100 rounded-full">
                         <ClockIcon className="w-5 h-5"/>
                         <p className="text-xs leading-3 text-green-700">

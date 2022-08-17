@@ -142,156 +142,166 @@ function Create(props: {}) {
                           title={"Job Post Created Successfully"}
                           description={"Thank you for using our platform."}/>
 
-            <main>
-                <Heading heading={"Create Post"}/>
+            <main className={'px-4'}>
 
-                <div className="max-w-[700px] mx-auto bg-white rounded py-8 px-10 mt-3">
-                    {errorMsg &&
-                        <FormErrorMessage errorMsg={errorMsg}/>
-                    }
+                <div className={'max-w-[1000px] mx-auto border rounded-lg border-gray-200 bg-white'}>
+                    <div className="flex items-center border-b border-gray-200 justify-between px-6 py-3">
+                        <p className="py-2.5 text-sm lg:text-xl font-semibold leading-tight text-gray-800">
+                            Job Post Details
+                        </p>
 
-                    <form method={"POST"} onSubmit={(e) => {
-                        e.preventDefault();
-                        formik.submitForm()
-                    }}>
-                        <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-4">
-                            <input name={"author"} value={`${user.first_name} ${user.last_name}`} hidden aria-hidden/>
-                            <div className={"col-span-2"}>
-                                <TextInput name="title"
-                                           placeholder="We are looking for..."
-                                           type="text"
-                                           iClass={'focus'}
+                    </div>
+                    <div className="py-8 px-10 mt-3">
 
-                                           value={formik.values.title}
-                                           onChange={formik.handleChange}
-                                           error={formik.touched.title && Boolean(formik.errors.title)}
-                                           errorMsg={formik.touched.title && formik.errors.title}
+                        {errorMsg &&
+                            <FormErrorMessage errorMsg={errorMsg}/>
+                        }
 
-                                           label={"Job Title"}
-                                           required={true}
-                                />
+                        <form method={"POST"} onSubmit={(e) => {
+                            e.preventDefault();
+                            formik.submitForm()
+                        }}>
+                            <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-x-8 gap-y-4">
+                                <input name={"author"} value={`${user.first_name} ${user.last_name}`} hidden
+                                       aria-hidden/>
+                                <div className={"col-span-2"}>
+                                    <TextInput name="title"
+                                               placeholder="We are looking for..."
+                                               type="text"
+                                               iClass={'focus'}
+
+                                               value={formik.values.title}
+                                               onChange={formik.handleChange}
+                                               error={formik.touched.title && Boolean(formik.errors.title)}
+                                               errorMsg={formik.touched.title && formik.errors.title}
+
+                                               label={"Job Title"}
+                                               required={true}
+                                    />
+                                </div>
+                                <Dropdown name={"field"}
+                                          options={fieldTypes}
+
+                                          onSelect={(v) => !formik.setFieldValue("field", v, true)}
+                                          error={formik.touched.field && Boolean(formik.errors.field)}
+                                          errorMsg={formik.touched.field && formik.errors.field}
+
+                                          label="Subject"
+                                          separateLabel={true}
+                                          required={true}/>
+
+                                <Dropdown name={"position"}
+                                          options={positionTypes}
+
+
+                                          onSelect={(v) => !formik.setFieldValue("position", v, true)}
+                                          error={formik.touched.position && Boolean(formik.errors.position)}
+                                          errorMsg={formik.touched.position && formik.errors.position}
+
+                                          label="Level"
+                                          separateLabel={true}
+                                          required={true}/>
+
+                                <div className={'col-span-2 md:col-span-1'}>
+                                    <TextInput name="location"
+                                               placeholder="Kathmandu"
+                                               type="text"
+
+                                               value={formik.values.location}
+                                               onChange={formik.handleChange}
+                                               error={formik.touched.location && Boolean(formik.errors.location)}
+                                               errorMsg={formik.touched.location && formik.errors.location}
+
+                                               label={"Location"}
+                                               required={true}
+                                    />
+                                </div>
+
+                                <div className={"flex items-end gap-3 col-span-2 md:col-span-1"}>
+
+                                    <TextInput name="salary_low"
+                                               type="number"
+                                               leftLabel={"Rs."}
+
+                                               value={formik.values.salary_low}
+                                               onChange={formik.handleChange}
+                                               error={formik.touched.salary_low && Boolean(formik.errors.salary_low)}
+                                               errorMsg={formik.touched.salary_low && formik.errors.salary_low}
+
+                                               label={"Salary Range"}/>
+
+                                    <span className={"font-medium text-gray-600 my-2"}>To</span>
+
+                                    <TextInput name="salary_high"
+                                               type="number"
+
+                                               value={formik.values.salary_high}
+                                               onChange={formik.handleChange}
+                                               error={formik.touched.salary_high && Boolean(formik.errors.salary_high)}
+                                               errorMsg={formik.touched.salary_high && formik.errors.salary_high}
+                                    />
+                                </div>
+
+                                <div className={"col-span-2"}>
+                                    <TextArea name={"description"}
+                                              placeholder={"We are looking for..."}
+
+                                              value={formik.values.description}
+                                              onChange={(e) => {
+                                                  formik.setFieldValue("description", e.target.value)
+                                              }}
+                                              error={formik.touched.description && Boolean(formik.errors.description)}
+                                              errorMsg={formik.touched.description && formik.errors.description}
+
+                                              label={"Description"}
+                                              required={true}
+                                    />
+                                </div>
+
+                                <div className={"flex items-end gap-3 col-span-2 md:col-span-1"}>
+                                    <TextInput name="time_low"
+                                               type="time"
+
+                                               value={formik.values.time_low}
+                                               onChange={formik.handleChange}
+                                               error={formik.touched.time_low && Boolean(formik.errors.time_low)}
+                                               errorMsg={formik.touched.time_low && formik.errors.time_low}
+
+                                               label={"Time Range"}
+                                               iClass={"px-2"}
+                                    />
+                                    <span className={"font-medium text-gray-600 my-2"}>To</span>
+                                    <TextInput name="time_high"
+                                               type="time"
+
+                                               value={formik.values.time_high}
+                                               onChange={formik.handleChange}
+                                               error={formik.touched.time_high && Boolean(formik.errors.time_high)}
+                                               errorMsg={formik.touched.time_high && formik.errors.time_high}
+
+                                               iClass={"px-2"}
+                                    />
+                                </div>
+
+                                <div className={"col-span-2 flex items-center gap-x-2 mt-2"}>
+                                    <label htmlFor={"lodging"} className={"mb-1 font-medium"}>Lodging</label>
+                                    <ToggleCheckbox name={"lodging"} defaultChecked={true}/>
+                                </div>
+
+
                             </div>
-                            <Dropdown name={"field"}
-                                      options={fieldTypes}
-
-                                      onSelect={(v) => !formik.setFieldValue("field", v, true)}
-                                      error={formik.touched.field && Boolean(formik.errors.field)}
-                                      errorMsg={formik.touched.field && formik.errors.field}
-
-                                      label="Subject"
-                                      separateLabel={true}
-                                      required={true}/>
-
-                            <Dropdown name={"position"}
-                                      options={positionTypes}
-
-
-                                      onSelect={(v) => !formik.setFieldValue("position", v, true)}
-                                      error={formik.touched.position && Boolean(formik.errors.position)}
-                                      errorMsg={formik.touched.position && formik.errors.position}
-
-                                      label="Level"
-                                      separateLabel={true}
-                                      required={true}/>
-
-                            <div className={'col-span-2 md:col-span-1'}>
-                                <TextInput name="location"
-                                           placeholder="Kathmandu"
-                                           type="text"
-
-                                           value={formik.values.location}
-                                           onChange={formik.handleChange}
-                                           error={formik.touched.location && Boolean(formik.errors.location)}
-                                           errorMsg={formik.touched.location && formik.errors.location}
-
-                                           label={"Location"}
-                                           required={true}
-                                />
+                            <div
+                                className="flex flex-col-reverse items-center justify-end w-full mt-6 gap-4 md:flex-row">
+                                <WhiteButton name={"Cancel"} onClick={() => Router.back()}
+                                             class="font-medium text-base"/>
+                                <PrimaryButton name={"Add Post"}
+                                               autoFocus={false}
+                                               disabled={isCreatingPost}
+                                               onClick={formik.submitForm}
+                                               class="font-medium text-base"/>
                             </div>
-
-                            <div className={"flex items-end gap-3 col-span-2 md:col-span-1"}>
-
-                                <TextInput name="salary_low"
-                                           type="number"
-                                           leftLabel={"Rs."}
-
-                                           value={formik.values.salary_low}
-                                           onChange={formik.handleChange}
-                                           error={formik.touched.salary_low && Boolean(formik.errors.salary_low)}
-                                           errorMsg={formik.touched.salary_low && formik.errors.salary_low}
-
-                                           label={"Salary Range"}/>
-
-                                <span className={"font-medium text-gray-600 my-2"}>To</span>
-
-                                <TextInput name="salary_high"
-                                           type="number"
-
-                                           value={formik.values.salary_high}
-                                           onChange={formik.handleChange}
-                                           error={formik.touched.salary_high && Boolean(formik.errors.salary_high)}
-                                           errorMsg={formik.touched.salary_high && formik.errors.salary_high}
-                                />
-                            </div>
-
-                            <div className={"col-span-2"}>
-                                <TextArea name={"description"}
-                                          placeholder={"We are looking for..."}
-
-                                          value={formik.values.description}
-                                          onChange={(e) => {
-                                              formik.setFieldValue("description", e.target.value)
-                                          }}
-                                          error={formik.touched.description && Boolean(formik.errors.description)}
-                                          errorMsg={formik.touched.description && formik.errors.description}
-
-                                          label={"Description"}
-                                          required={true}
-                                />
-                            </div>
-
-                            <div className={"flex items-end gap-3 col-span-2 md:col-span-1"}>
-                                <TextInput name="time_low"
-                                           type="time"
-
-                                           value={formik.values.time_low}
-                                           onChange={formik.handleChange}
-                                           error={formik.touched.time_low && Boolean(formik.errors.time_low)}
-                                           errorMsg={formik.touched.time_low && formik.errors.time_low}
-
-                                           label={"Time Range"}
-                                           iClass={"px-2"}
-                                />
-                                <span className={"font-medium text-gray-600 my-2"}>To</span>
-                                <TextInput name="time_high"
-                                           type="time"
-
-                                           value={formik.values.time_high}
-                                           onChange={formik.handleChange}
-                                           error={formik.touched.time_high && Boolean(formik.errors.time_high)}
-                                           errorMsg={formik.touched.time_high && formik.errors.time_high}
-
-                                           iClass={"px-2"}
-                                />
-                            </div>
-
-                            <div className={"col-span-2 flex items-center gap-x-2 mt-2"}>
-                                <label htmlFor={"lodging"} className={"mb-1 font-medium"}>Lodging</label>
-                                <ToggleCheckbox name={"lodging"} defaultChecked={true}/>
-                            </div>
-
-
-                        </div>
-                        <div
-                            className="flex flex-col-reverse items-center justify-end w-full mt-6 gap-4 md:flex-row">
-                            <WhiteButton name={"Cancel"} onClick={() => Router.back()} class="font-medium text-base"/>
-                            <PrimaryButton name={"Add Post"}
-                                           autoFocus={false}
-                                           disabled={isCreatingPost}
-                                           onClick={formik.submitForm}
-                                           class="font-medium text-base"/>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </main>
 
