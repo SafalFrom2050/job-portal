@@ -85,7 +85,7 @@ function EditIsAvailableToWork() {
                            loading={isUpdatingAccount}
 
                            title={"Looking For a New Job?"}
-                           description={"Enable this option which lets companies to find you."}/>
+                           description={"Enabling this option lets schools find you."}/>
     );
 }
 

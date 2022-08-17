@@ -108,7 +108,7 @@ function ManageOrganizationInfo() {
             }
 
             <div className="max-w-[800px] mx-auto bg-white rounded py-8 px-10 mt-3 shadow">
-                <Heading heading={"Company Information"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl"}/>
+                <Heading heading={"School Information"} cClass={"pt-0 pb-6 px-0"} hClass={"text-xl"}/>
 
                 <form method={"POST"} onSubmit={(e) => {
                     e.preventDefault();
@@ -125,13 +125,13 @@ function ManageOrganizationInfo() {
                                    error={formik.touched.org_title && Boolean(formik.errors.org_title)}
                                    errorMsg={formik.touched.org_title && formik.errors.org_title}
 
-                                   label={"Company Name"}
+                                   label={"School Name"}
                                    required={true}
                         />
 
                         <div className={"col-span-2"}>
                             <TextArea name={"org_description"}
-                                      label={"Company Description"}
+                                      label={"School Description"}
                                       value={formik.values.org_description}
 
                                       onChange={(e) => {
@@ -152,7 +152,7 @@ function ManageOrganizationInfo() {
                                        error={formik.touched.org_number_of_employees && Boolean(formik.errors.org_number_of_employees)}
                                        errorMsg={formik.touched.org_number_of_employees && formik.errors.org_number_of_employees}
 
-                                       label={"Number of Employees"}
+                                       label={"Number of Staff"}
                             />
                         </div>
 
