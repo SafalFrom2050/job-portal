@@ -130,12 +130,12 @@ function ApplicationFormModal(props: {
                             Details</h3>
                         <div className="flex flex-col sm:flex-row justify-center w-full gap-x-2">
 
-                            {formik.errors.cv &&
+                            {formik.touched.cv && formik.errors.cv &&
                                 <p className={'text-red-400 text-xs capitalize'}>{formik.errors.cv}</p>}
                             <FileInputWithDragDrop name={"cv"} message={"Drop your CV here"}
                                                    onFileChanged={(file) => formik.setFieldValue('cv', file)}/>
 
-                            {formik.errors.cover_letter &&
+                            {formik.touched.cover_letter && formik.errors.cover_letter &&
                                 <p className={'text-red-400 text-xs capitalize'}>{formik.errors.cover_letter}</p>}
                             <FileInputWithDragDrop name={"cover_letter"} message={"Drop your Cover Letter here"}
                                                    onFileChanged={(file) => formik.setFieldValue('cover_letter', file)}/>

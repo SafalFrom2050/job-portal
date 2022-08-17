@@ -7,7 +7,7 @@ import {TokenContextType} from "../../@types/token";
 import Router, {useRouter} from "next/router";
 import Image from "next/image";
 import {APP_NAME, BASE_URL} from "../../others/config";
-import {LockClosedIcon} from "@heroicons/react/solid";
+import {LockClosedIcon, LoginIcon} from "@heroicons/react/outline";
 
 export default function Header(props: { guest?: boolean }) {
 
@@ -129,6 +129,7 @@ export default function Header(props: { guest?: boolean }) {
 
                                         <Image
                                             layout={'fill'}
+                                            objectFit={'cover'}
                                             src={user && user.avatar ? BASE_URL + user.avatar?.substring(1) : "/images/default-profile.png"}
                                             alt={'profile picture'}
                                         />
@@ -138,7 +139,7 @@ export default function Header(props: { guest?: boolean }) {
                         </>
                         : <Link href={'/login'}>
                             <a className={'text-indigo-700 flex items-center gap-x-1'}>
-                                <LockClosedIcon className={'w-5 h-5'}/>
+                                <LoginIcon className={'w-5 h-5'}/>
                                 <p className={"text-sm font-medium text-indigo-800"}>Login</p>
                             </a>
                         </Link>
