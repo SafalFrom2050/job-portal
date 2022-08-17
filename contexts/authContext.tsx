@@ -8,6 +8,7 @@ import Router, {useRouter} from "next/router";
 import {ALERT_TYPE_WARNING, authOnlyRoutes, organizationOnlyRoutes} from "../constants";
 import {AlertContext} from "./alertContext";
 import {AlertContextType} from "../@types/alert";
+import {ScreenLoading} from "../components/common/screenLoading";
 
 
 export const AuthContext = React.createContext<AuthContextType | null>(null)
@@ -111,6 +112,9 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
         })
     }
 
-    if (isLoggedIn === undefined) return <></>
+    if (isLoggedIn === undefined) return <ScreenLoading />
+
+
+
     return <AuthContext.Provider value={{user, isLoggedIn, syncUser}}>{children}</AuthContext.Provider>
 }
