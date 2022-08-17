@@ -97,7 +97,7 @@ function Search(props: {
                     <div className="py-4">
                         <div
                             className={`mt-7 pt-0  rounded-[4px]  bg-white ${props.isFullSize ? 'min-w-[80vw] xl:min-w-[900px]' : 'max-w-[400px]'} w-full mx-auto ${showFilters && 'shadow-2xl'}`}>
-                            <div className={`py-6 mt-12 transition-all`} id="interaction">
+                            <div className={`pt-6 sm:py-6 mt-12 transition-all`} id="interaction">
                                 <div className={'px-8'}>
                                     <div className=" flex flex-col w-full gap-y-2">
                                         <div className="w-full flex gap-x-2 items-center">
@@ -148,7 +148,7 @@ function Search(props: {
                                 </div>
 
                                 <div
-                                    className={` bg-white absolute z-50 px-8 ${props.isFullSize ? 'min-w-[80vw] xl:min-w-[900px]' : 'max-w-[400px]'} w-full rounded-[4px] mt-4 transition-all duration-150 ${showFilters ? "h-auto min-h-0 max-h-screen shadow-2xl" : "max-h-0 overflow-hidden"} `}>
+                                    className={` bg-white sm:absolute z-50 px-8 ${props.isFullSize ? 'min-w-[80vw] xl:min-w-[900px]' : 'max-w-[400px]'} w-full rounded-[4px] mt-4 transition-all duration-150 ${showFilters ? "h-auto min-h-0 max-h-screen shadow-2xl" : "max-h-0 overflow-hidden"} `}>
 
                                     <hr className="bg-[#F1F5F9] mb-6"/>
 
@@ -177,8 +177,14 @@ function Search(props: {
 
                                     </div>
                                     <div
-                                        className="flex flex-col items-center justify-end w-full gap-4 my-4 lg:flex-row">
+                                        className="flex items-center justify-end w-full gap-4 mt-4 sm:my-4 lg:flex-row">
                                         {/*<WhiteButton name={"Advanced"} class="font-medium text-sm"/>*/}
+
+                                        <div className={"sm:hidden"}>
+                                            <TextButton name={"Hide"} onClick={() => setShowFilters(false)}/>
+
+                                        </div>
+
                                         <PrimaryButton autoFocus={false}
                                                        disabled={(props.disable === true) || !formik.isValid}
                                                        isSubmitType={true}
