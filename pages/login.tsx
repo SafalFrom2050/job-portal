@@ -153,7 +153,7 @@ export default function Login() {
                                 <a
                                     className="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer">
                                     {" "}
-                                    Sign up here
+                                    Create account here
                                 </a>
                             </Link>
 

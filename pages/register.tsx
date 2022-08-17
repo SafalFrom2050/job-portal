@@ -39,7 +39,11 @@ export default function Register() {
             .min(8, 'Password should be of minimum 8 characters length')
             .required('Password is required'),
         is_organization: yup
-            .boolean()
+            .boolean(),
+        confirm_password: yup
+            .string()
+            .oneOf([yup.ref('password')], 'Passwords must match')
+            .required('Please type your password again')
     });
 
 
@@ -49,7 +53,8 @@ export default function Register() {
             last_name: '',
             email: '',
             password: '',
-            is_organization: false
+            is_organization: false,
+            confirm_password: ''
         },
         validationSchema: validationSchema,
         onSubmit: (values: any) => {
@@ -81,7 +86,10 @@ export default function Register() {
 
     return (
         <>
-            <form method={"POST"} onSubmit={(e) => { e.preventDefault(); formik.submitForm()}}>
+            <form method={"POST"} onSubmit={(e) => {
+                e.preventDefault();
+                formik.submitForm()
+            }}>
                 <div
                     className="xl:px-20 md:px-10 sm:px-6 px-4 md:py-12 py-9 2xl:mx-auto 2xl:container md:flex items-center justify-center">
                     <div className=" md:hidden sm:mb-8 mb-6">
@@ -158,7 +166,26 @@ export default function Register() {
                                        errorMsg={formik.touched.password && formik.errors.password}
                             >
                                 <div onClick={() => setShowPass(!showpass)}
-                                     className="absolute right-0 mt-2 mr-3 cursor-pointer">
+                                     className="absolute right-0 mt-1 mr-3 cursor-pointer">
+                                    <IconShowHidePassword show={showpass}/>
+                                </div>
+                            </TextInput>
+
+                        </div>
+
+                        <div className="mt-4 w-full">
+
+                            <TextInput type={showpass ? 'text' : 'password'}
+                                       name={'confirm_password'}
+                                       label={'Confirm Password'}
+                                       cClass="relative flex items-center justify-center"
+                                       value={formik.values.confirm_password}
+                                       onChange={formik.handleChange}
+                                       error={formik.touched.confirm_password && Boolean(formik.errors.confirm_password)}
+                                       errorMsg={formik.touched.confirm_password && formik.errors.confirm_password}
+                            >
+                                <div onClick={() => setShowPass(!showpass)}
+                                     className="absolute right-0 mt-1 mr-3 cursor-pointer">
                                     <IconShowHidePassword show={showpass}/>
                                 </div>
                             </TextInput>
@@ -166,7 +193,7 @@ export default function Register() {
                         </div>
 
                         <ToggleCheckbox name={"is_organization"}
-                                        label={"Organization Account"}
+                                        label={`Want to hire staff for your school?`}
 
                                         defaultChecked={formik.values.is_organization}
                                         onChange={formik.handleChange}
@@ -174,10 +201,11 @@ export default function Register() {
                                         errorMsg={formik.touched.is_organization && formik.errors.is_organization}
                                         cClass={"flex-row items-center justify-between mt-6 w-full "}
                         />
+                        <p className={'text-xs text-indigo-600'}>{`${formik.values.is_organization ? 'Representing a school' : 'Creating account as a job seeker'}`}</p>
 
                         <div className="mt-4">
                             <PrimaryButton
-                                disabled={isRegisteringUser || Object.keys(formik.errors).length !== 0}
+                                disabled={isRegisteringUser}
                                 onClick={formik.submitForm}
                                 isSubmitType={true}
                                 name={"SIGN UP"} cClass="w-full"
