@@ -20,7 +20,7 @@ const Home: NextPage = () => {
     const router = useRouter()
 
     const [postDataUrl, setPostDataUrl] = useState('post/');
-    const [postsCount, setPostsCount] = useState(6)
+    const [postsCount, setPostsCount] = useState(9)
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
 
