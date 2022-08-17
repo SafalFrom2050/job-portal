@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <div className="2xl:mx-auto 2xl:container py-16 pb-28 md:pb-16 xl:px-20 lg:px-12 sm:px-6 px-4 mt-12 bg-white">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 md:gap-8 gap-4">
-                <div className="flex flex-col flex-shrink-0">
+                <div className="flex flex-col flex-shrink-0 mb-6">
                     <div>
                         <h3 className="font-bold text-gray-900 text-xl">{APP_NAME}</h3>
                     </div>
@@ -61,7 +61,7 @@ const Footer = () => {
                     <p className="hover:text-gray-500 text-base leading-4 mt-6 text-gray-800 cursor-pointer">Testimonials</p>
                 </div>
 
-                <div className="sm:ml-0 mx-8">
+                <div className="sm:ml-0">
                     <h2 className="text-base font-semibold leading-4 text-gray-800">For Organization</h2>
                     <p className="hover:text-gray-500 text-base leading-4 mt-6 text-gray-800 cursor-pointer">Hire
                         Staff</p>
@@ -70,7 +70,7 @@ const Footer = () => {
                         Staff</p>
                 </div>
 
-                <div className="sm:ml-0 mx-8">
+                <div className="sm:ml-0 ">
                     <h2 className="text-base font-semibold leading-4 text-gray-800">For Individual</h2>
 
 
