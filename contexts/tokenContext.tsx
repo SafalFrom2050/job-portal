@@ -1,10 +1,8 @@
 import * as React from "react"
 import {Token, TokenContextType} from "../@types/token"
 import {useContext, useEffect} from "react";
-import Router from 'next/router';
 import {AlertContext} from "./alertContext";
 import {AlertContextType} from "../@types/alert";
-import {ALERT_TYPE_WARNING} from "../constants";
 
 
 export const TokenContext = React.createContext<TokenContextType | null>(null)
