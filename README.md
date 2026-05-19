@@ -2,8 +2,6 @@
 
 A job portal web application for the education sector, connecting schools/colleges with job seekers. Built with Next.js, React, and TypeScript, deployed as a Progressive Web App.
 
-**Live:** https://job-portal-sigma.vercel.app/
-
 ## Tech Stack
 
 - **Framework:** Next.js 12 (Pages Router)
